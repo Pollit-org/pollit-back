@@ -6,7 +6,7 @@ namespace Pollit.Domain.Shared.Email;
 
 public class Email : ValueObject
 {
-    public const int EmailMaxLength = 255;
+    public const int MaxLength = 255;
             
     public Email(string? email)
     {
@@ -15,7 +15,7 @@ public class Email : ValueObject
 
         Value = email.Trim();
 
-        if (Value.Length >= EmailMaxLength || !IsValidEmail(Value))
+        if (Value.Length >= MaxLength || !IsValidEmail(Value))
             throw new EmailException();
     }
 

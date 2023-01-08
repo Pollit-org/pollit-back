@@ -4,5 +4,6 @@ public interface ISignupWithCredentialsPresenter
 {
     void Success();
 
-    void EMailAlreadyTaken();
+    void EMailAlreadyExists();
+    void UserNameAlreadyExists();
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Pollit.Application.Auth.SignupWithCredentials;
 using Pollit.Domain.Shared.Email;
+using Pollit.Domain.Users;
 using Pollit.Domain.Users.ClearPasswords;
 
 namespace Pollit.Infra.Api.Controllers.Auth.SignupWithCredentials;
@@ -18,7 +19,7 @@ public class SignupWithCredentialsController : ControllerBase
     [HttpPost("auth/signup", Name = "Signup")]
     public async Task<IActionResult?> Signup([FromBody] SignupWithCredentialsHttpRequestBody requestBody)
     {
-        var command = new SignupWithCredentialsCommand(new Email(requestBody.Email), new ClearPassword(requestBody.Password));
+        var command = new SignupWithCredentialsCommand(new Email(requestBody.Email), new UserName(requestBody.UserName), new ClearPassword(requestBody.Password));
 
         var presenter = new SignupWithCredentialsPresenter();
         

@@ -15,6 +15,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(u => u.Id).HasDefaultValueSql("gen_random_uuid ()").IsRequired();
 
         builder.HasIndex(u => u.Email);
+        builder.HasIndex(u => u.UserName);
         
         builder.Property(u => u.EncryptedPassword)
             .HasConversion(encryptedPassword => encryptedPassword.ToString(), encryptedPasswordString => EncryptedPassword.Parse(encryptedPasswordString))
@@ -24,5 +25,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .HasConversion(id => id.Value, id => new UserId(id));
 
         builder.Property(u => u.Email).HasEmailConversion();
+
+        builder.Property(u => u.UserName).HasUserNameConversion();
     }
 }

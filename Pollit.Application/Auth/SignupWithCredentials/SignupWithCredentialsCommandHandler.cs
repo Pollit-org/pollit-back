@@ -20,13 +20,19 @@ public class SignupWithCredentialsCommandHandler
     {
         if (await _userRepository.EmailExistsAsync(command.Email))
         {
-            presenter.EMailAlreadyTaken();
+            presenter.EMailAlreadyExists();
+            return;
+        }
+        
+        if (await _userRepository.UserNameExistsAsync(command.UserName))
+        {
+            presenter.UserNameAlreadyExists();
             return;
         }
 
         var encryptedPassword = _passwordEncryptor.Encrypt(command.Password);
 
-        var user = User.NewUser(command.Email, encryptedPassword);
+        var user = User.NewUser(command.Email, command.UserName, encryptedPassword);
 
         await _userRepository.AddAsync(user);
 

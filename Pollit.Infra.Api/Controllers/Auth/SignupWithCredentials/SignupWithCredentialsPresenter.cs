@@ -10,6 +10,9 @@ public class SignupWithCredentialsPresenter : BasePresenter, ISignupWithCredenti
         ActionResult = new OkResult();
     }
 
-    public void EMailAlreadyTaken() 
+    public void EMailAlreadyExists() 
         => Conflict("Email already exists");
+
+    public void UserNameAlreadyExists() 
+        => Conflict("User mame already exists");
 }
