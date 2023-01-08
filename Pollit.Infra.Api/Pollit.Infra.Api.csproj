@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.5" />
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.1" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Pollit.Infra.EfCore.NpgSql\Pollit.Infra.EfCore.NpgSql.csproj" />
+      <ProjectReference Include="..\Pollit.Infra.Jwt\Pollit.Infra.Jwt.csproj" />
+      <ProjectReference Include="..\Pollit.Infra.PasswordEncryptor\Pollit.Infra.PasswordEncryptor.csproj" />
+    </ItemGroup>
+
+</Project>

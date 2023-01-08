@@ -1,14 +1,25 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pollit.Api", "Pollit.Api\Pollit.Api.csproj", "{EAA7C114-D4F1-463E-8116-459E0ABCF452}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pollit.Infra.Api", "Pollit.Infra.Api\Pollit.Infra.Api.csproj", "{EAA7C114-D4F1-463E-8116-459E0ABCF452}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pollit.Application", "Pollit.Application\Pollit.Application.csproj", "{EE090DA3-032C-4128-B216-73A74AFAD393}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pollit.Domain", "Pollit.Domain\Pollit.Domain.csproj", "{04942496-B2A2-4F86-8D84-AE6535B09841}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pollit.Infra.SqlServer", "Pollit.Infra.SqlServer\Pollit.Infra.SqlServer.csproj", "{A9E6053F-BB69-4893-A631-9AA8B0DE5AB0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pollit.Infra.EfCore.NpgSql", "Pollit.Infra.EfCore.NpgSql\Pollit.Infra.EfCore.NpgSql.csproj", "{A9E6053F-BB69-4893-A631-9AA8B0DE5AB0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pollit.SeedWork", "Pollit.SeedWork\Pollit.SeedWork.csproj", "{01108D5C-8183-4BEF-BA30-DD022322B570}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_DevCommands", "_DevCommands", "{A20A8FB1-E93F-49F2-A36E-19E30D4CF9BB}"
+	ProjectSection(SolutionItems) = preProject
+		DevCommands\EfCore.txt = DevCommands\EfCore.txt
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pollit.Infra.PasswordEncryptor", "Pollit.Infra.PasswordEncryptor\Pollit.Infra.PasswordEncryptor.csproj", "{E9CFE57B-0838-44E5-BFBE-F08D83C9005C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pollit.Infra.Jwt", "Pollit.Infra.Jwt\Pollit.Infra.Jwt.csproj", "{63891DB2-E47D-4BF9-A081-FB20AFE8E8F9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infra", "Infra", "{9CAED300-A53A-4544-B2CF-09AA233FE390}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,5 +47,19 @@ Global
 		{01108D5C-8183-4BEF-BA30-DD022322B570}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{01108D5C-8183-4BEF-BA30-DD022322B570}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{01108D5C-8183-4BEF-BA30-DD022322B570}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9CFE57B-0838-44E5-BFBE-F08D83C9005C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9CFE57B-0838-44E5-BFBE-F08D83C9005C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9CFE57B-0838-44E5-BFBE-F08D83C9005C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9CFE57B-0838-44E5-BFBE-F08D83C9005C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63891DB2-E47D-4BF9-A081-FB20AFE8E8F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63891DB2-E47D-4BF9-A081-FB20AFE8E8F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63891DB2-E47D-4BF9-A081-FB20AFE8E8F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63891DB2-E47D-4BF9-A081-FB20AFE8E8F9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{63891DB2-E47D-4BF9-A081-FB20AFE8E8F9} = {9CAED300-A53A-4544-B2CF-09AA233FE390}
+		{A9E6053F-BB69-4893-A631-9AA8B0DE5AB0} = {9CAED300-A53A-4544-B2CF-09AA233FE390}
+		{E9CFE57B-0838-44E5-BFBE-F08D83C9005C} = {9CAED300-A53A-4544-B2CF-09AA233FE390}
+		{EAA7C114-D4F1-463E-8116-459E0ABCF452} = {9CAED300-A53A-4544-B2CF-09AA233FE390}
 	EndGlobalSection
 EndGlobal

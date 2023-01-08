@@ -1,0 +1,51 @@
+using Microsoft.EntityFrameworkCore;
+using Pollit.Application._Ports;
+using Pollit.Application.Auth.SignupWithCredentials;
+using Pollit.Domain.Users;
+using Pollit.Infra.EfCore.NpgSql;
+using Pollit.Infra.EfCore.NpgSql.Repositories.Users;
+using Pollit.Infra.Jwt;
+using Pollit.Infra.PasswordEncryptor;
+
+var builder = WebApplication.CreateBuilder(args);
+
+var configuration = builder.Configuration;
+var services = builder.Services;
+
+services
+    .AddEndpointsApiExplorer()
+    .AddLogging(logging => logging.AddConsole())
+    .AddControllers();
+
+services.AddSwaggerGen();
+
+services.AddDbContext<PollitDbContext>(options =>
+    options.UseNpgsql(configuration.GetConnectionString("Postgres")));
+
+services
+    .AddScoped<IUserRepository, UserRepository>()
+    .AddTransient<IUnitOfWork, UnitOfWork>()
+    .AddTransient<SignupWithCredentialsCommandHandler>()
+    .AddSingleton<IAccessTokenManager, AccessTokenManager>()
+    .AddSingleton<IPasswordEncryptor, PasswordEncryptor>();
+
+var jwtConfig = new JwtConfig();
+configuration.GetSection("JwtConfig").Bind(jwtConfig);
+services.AddSingleton<JwtConfig>(_ => jwtConfig);
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseHttpsRedirection();
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();

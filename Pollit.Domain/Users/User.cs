@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
+using Pollit.Domain.Shared.Email;
 using Pollit.Domain.Users.EncryptedPasswords;
-using Pollit.Domain.ValueObjects.Email;
 
 namespace Pollit.Domain.Users;
 

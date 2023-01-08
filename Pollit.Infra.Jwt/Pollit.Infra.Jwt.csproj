@@ -7,11 +7,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Pollit.Domain\Pollit.Domain.csproj" />
+      <ProjectReference Include="..\Pollit.Application\Pollit.Application.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Auth" />
+        <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.16.0" />
+        <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.16.0" />
     </ItemGroup>
 
 </Project>
