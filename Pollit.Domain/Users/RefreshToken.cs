@@ -15,6 +15,6 @@ public class RefreshToken : StringValueBase
         using var rng = RandomNumberGenerator.Create();
         rng.GetBytes(randomNumber);
         
-        return new RefreshToken(Convert.ToBase64String(randomNumber));
+        return new RefreshToken(Convert.ToBase64String(randomNumber).Replace(' ', '.'));
     }
 }

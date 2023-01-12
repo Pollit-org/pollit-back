@@ -1,2 +1,2 @@
 ﻿Create a migration : 
-dotnet  ef migrations add UserName --project Pollit.Infra.EfCore.NpgSql --startup-project Pollit.Infra.Api
+dotnet ef migrations add <MigrationName> --project Pollit.Infra.EfCore.NpgSql --startup-project Pollit.Infra.Api
