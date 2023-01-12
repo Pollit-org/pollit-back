@@ -16,4 +16,9 @@ public class UserName : StringValueBase
         if (brokenRule is not null)
             throw new BusinessRuleValidationException(brokenRule);
     }
+
+    public static UserName RandomTemporary()
+    {
+        return new UserName(StringExtensions.RandomString(UserNameMustNotBeTooLongRule.MaxLength, StringExtensions.AlphaNumericLowercaseCharacterSet));
+    }
 }

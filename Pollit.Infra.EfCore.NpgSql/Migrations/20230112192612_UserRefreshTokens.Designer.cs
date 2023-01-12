@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Pollit.Domain.Users;
@@ -12,9 +13,11 @@ using Pollit.Infra.EfCore.NpgSql;
 namespace Pollit.Infra.SqlServer.Migrations
 {
     [DbContext(typeof(PollitDbContext))]
-    partial class PollitDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230112192612_UserRefreshTokens")]
+    partial class UserRefreshTokens
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

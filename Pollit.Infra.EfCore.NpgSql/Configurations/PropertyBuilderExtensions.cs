@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using System.Collections;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Newtonsoft.Json;
 using Pollit.Domain.Shared.Email;
 using Pollit.Domain.Users;
 
@@ -21,6 +23,22 @@ public static class PropertyBuilderExtensions
             .HasConversion(userName => userName.ToString(), userNameString => new UserName(userNameString))
             .HasMaxLength(UserNameMustNotBeTooLongRule.MaxLength);
         
+        return propertyBuilder;
+    }
+    
+    public static PropertyBuilder<TEnumerable> HasDelimiterSeparatedConversion<TEnumerable, TElement>(this PropertyBuilder<TEnumerable> propertyBuilder, string delimiter, Func<TElement, string> toStringFunc, Func<string, TElement> fromStringFunc, Func<IEnumerable<TElement>, TEnumerable> enumerableFactory) where TEnumerable : IEnumerable<TElement>
+    {
+        propertyBuilder.HasConversion(
+            prop => string.Join(delimiter, prop.Select(toStringFunc)), 
+            propString => enumerableFactory(propString.Split(delimiter, StringSplitOptions.None).Select(fromStringFunc)));
+
+        return propertyBuilder;
+    }
+    
+    public static PropertyBuilder<HashSet<TElement>> HasHashSetDelimiterSeparatedConversion<TElement>(this PropertyBuilder<HashSet<TElement>> propertyBuilder, string delimiter, Func<TElement, string> toStringFunc, Func<string, TElement> fromStringFunc)
+    {
+        propertyBuilder.HasDelimiterSeparatedConversion(delimiter, toStringFunc, fromStringFunc, elements => new HashSet<TElement>(elements));
+
         return propertyBuilder;
     }
 }

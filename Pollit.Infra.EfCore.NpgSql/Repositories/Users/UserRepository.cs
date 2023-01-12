@@ -33,7 +33,7 @@ public class UserRepository : IUserRepository
         return _context.Users.AnyAsync(u => (string) (object) u.UserName == userName.Value);
     }
 
-    public Task<User?> FindUserByEmail(Email email)
+    public Task<User?> FindUserByEmailAsync(Email email)
     {
         return _context.Users.FirstOrDefaultAsync(u => (string) (object) u.Email == email.Value);
     }

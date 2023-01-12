@@ -14,6 +14,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Pollit.Infra.EfCore.NpgSql\Pollit.Infra.EfCore.NpgSql.csproj" />
+      <ProjectReference Include="..\Pollit.Infra.GoogleApi\Pollit.Infra.GoogleApi.csproj" />
       <ProjectReference Include="..\Pollit.Infra.Jwt\Pollit.Infra.Jwt.csproj" />
       <ProjectReference Include="..\Pollit.Infra.PasswordEncryptor\Pollit.Infra.PasswordEncryptor.csproj" />
     </ItemGroup>

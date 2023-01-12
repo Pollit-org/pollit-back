@@ -10,6 +10,6 @@ public interface IUserRepository
     Task<bool> EmailExistsAsync(Email email);
     Task<bool> UserNameExistsAsync(UserName userName);
     
-    Task<User?> FindUserByEmail(Email email);
+    Task<User?> FindUserByEmailAsync(Email email);
     Task<User?> GetAsync(UserId userId);
 }

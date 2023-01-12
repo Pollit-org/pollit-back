@@ -27,5 +27,9 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(u => u.Email).HasEmailConversion();
 
         builder.Property(u => u.UserName).HasUserNameConversion();
+        
+        builder.Property(u => u.RefreshTokens).HasHashSetDelimiterSeparatedConversion(" ", token => token.ToString(), s => new RefreshToken(s));
+        
+        builder.Property(u => u.GoogleProfile).HasColumnType("jsonb");
     }
 }
