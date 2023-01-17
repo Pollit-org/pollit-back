@@ -39,7 +39,7 @@ public class SigninWithGoogleCommandHandler
 
         var email = new Email(googleProfile.Email);
         
-        var user = await _userRepository.FindUserByEmailAsync(email);
+        var user = await _userRepository.FindByEmailAsync(email);
         
         if (user is null)
         {

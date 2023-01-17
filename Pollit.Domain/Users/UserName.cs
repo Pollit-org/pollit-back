@@ -21,4 +21,18 @@ public class UserName : StringValueBase
     {
         return new UserName(StringExtensions.RandomString(UserNameMustNotBeTooLongRule.MaxLength, StringExtensions.AlphaNumericLowercaseCharacterSet));
     }
+    
+    public static bool TryParse(string userNameStr, out UserName userName)
+    {
+        try
+        {
+            userName = new UserName(userNameStr);
+            return true;
+        }
+        catch (Exception)
+        {
+            userName = null!;
+            return false;
+        }
+    }
 }

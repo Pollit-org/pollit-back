@@ -17,7 +17,7 @@ public class SignupWithCredentialsController : ControllerBase
     }
 
     [HttpPost("auth/signup", Name = "Signup")]
-    public async Task<IActionResult?> Signup([FromBody] SignupWithCredentialsHttpRequestBody requestBody)
+    public async Task<IActionResult?> SignupAsync([FromBody] SignupWithCredentialsHttpRequestBody requestBody)
     {
         var command = new SignupWithCredentialsCommand(new Email(requestBody.Email), new UserName(requestBody.UserName), new ClearPassword(requestBody.Password));
 
