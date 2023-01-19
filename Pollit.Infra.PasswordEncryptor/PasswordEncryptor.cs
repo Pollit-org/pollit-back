@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+﻿using System;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Pollit.Application._Ports;
 using Pollit.Domain.Users.ClearPasswords;
 using Pollit.Domain.Users.EncryptedPasswords;

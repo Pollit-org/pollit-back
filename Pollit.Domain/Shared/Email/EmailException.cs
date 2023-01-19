@@ -1,4 +1,6 @@
-﻿namespace Pollit.Domain.Shared.Email
+﻿using System;
+
+namespace Pollit.Domain.Shared.Email
 {
     public class EmailException : Exception
     {

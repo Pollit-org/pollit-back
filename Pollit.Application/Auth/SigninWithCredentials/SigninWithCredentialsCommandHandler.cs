@@ -1,4 +1,5 @@
-﻿using Pollit.Application._Ports;
+﻿using System.Threading.Tasks;
+using Pollit.Application._Ports;
 using Pollit.Domain.Shared.Email;
 using Pollit.Domain.Users;
 

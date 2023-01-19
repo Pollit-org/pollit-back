@@ -1,3 +1,5 @@
+using System;
+
 namespace Pollit.SeedWork;
 
 public abstract class StringValueBase : IStringValue, IEquatable<StringValueBase>

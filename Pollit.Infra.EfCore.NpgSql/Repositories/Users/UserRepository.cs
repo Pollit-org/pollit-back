@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Pollit.Domain.Shared.Email;
 using Pollit.Domain.Users;
 
@@ -45,6 +46,6 @@ public class UserRepository : IUserRepository
 
     public async Task<User?> GetAsync(UserId userId)
     {
-        return await _context.Users.FindAsync(userId.Value);
+        return await _context.Users.FindAsync(userId);
     }
 }

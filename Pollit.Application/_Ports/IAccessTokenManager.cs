@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System.Collections.Generic;
+using System.Security.Claims;
 using Pollit.Domain.Users;
 
 namespace Pollit.Application._Ports;
