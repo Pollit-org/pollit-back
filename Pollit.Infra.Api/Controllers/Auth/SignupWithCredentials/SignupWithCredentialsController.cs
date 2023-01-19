@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pollit.Application.Auth.SignupWithCredentials;
 using Pollit.Domain.Shared.Email;
@@ -17,6 +18,7 @@ public class SignupWithCredentialsController : ControllerBase
         _commandHandler = commandHandler;
     }
 
+    [AllowAnonymous]
     [HttpPost("auth/signup", Name = "Signup")]
     public async Task<IActionResult?> SignupAsync([FromBody] SignupWithCredentialsHttpRequestBody requestBody)
     {

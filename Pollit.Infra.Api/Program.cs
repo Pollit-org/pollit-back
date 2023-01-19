@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Pollit.Application._Ports;
 using Pollit.Domain.Users;
@@ -29,13 +30,14 @@ services
     .AddSingleton<IAccessTokenManager, AccessTokenManager>()
     .AddSingleton<IPasswordEncryptor, PasswordEncryptor>()
     .AddSingleton<IGoogleAuthenticator, GoogleAuthenticator>()
-    .BindConfigurationSectionAsSingleton<JwtConfig>(configuration.GetSection("JwtConfig"))
+    .BindConfigurationSectionAsSingleton<JwtConfig>(configuration.GetSection("JwtConfig"), out var jwtConfig)
     .BindConfigurationSectionAsSingleton<GoogleAuthenticatorConfig>(configuration.GetSection("Google"))
-    .AddQueryAndCommandHandlers();
+    .AddQueryAndCommandHandlers()
+    .AddJwtAuthentication(jwtConfig)
+    .AddAuthorizationPolicies();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -46,9 +48,10 @@ app.UseCors(policyBuilder => policyBuilder.AllowAnyHeader().AllowAnyMethod().All
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllers();
+app.MapControllers().RequireAuthorization();
 
 using (var scope = app.Services.CreateScope())
 {
