@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pollit.Application.Users.SetPermanentUserName;
 using Pollit.Domain.Users;
@@ -15,6 +16,7 @@ public class SetPermanentUserNameController : ControllerBase
         _commandHandler = commandHandler;
     }
 
+    [Authorize(Policy = CPolicies.Authenticated)]
     [HttpPatch("users/{userId:guid}/userName", Name = "SetPermanentUserName")]
     public async Task<IActionResult?> SetPermanentUserNameAsync(Guid userId, [FromBody] SetPermanentUserNameHttpRequestBody requestBody)
     {

@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pollit.Application.Auth.SigninWithGoogle;
 using Pollit.Application.Auth.SignupWithCredentials;
@@ -19,6 +20,7 @@ public class SigninWithGoogleController : ControllerBase
         _commandHandler = commandHandler;
     }
 
+    [AllowAnonymous]
     [HttpPost("auth/signin/google", Name = "SigninWithGoogle")]
     public async Task<IActionResult?> SigninWithGoogleAsync([FromBody] SigninWithGoogleHttpRequestBody requestBody)
     {

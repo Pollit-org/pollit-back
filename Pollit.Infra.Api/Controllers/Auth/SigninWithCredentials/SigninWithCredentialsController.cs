@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pollit.Application.Auth.SigninWithCredentials;
 using Pollit.Domain.Users.ClearPasswords;
@@ -15,6 +16,7 @@ public class SigninWithCredentialsController : ControllerBase
         _commandHandler = commandHandler;
     }
 
+    [AllowAnonymous]
     [HttpPost("auth/signin", Name = "Signin")]
     public async Task<IActionResult?> SigninAsync([FromBody] SigninWithCredentialsHttpRequestBody requestBody)
     {
