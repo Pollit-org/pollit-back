@@ -56,4 +56,18 @@ public class Email : ValueObject
             return false;
         }
     }
+
+    public static bool TryParse(string emailStr, out Email email)
+    {
+        try
+        {
+            email = new Email(emailStr);
+            return true;
+        }
+        catch (EmailException)
+        {
+            email = null!;
+            return false;
+        }
+    }
 }

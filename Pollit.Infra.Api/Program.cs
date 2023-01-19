@@ -1,8 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Pollit.Application._Ports;
-using Pollit.Application.Auth.SigninWithGoogle;
-using Pollit.Application.Auth.SignupWithCredentials;
 using Pollit.Domain.Users;
+using Pollit.Infra.Api;
 using Pollit.Infra.EfCore.NpgSql;
 using Pollit.Infra.EfCore.NpgSql.Repositories.Users;
 using Pollit.Infra.GoogleApi;
@@ -27,19 +26,12 @@ services.AddDbContext<PollitDbContext>(options =>
 services
     .AddScoped<IUserRepository, UserRepository>()
     .AddTransient<IUnitOfWork, UnitOfWork>()
-    .AddTransient<SignupWithCredentialsCommandHandler>()
-    .AddTransient<SigninWithGoogleCommandHandler>()
     .AddSingleton<IAccessTokenManager, AccessTokenManager>()
     .AddSingleton<IPasswordEncryptor, PasswordEncryptor>()
-    .AddSingleton<IGoogleAuthenticator, GoogleAuthenticator>();
-
-var jwtConfig = new JwtConfig();
-configuration.GetSection("JwtConfig").Bind(jwtConfig);
-services.AddSingleton<JwtConfig>(_ => jwtConfig);
-
-var googleAuthenticatorConfig = new GoogleAuthenticatorConfig();
-configuration.GetSection("Google").Bind(googleAuthenticatorConfig);
-services.AddSingleton<GoogleAuthenticatorConfig>(_ => googleAuthenticatorConfig);
+    .AddSingleton<IGoogleAuthenticator, GoogleAuthenticator>()
+    .BindConfigurationSectionAsSingleton<JwtConfig>(configuration.GetSection("JwtConfig"))
+    .BindConfigurationSectionAsSingleton<GoogleAuthenticatorConfig>(configuration.GetSection("Google"))
+    .AddQueryAndCommandHandlers();
 
 var app = builder.Build();
 
