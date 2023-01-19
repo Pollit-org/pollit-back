@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Pollit.Application.Auth.SignupWithCredentials;
 using Pollit.Domain.Shared.Email;
 using Pollit.Domain.Users;

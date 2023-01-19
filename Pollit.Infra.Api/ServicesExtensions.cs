@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using Pollit.Infra.GoogleApi;
 
 namespace Pollit.Infra.Api;
 
@@ -18,10 +17,5 @@ public static class ServicesExtensions
         var instance = new TConfig();
         configurationSection.Bind(instance);
         return services.AddSingleton(typeof(TConfig), instance);
-    }
-    
-    public static IServiceCollection BindConfigurationSectionAsSingleton<TConfig>(this IServiceCollection services, IConfiguration config, string configurationSectionKey) where TConfig : new()
-    {
-        return services.BindConfigurationSectionAsSingleton<TConfig>(config.GetSection(configurationSectionKey));
     }
 }

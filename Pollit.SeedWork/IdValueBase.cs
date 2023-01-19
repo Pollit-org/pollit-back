@@ -1,4 +1,6 @@
-﻿namespace Pollit.SeedWork;
+﻿using System;
+
+namespace Pollit.SeedWork;
 
 public abstract class IdValueBase : IIdValue, IEquatable<IdValueBase>
 {

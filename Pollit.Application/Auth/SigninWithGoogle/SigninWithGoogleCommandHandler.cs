@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using System;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Pollit.Application._Ports;
 using Pollit.Domain.Shared.Email;
 using Pollit.Domain.Users;

@@ -1,4 +1,5 @@
-﻿using Pollit.SeedWork;
+﻿using System.Linq;
+using Pollit.SeedWork;
 
 namespace Pollit.Domain.Users.ClearPasswords;
 

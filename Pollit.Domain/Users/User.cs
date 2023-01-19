@@ -1,6 +1,9 @@
-﻿using System.Security.Claims;
+﻿using System;
+using System.Collections.Generic;
+using System.Security.Claims;
 using Pollit.Domain.Shared.Email;
 using Pollit.Domain.Users.EncryptedPasswords;
+using Pollit.Domain.Users.Exceptions;
 
 namespace Pollit.Domain.Users;
 
@@ -33,6 +36,8 @@ public class User
     public Email Email { get; protected set; }
     
     public bool HasTemporaryUserName { get; protected set; }
+
+    public bool HasPermanentUserName => !HasTemporaryUserName;
     
     public UserName UserName { get; protected set; }
 
@@ -90,6 +95,15 @@ public class User
         // degueu mais EFCore detecte pas la modif sur les hashet si je fais pas ca
         RefreshTokens = new HashSet<RefreshToken>(RefreshTokens);
         RefreshTokens.Remove(refreshToken);
+    }
+    
+    public void SetPermanentUserName(UserName userName)
+    {
+        if (HasPermanentUserName)
+            throw new UserException("User already has a permanent user name.");
+
+        UserName = userName;
+        HasTemporaryUserName = false;
     }
 
     public IEnumerable<Claim> GetClaims()

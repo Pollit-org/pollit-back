@@ -1,4 +1,7 @@
-﻿namespace Pollit.SeedWork;
+﻿using System;
+using System.Linq;
+
+namespace Pollit.SeedWork;
 
 public class StringExtensions
 {

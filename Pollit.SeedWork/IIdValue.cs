@@ -1,4 +1,6 @@
-﻿namespace Pollit.SeedWork;
+﻿using System;
+
+namespace Pollit.SeedWork;
 
 public interface IIdValue
 {

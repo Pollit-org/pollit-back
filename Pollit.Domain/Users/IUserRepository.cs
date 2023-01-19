@@ -1,4 +1,5 @@
-﻿using Pollit.Domain.Shared.Email;
+﻿using System.Threading.Tasks;
+using Pollit.Domain.Shared.Email;
 
 namespace Pollit.Domain.Users;
 

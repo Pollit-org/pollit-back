@@ -1,4 +1,5 @@
-﻿using Pollit.Domain.Users;
+﻿using System.Threading.Tasks;
+using Pollit.Domain.Users;
 
 namespace Pollit.Application._Ports;
 

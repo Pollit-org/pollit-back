@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Pollit.Application.Auth.SigninWithCredentials;
 using Pollit.Domain.Users.ClearPasswords;
 
