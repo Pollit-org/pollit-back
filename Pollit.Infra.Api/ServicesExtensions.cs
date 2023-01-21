@@ -59,9 +59,8 @@ public static class ServicesExtensions
         {
             options.AddPolicy(CPolicies.PermanentUserName, policy => policy.RequireClaim(CClaimTypes.HasTemporaryUserName, false.ToString()));
             options.AddPolicy(CPolicies.EmailVerified, policy => policy.RequireClaim(CClaimTypes.IsEmailVerified, true.ToString()));
-            options.AddPolicy(CPolicies.Authenticated, policy => policy.RequireAuthenticatedUser());
+            options.AddPolicy(CPolicies.Authenticated, policy => policy.RequireClaim(CClaimTypes.UserId));
             options.AddPolicy(CPolicies.PermanentUserNameAndEmailVerified, policy => policy.Combine(options.GetPolicy(CPolicies.PermanentUserName)!).Combine(options.GetPolicy(CPolicies.EmailVerified)!));
-            options.DefaultPolicy = options.GetPolicy(CPolicies.PermanentUserNameAndEmailVerified)!;
         });
     }
 }
