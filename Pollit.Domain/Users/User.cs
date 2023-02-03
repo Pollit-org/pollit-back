@@ -114,6 +114,7 @@ public class User
             new Claim(CClaimTypes.Email, Email.Value),
             new Claim(CClaimTypes.IsEmailVerified, IsEmailVerified.ToString()),
             new Claim(CClaimTypes.HasTemporaryUserName, HasTemporaryUserName.ToString()),
+            new Claim(CClaimTypes.UserName, UserName.ToString()),
         };
     }
 }
