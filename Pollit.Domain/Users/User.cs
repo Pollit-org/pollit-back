@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Security.Claims;
+using System.Security.Cryptography.X509Certificates;
 using Pollit.Domain.Shared.Email;
 using Pollit.Domain.Users.EncryptedPasswords;
 using Pollit.Domain.Users.Exceptions;
@@ -68,8 +70,8 @@ public class User
         IsEmailVerified = true;
         LastLoginAt = DateTime.UtcNow;
 
-        if (googleProfile is { BirthdayYear: { }, BirthdayMonth: { }, BirthdayDay: { } })
-            Birthday = new DateTime(googleProfile.BirthdayYear.Value, googleProfile.BirthdayMonth.Value, googleProfile.BirthdayDay.Value);
+        if (googleProfile is {BirthdayYear: { }, BirthdayMonth: { }, BirthdayDay: { }})
+            Birthday = new DateTime(googleProfile.BirthdayYear.Value, googleProfile.BirthdayMonth.Value, googleProfile.BirthdayDay.Value, 0, 0, 0, DateTimeKind.Utc);
 
         if (googleProfile.Gender is not null)
             Gender = googleProfile.Gender.ToLower() switch
