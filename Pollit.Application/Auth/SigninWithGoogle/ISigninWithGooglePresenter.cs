@@ -6,5 +6,5 @@ public interface ISigninWithGooglePresenter
 {
     void Success(SigninResult signinResult);
 
-    void GoogleAuthenticationFailed();
+    void GoogleAuthenticationFailed(string error = ApplicationError.GoogleSigninFailed);
 }

@@ -1,0 +1,18 @@
+﻿// See https://aka.ms/new-console-template for more information
+
+using System.Reflection;
+using Pollit.Application;
+
+var errors =
+    typeof(ApplicationError)
+        .GetFields(BindingFlags.Public | BindingFlags.Static)
+        .Where(f => f.FieldType == typeof(string))
+        .Select(f => new { name = f.Name, Value = f.GetValue(null) })
+        .OrderBy(x => x.Value);
+
+Console.WriteLine("export const apiErrors = {");
+foreach (var error in errors)
+{
+    Console.WriteLine($"    {error.name}: \"{error.Value}\",");
+}
+Console.WriteLine("}");

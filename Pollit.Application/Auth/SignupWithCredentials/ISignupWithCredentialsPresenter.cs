@@ -4,6 +4,6 @@ public interface ISignupWithCredentialsPresenter
 {
     void Success();
 
-    void EMailAlreadyExists();
-    void UserNameAlreadyExists();
+    void EMailAlreadyExists(string error = ApplicationError.EmailAlreadyExists);
+    void UserNameAlreadyExists(string error = ApplicationError.UserNameAlreadyExists);
 }

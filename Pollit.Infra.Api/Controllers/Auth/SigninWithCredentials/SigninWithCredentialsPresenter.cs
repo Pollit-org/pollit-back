@@ -15,6 +15,6 @@ public class SigninWithCredentialsPresenter : BasePresenter, ISigninWithCredenti
         });
     }
 
-    public void LoginFailed() 
-        => Unauthorized("Login failed");
+    public void LoginFailed(string error) 
+        => Unauthorized(error);
 }

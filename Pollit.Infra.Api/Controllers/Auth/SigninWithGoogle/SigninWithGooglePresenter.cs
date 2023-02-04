@@ -15,6 +15,6 @@ public class SigninWithGooglePresenter : BasePresenter, ISigninWithGooglePresent
         });
     }
 
-    public void GoogleAuthenticationFailed()
-        => Unauthorized("Google authentication failed");
+    public void GoogleAuthenticationFailed(string error)
+        => Unauthorized(error);
 }

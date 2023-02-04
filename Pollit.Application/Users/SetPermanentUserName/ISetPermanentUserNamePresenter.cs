@@ -4,9 +4,9 @@ public interface ISetPermanentUserNamePresenter
 {
     void Success();
 
-    void UsernameIsAlreadyPermanent();
+    void UsernameIsAlreadyPermanent(string error = ApplicationError.UserNameIsAlreadyPermanent);
 
-    void UserNotFound();
+    void UserNotFound(string error = ApplicationError.UserNotFound);
     
-    void UserNameAlreadyExists();
+    void UserNameAlreadyExists(string error = ApplicationError.UserNameAlreadyExists);
 }

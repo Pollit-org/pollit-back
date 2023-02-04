@@ -9,12 +9,12 @@ public class BasePresenter
     protected void OkNoContent()
         => ActionResult = new NoContentResult();
     
-    protected void Conflict(string message) 
-        => ActionResult = new ConflictObjectResult(new ProblemDetails {Title = "Conflict.", Detail = message});
+    protected void Conflict(string error) 
+        => ActionResult = new ConflictObjectResult(new ProblemDetails {Title = "Conflict.", Detail = error});
     
-    protected void NotFound(string message) 
-        => ActionResult = new NotFoundObjectResult(new ProblemDetails {Title = "Not found.", Detail = message});
+    protected void NotFound(string error) 
+        => ActionResult = new NotFoundObjectResult(new ProblemDetails {Title = "Not found.", Detail = error});
     
-    protected void Unauthorized(string message) 
-        => ActionResult = new UnauthorizedObjectResult(new ProblemDetails {Title = "Unauthorized.", Detail = message});
+    protected void Unauthorized(string error) 
+        => ActionResult = new UnauthorizedObjectResult(new ProblemDetails {Title = "Unauthorized.", Detail = error});
 }

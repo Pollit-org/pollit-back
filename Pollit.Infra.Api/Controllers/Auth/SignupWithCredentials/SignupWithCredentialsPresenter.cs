@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Pollit.Application;
 using Pollit.Application.Auth.SignupWithCredentials;
 
 namespace Pollit.Infra.Api.Controllers.Auth.SignupWithCredentials;
@@ -10,9 +11,9 @@ public class SignupWithCredentialsPresenter : BasePresenter, ISignupWithCredenti
         ActionResult = new OkResult();
     }
 
-    public void EMailAlreadyExists() 
-        => Conflict("Email already exists");
+    public void EMailAlreadyExists(string error) 
+        => Conflict(error);
 
-    public void UserNameAlreadyExists() 
-        => Conflict("User mame already exists");
+    public void UserNameAlreadyExists(string error) 
+        => Conflict(error);
 }

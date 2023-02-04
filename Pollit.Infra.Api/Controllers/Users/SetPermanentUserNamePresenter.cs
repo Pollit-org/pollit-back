@@ -7,12 +7,12 @@ public class SetPermanentUserNamePresenter : BasePresenter, ISetPermanentUserNam
     public void Success()
         => OkNoContent();
 
-    public void UsernameIsAlreadyPermanent()
-        => Conflict("UserName is already permanent.");
+    public void UsernameIsAlreadyPermanent(string error)
+        => Conflict(error);
 
-    public void UserNotFound()
-        => NotFound("User not found.");
+    public void UserNotFound(string error)
+        => NotFound(error);
 
-    public void UserNameAlreadyExists()
-        => Conflict("User mame already exists");
+    public void UserNameAlreadyExists(string error)
+        => Conflict(error);
 }
