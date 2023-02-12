@@ -10,9 +10,7 @@ var errors =
         .Select(f => new { name = f.Name, Value = f.GetValue(null) })
         .OrderBy(x => x.Value);
 
-Console.WriteLine("export const apiErrors = {");
-foreach (var error in errors)
-{
-    Console.WriteLine($"    {error.name}: \"{error.Value}\",");
-}
-Console.WriteLine("}");
+Console.WriteLine("export type ApiError = ");
+Console.Write("    ");
+Console.Write(string.Join($" |{Environment.NewLine}    ", errors.Select(e => $"\"{e.Value}\"")));
+Console.Write(";");
