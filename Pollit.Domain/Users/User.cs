@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.Security.Claims;
-using System.Security.Cryptography.X509Certificates;
 using Pollit.Domain.Shared.Email;
 using Pollit.Domain.Users.EncryptedPasswords;
 using Pollit.Domain.Users.Exceptions;
+using Pollit.SeedWork;
 
 namespace Pollit.Domain.Users;
 
-public class User
+public class User : EntityBase<UserId>
 {
     public User(UserId id, Email email, UserName userName, bool hasTemporaryUserName, EncryptedPassword? encryptedPassword, HashSet<RefreshToken> refreshTokens, bool isEmailVerified, EGender? gender, DateTime? birthday, GoogleProfile? googleProfile, DateTime createdAt, DateTime? lastLoginAt)
     {
@@ -33,7 +31,7 @@ public class User
     public static User NewUser(Email email) 
         => new (UserId.NewUserId(), email, UserName.RandomTemporary(), true, null, new HashSet<RefreshToken>(), true, null, null, null, DateTime.UtcNow, null);
 
-    public UserId Id { get; protected set; }
+    public override UserId Id { get; protected set; }
     
     public Email Email { get; protected set; }
     
@@ -78,8 +76,8 @@ public class User
             {
                 "male" => EGender.Male,
                 "female" => EGender.Female,
-                null => EGender.None,
-                _ => EGender.Other
+                null => null,
+                _ => EGender.PreferNotToSay
             };
     }
     

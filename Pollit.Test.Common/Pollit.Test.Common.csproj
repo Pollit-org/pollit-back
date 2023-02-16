@@ -7,14 +7,10 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.1" />
-      <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
-      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.1" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\Pollit.Application\Pollit.Application.csproj" />
       <ProjectReference Include="..\Pollit.Domain\Pollit.Domain.csproj" />
+      <ProjectReference Include="..\Pollit.Infra.Api\Pollit.Infra.Api.csproj" />
+      <ProjectReference Include="..\Pollit.Test.InMemoryDb\Pollit.Test.InMemoryDb.csproj" />
     </ItemGroup>
 
 </Project>
