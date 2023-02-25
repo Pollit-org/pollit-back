@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
-using Pollit.Application._Ports;
+using Pollit.Domain._Ports;
 using Pollit.Domain.Users;
+using Pollit.Domain.Users.Services;
 using Pollit.Infra.Api;
 using Pollit.Infra.EfCore.NpgSql;
 using Pollit.Infra.EfCore.NpgSql.Repositories.Users;
@@ -32,6 +33,8 @@ services
     .AddSingleton<IGoogleAuthenticator, GoogleAuthenticator>()
     .BindConfigurationSectionAsSingleton<JwtConfig>(configuration.GetSection("JwtConfig"), out var jwtConfig)
     .BindConfigurationSectionAsSingleton<GoogleAuthenticatorConfig>(configuration.GetSection("Google"))
+    .AddTransient<CredentialsAuthenticationService>()
+    .AddTransient<GoogleAuthenticationService>()
     .AddQueryAndCommandHandlers()
     .AddJwtAuthentication(jwtConfig)
     .AddAuthorizationPolicies();

@@ -4,12 +4,12 @@ namespace Pollit.Application.Auth.SigninWithCredentials;
 
 public class SigninWithCredentialsCommand
 {
-    public SigninWithCredentialsCommand(string userNameOrEmail, ClearPassword password)
+    public SigninWithCredentialsCommand(string userNameOrEmail, string password)
     {
         UserNameOrEmail = userNameOrEmail;
         Password = password;
     }
 
     public string UserNameOrEmail { get; }
-    public ClearPassword Password { get; }
+    public string Password { get; }
 }

@@ -1,44 +1,32 @@
-﻿using System.Threading.Tasks;
-using Pollit.Application._Ports;
-using Pollit.Domain.Users;
+﻿using Pollit.Domain._Ports;
+using Pollit.Domain.Users.Services;
+using Pollit.SeedWork;
 
 namespace Pollit.Application.Auth.SignupWithCredentials;
 
-public class SignupWithCredentialsCommandHandler
+public class SignupWithCredentialsCommandHandler : CommandHandlerBase<SignupWithCredentialsCommand, ISignupWithCredentialsPresenter>
 {
-    private readonly IUserRepository _userRepository;
+    private readonly CredentialsAuthenticationService _credentialsAuthenticationService;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IPasswordEncryptor _passwordEncryptor;
 
-    public SignupWithCredentialsCommandHandler(IUserRepository userRepository, IAccessTokenManager accessTokenManager, IPasswordEncryptor passwordEncryptor, IUnitOfWork unitOfWork)
+    public SignupWithCredentialsCommandHandler(CredentialsAuthenticationService credentialsAuthenticationService, IUnitOfWork unitOfWork)
     {
-        _userRepository = userRepository;
-        _passwordEncryptor = passwordEncryptor;
+        _credentialsAuthenticationService = credentialsAuthenticationService;
         _unitOfWork = unitOfWork;
     }
     
-    public async Task HandleAsync(SignupWithCredentialsCommand command, ISignupWithCredentialsPresenter presenter)
+    protected override async Task HandleInternalAsync(SignupWithCredentialsCommand command, ISignupWithCredentialsPresenter presenter)
     {
-        if (await _userRepository.EmailExistsAsync(command.Email))
-        {
-            presenter.EMailAlreadyExists();
-            return;
-        }
-        
-        if (await _userRepository.UserNameExistsAsync(command.UserName))
-        {
-            presenter.UserNameAlreadyExists();
-            return;
-        }
+        var result = await _credentialsAuthenticationService.SignupWithCredentialsAsync(command.Email, command.UserName, command.Password);
 
-        var encryptedPassword = _passwordEncryptor.Encrypt(command.Password);
-
-        var user = User.NewUser(command.Email, command.UserName, encryptedPassword);
-
-        await _userRepository.AddAsync(user);
-
-        await _unitOfWork.SaveChangesAsync();
-        
-       presenter.Success();
+        await result.SwitchAsync(
+            async success =>
+            {
+                await _unitOfWork.SaveChangesAsync();
+                presenter.Success();
+            },
+            emailAlreadyExistsError => presenter.EMailAlreadyExists(),
+            userNameAlreadyExistsError => presenter.UserNameAlreadyExists()
+        );
     }
 }

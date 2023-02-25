@@ -1,6 +1,7 @@
 ﻿using Pollit.Domain.Shared.Email;
 using Pollit.Domain.Users;
 using Pollit.Domain.Users.EncryptedPasswords;
+using Pollit.Domain.Users.UserNames;
 
 namespace Pollit.Test.Common.Builders.Domain.Users;
 
@@ -9,7 +10,7 @@ public class UserBuilder : IFluentBuilder<User>
     private UserId _id = UserId.NewUserId();
     private Email _email = new ("john.doe@pollit.me");
     private UserName _userName = new("John-Doe");
-    private EncryptedPassword _encryptedPassword;
+    private EncryptedPassword? _encryptedPassword;
     private bool _hasTemporaryUserName = false;
     private HashSet<RefreshToken> _refreshTokens = new();
     private bool _isEmailVerified = false;
@@ -34,18 +35,12 @@ public class UserBuilder : IFluentBuilder<User>
         return this;
     }
 
-    public UserBuilder WithEmail(string email) 
-        => WithEmail(new Email(email));
-    
     public UserBuilder WithUserName(UserName userName)
     {
         _userName = userName;
         return this;
     }
 
-    public UserBuilder WithUserName(string userName) 
-        => WithUserName(new UserName(userName));
-    
     public UserBuilder WithTemporaryUserName(bool hasTemporaryUserName = true)
     {
         this._hasTemporaryUserName = hasTemporaryUserName;
@@ -101,6 +96,12 @@ public class UserBuilder : IFluentBuilder<User>
     public UserBuilder WithLastLoginAt(DateTime? lastLoginAt)
     {
         _lastLoginAt = lastLoginAt;
+        return this;
+    }
+    
+    public UserBuilder WithoutPassword()
+    {
+        _encryptedPassword = null;
         return this;
     }
 

@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
-using Pollit.Application._Ports;
+using Pollit.Domain.Users;
 using Pollit.SeedWork;
+using Pollit.Test.InMemoryDb.Users;
 
 namespace Pollit.Test.InMemoryDb;
 
@@ -19,8 +20,19 @@ public class InMemoryDatabase
         
         return inMemoryImplementation;
     }
+    
+    public UserInMemoryRepository GetUserRepository()
+    {
+        if (_repositories.TryGetValue(typeof(IUserRepository), out var repo))
+            return (UserInMemoryRepository) repo;
 
-    public IUnitOfWork GetUnitOfWork()
+        var inMemoryImplementation = new UserInMemoryRepository();
+        _repositories.Add(typeof(IUserRepository), inMemoryImplementation);
+        
+        return inMemoryImplementation;
+    }
+
+    public InMemoryUnitOfWork GetUnitOfWork()
     {
         return new InMemoryUnitOfWork(OnSaveChanges);
     }

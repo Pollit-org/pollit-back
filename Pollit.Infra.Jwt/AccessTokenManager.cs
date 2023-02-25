@@ -5,7 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
-using Pollit.Application._Ports;
+using Pollit.Domain._Ports;
 using Pollit.Domain.Users;
 
 namespace Pollit.Infra.Jwt;
@@ -13,12 +13,12 @@ namespace Pollit.Infra.Jwt;
 public class AccessTokenManager : IAccessTokenManager
 {
     private readonly JwtConfig _config;
-    private readonly SymmetricSecurityKey _symmertricSecurityKey;
+    private readonly SymmetricSecurityKey _symmetricSecurityKey;
 
     public AccessTokenManager(JwtConfig config)
     {
         _config = config;
-        _symmertricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.SecretKey));
+        _symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.SecretKey));
     }
 
     public AccessToken Build(IEnumerable<Claim> claims)
@@ -28,7 +28,7 @@ public class AccessTokenManager : IAccessTokenManager
             _config.Audience,
             claims: claims,
             expires: DateTime.UtcNow.AddMinutes(_config.ExpiryInMinutes),
-            signingCredentials: new SigningCredentials(_symmertricSecurityKey, SecurityAlgorithms.HmacSha256)
+            signingCredentials: new SigningCredentials(_symmetricSecurityKey, SecurityAlgorithms.HmacSha256)
         );
 
         return new AccessToken(new JwtSecurityTokenHandler().WriteToken(token));
@@ -41,7 +41,7 @@ public class AccessTokenManager : IAccessTokenManager
         var validationParameters = new TokenValidationParameters
         {
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = _symmertricSecurityKey,
+            IssuerSigningKey = _symmetricSecurityKey,
             ValidAudience = _config.Audience,
             ValidateAudience = true,
             ValidIssuer = _config.Issuer,
@@ -68,7 +68,7 @@ public class AccessTokenManager : IAccessTokenManager
         var validationParameters = new TokenValidationParameters
         {
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = _symmertricSecurityKey,
+            IssuerSigningKey = _symmetricSecurityKey,
             ValidAudience = _config.Audience,
             ValidateAudience = true,
             ValidIssuer = _config.Issuer,

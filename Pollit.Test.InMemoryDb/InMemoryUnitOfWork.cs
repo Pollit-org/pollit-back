@@ -1,15 +1,20 @@
-﻿using Pollit.Application._Ports;
+﻿using Pollit.Domain._Ports;
 using Pollit.SeedWork;
 
 namespace Pollit.Test.InMemoryDb;
 
-internal class InMemoryUnitOfWork : IUnitOfWork
+public class InMemoryUnitOfWork : IUnitOfWork
 {
     private readonly Action _onSaveChanges;
 
-    public InMemoryUnitOfWork(Action onSaveChanges)
+    internal InMemoryUnitOfWork(Action onSaveChanges)
     {
         _onSaveChanges = onSaveChanges;
+    }
+    
+    public void SaveChanges()
+    {
+        _onSaveChanges();
     }
     
     public Task SaveChangesAsync()

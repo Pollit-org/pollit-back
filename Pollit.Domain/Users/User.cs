@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Security.Claims;
+using OneOf;
+using OneOf.Types;
 using Pollit.Domain.Shared.Email;
 using Pollit.Domain.Users.EncryptedPasswords;
-using Pollit.Domain.Users.Exceptions;
+using Pollit.Domain.Users.Errors;
+using Pollit.Domain.Users.UserNames;
 using Pollit.SeedWork;
 
 namespace Pollit.Domain.Users;
@@ -57,7 +60,7 @@ public class User : EntityBase<UserId>
     
     public DateTime? LastLoginAt { get; protected set; }
 
-    public void OnLoginWithCredentials()
+    public void OnSigninWithCredentials()
     {
         LastLoginAt = DateTime.UtcNow;
     }
@@ -97,13 +100,15 @@ public class User : EntityBase<UserId>
         RefreshTokens.Remove(refreshToken);
     }
     
-    public void SetPermanentUserName(UserName userName)
+    public OneOf<Success, UserNameIsAlreadyPermanentError> SetPermanentUserName(UserName userName)
     {
         if (HasPermanentUserName)
-            throw new UserException("User already has a permanent user name.");
+            return new UserNameIsAlreadyPermanentError();
 
         UserName = userName;
         HasTemporaryUserName = false;
+
+        return new Success();
     }
 
     public IEnumerable<Claim> GetClaims()

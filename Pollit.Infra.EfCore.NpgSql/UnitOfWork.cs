@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Pollit.Application._Ports;
+using Pollit.Domain._Ports;
 
 namespace Pollit.Infra.EfCore.NpgSql;
 

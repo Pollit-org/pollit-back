@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Newtonsoft.Json;
 using Pollit.Domain.Shared.Email;
-using Pollit.Domain.Users;
+using Pollit.Domain.Users.UserNames;
 
 namespace Pollit.Infra.EfCore.NpgSql.Configurations;
 
@@ -24,7 +20,7 @@ public static class PropertyBuilderExtensions
     {
         propertyBuilder
             .HasConversion(userName => userName.ToString(), userNameString => new UserName(userNameString))
-            .HasMaxLength(UserNameMustNotBeTooLongRule.MaxLength);
+            .HasMaxLength(UserName.MaxLength);
         
         return propertyBuilder;
     }

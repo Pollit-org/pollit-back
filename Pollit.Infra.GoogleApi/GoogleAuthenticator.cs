@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Auth.OAuth2.Flows;
 using Google.Apis.Oauth2.v2.Data;
@@ -9,7 +6,7 @@ using Google.Apis.Services;
 using Pollit.Domain.Users;
 using Google.Apis.PeopleService.v1;
 using Google.Apis.PeopleService.v1.Data;
-using Pollit.Application._Ports;
+using Pollit.Domain._Ports;
 
 namespace Pollit.Infra.GoogleApi;
 
@@ -22,7 +19,7 @@ public class GoogleAuthenticator : IGoogleAuthenticator
         _config = config;
     }
 
-    public async Task<GoogleProfile> Authenticate(string code)
+    public async Task<GoogleProfile> AuthenticateAsync(string code)
     {
         var authorizationCodeFlow = new GoogleAuthorizationCodeFlow(new GoogleAuthorizationCodeFlow.Initializer
         {
@@ -38,10 +35,7 @@ public class GoogleAuthenticator : IGoogleAuthenticator
             code,
             "postmessage",
             CancellationToken.None);
-        
-        Console.WriteLine(tokenResponse.AccessToken);
-        Console.WriteLine(tokenResponse.RefreshToken);
-        
+
         return await GetProfile(tokenResponse.AccessToken);
     }
 

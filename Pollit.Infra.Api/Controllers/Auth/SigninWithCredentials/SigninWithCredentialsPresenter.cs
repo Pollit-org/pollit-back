@@ -8,11 +8,7 @@ public class SigninWithCredentialsPresenter : BasePresenter, ISigninWithCredenti
 {
     public void Success(SigninResult signinResult)
     {
-        ActionResult = new OkObjectResult(new
-        {
-            AccessToken = signinResult.AccessToken.ToString(),
-            RefreshToken = signinResult.RefreshToken.ToString()
-        });
+        ActionResult = new OkObjectResult(new SigninResultDto(signinResult));
     }
 
     public void LoginFailed(string error) 

@@ -1,45 +1,34 @@
-﻿using System.Threading.Tasks;
-using Pollit.Application._Ports;
-using Pollit.Domain.Users;
+﻿using Pollit.Domain._Ports;
+using Pollit.Domain.Users.Services;
+using Pollit.SeedWork;
 
 namespace Pollit.Application.Users.SetPermanentUserName;
 
-public class SetPermanentUserNameCommandHandler
+public class SetPermanentUserNameCommandHandler : CommandHandlerBase<SetPermanentUserNameCommand, ISetPermanentUserNamePresenter>
 {
-    private readonly IUserRepository _userRepository;
+    private readonly AccountSettingsService _accountSettingsService;
     private readonly IUnitOfWork _unitOfWork;
 
-    public SetPermanentUserNameCommandHandler(IUserRepository userRepository, IUnitOfWork unitOfWork)
+    public SetPermanentUserNameCommandHandler(IUnitOfWork unitOfWork, AccountSettingsService accountSettingsService)
     {
-        _userRepository = userRepository;
         _unitOfWork = unitOfWork;
+        _accountSettingsService = accountSettingsService;
     }
 
-    public async Task HandleAsync(SetPermanentUserNameCommand command, ISetPermanentUserNamePresenter presenter)
+    protected override async Task HandleInternalAsync(SetPermanentUserNameCommand command, ISetPermanentUserNamePresenter presenter)
     {
-        var user = await _userRepository.GetAsync(command.UserId);
-        if (user is null)
-        {
-            presenter.UserNotFound();
-            return;
-        }
+        var result = await _accountSettingsService.SetPermanentUserNameAsync(command.UserId, command.UserName);
 
-        if (user.HasPermanentUserName)
-        {
-            presenter.UsernameIsAlreadyPermanent();
-            return;
-        }
+        await result.SwitchAsync(
+            async success =>
+            {
+                await _unitOfWork.SaveChangesAsync();
 
-        if (await _userRepository.UserNameExistsAsync(command.UserName))
-        {
-            presenter.UserNameAlreadyExists();
-            return;
-        }
-
-        user.SetPermanentUserName(command.UserName);
-
-        await _unitOfWork.SaveChangesAsync();
-        
-        presenter.Success();
+                presenter.Success();
+            },
+            userDoesNotExistError => presenter.UserNotFound(),
+            userNameIsAlreadyPermanentError => presenter.UsernameIsAlreadyPermanent(),
+            userNameAlreadyExistsError => presenter.UserNotFound()
+        );
     }
 }

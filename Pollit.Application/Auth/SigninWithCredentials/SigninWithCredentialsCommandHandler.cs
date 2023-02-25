@@ -1,54 +1,33 @@
-﻿using System.Threading.Tasks;
-using Pollit.Application._Ports;
-using Pollit.Domain.Shared.Email;
-using Pollit.Domain.Users;
+﻿using Pollit.Domain._Ports;
+using Pollit.Domain.Users.Services;
+using Pollit.SeedWork;
 
 namespace Pollit.Application.Auth.SigninWithCredentials;
 
-public class SigninWithCredentialsCommandHandler
+public class SigninWithCredentialsCommandHandler : CommandHandlerBase<SigninWithCredentialsCommand, ISigninWithCredentialsPresenter>
 {
-    private readonly IUserRepository _userRepository;
-    private readonly IPasswordEncryptor _passwordEncryptor;
-    private readonly IAccessTokenManager _accessTokenManager;
+    private readonly CredentialsAuthenticationService _credentialsAuthenticationService;
     private readonly IUnitOfWork _unitOfWork;
 
-    public SigninWithCredentialsCommandHandler(IUnitOfWork unitOfWork, IUserRepository userRepository, IPasswordEncryptor passwordEncryptor, IAccessTokenManager accessTokenManager)
+    public SigninWithCredentialsCommandHandler(IUnitOfWork unitOfWork, CredentialsAuthenticationService credentialsAuthenticationService)
     {
         _unitOfWork = unitOfWork;
-        _userRepository = userRepository;
-        _passwordEncryptor = passwordEncryptor;
-        _accessTokenManager = accessTokenManager;
+        _credentialsAuthenticationService = credentialsAuthenticationService;
     }
 
-    public async Task HandleAsync(SigninWithCredentialsCommand command, ISigninWithCredentialsPresenter presenter)
+    protected override async Task HandleInternalAsync(SigninWithCredentialsCommand command, ISigninWithCredentialsPresenter presenter)
     {
-        User? user = null;
-        if (Email.TryParse(command.UserNameOrEmail, out var email))
-            user = await _userRepository.FindByEmailAsync(email);
-        else if (UserName.TryParse(command.UserNameOrEmail, out var userName))
-            user = await _userRepository.FindByUserNameAsync(userName);
+        var result = await _credentialsAuthenticationService.SigninWithCredentialsAsync(command.UserNameOrEmail, command.Password);
 
-        if (user?.EncryptedPassword is null)
-        {
-            presenter.LoginFailed();
-            return;
-        }
-
-        if (!_passwordEncryptor.ValidateClearPasswordAgainstEncrypted(command.Password, user.EncryptedPassword))
-        {
-            presenter.LoginFailed();
-            return;
-        }
-        
-        user.OnLoginWithCredentials();
-
-        var accessToken = _accessTokenManager.Build(user.GetClaims());
-        var refreshToken = RefreshToken.Generate();
-        
-        user.AddRefreshToken(refreshToken);
-        
-        await _unitOfWork.SaveChangesAsync();
-        
-        presenter.Success(new SigninResult(accessToken, refreshToken));
+        await result.SwitchAsync(
+            async signinResult =>
+            {
+                await _unitOfWork.SaveChangesAsync();
+                presenter.Success(signinResult);
+            },
+            userDoesNotExistError => presenter.LoginFailed(),
+            userHasNoPasswordError => presenter.LoginFailed(),
+            passwordMismatchError => presenter.LoginFailed()
+        );
     }
 }

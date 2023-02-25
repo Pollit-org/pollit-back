@@ -17,4 +17,7 @@ public class BasePresenter
     
     protected void Unauthorized(string error) 
         => ActionResult = new UnauthorizedObjectResult(new ProblemDetails {Title = "Unauthorized.", Detail = error});
+    
+    public void BadRequest(string error) 
+        => ActionResult = new BadRequestObjectResult(new ProblemDetails {Title = "Bad request.", Detail = error});
 }

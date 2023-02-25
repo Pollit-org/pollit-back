@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pollit.Application.Auth.SigninWithCredentials;
 using Pollit.Domain.Users.ClearPasswords;
@@ -7,13 +6,11 @@ using Pollit.Domain.Users.ClearPasswords;
 namespace Pollit.Infra.Api.Controllers.Auth.SigninWithCredentials;
 
 [ApiController]
-public class SigninWithCredentialsController : ControllerBase
+public class SigninWithCredentialsController : CommandControllerBase<SigninWithCredentialsCommand, ISigninWithCredentialsPresenter, SigninWithCredentialsPresenter,SigninWithCredentialsCommandHandler>
 {
-    private readonly SigninWithCredentialsCommandHandler _commandHandler;
 
-    public SigninWithCredentialsController(SigninWithCredentialsCommandHandler commandHandler)
+    public SigninWithCredentialsController(SigninWithCredentialsCommandHandler commandHandler) : base(commandHandler)
     {
-        _commandHandler = commandHandler;
     }
 
     [AllowAnonymous]
@@ -24,7 +21,7 @@ public class SigninWithCredentialsController : ControllerBase
 
         var presenter = new SigninWithCredentialsPresenter();
         
-        await _commandHandler.HandleAsync(command, presenter);
+        await HandleCommandAsync(command, presenter);
         
         return presenter.ActionResult;
     }
