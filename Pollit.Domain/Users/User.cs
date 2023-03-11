@@ -111,6 +111,11 @@ public class User : EntityBase<UserId>
         return new Success();
     }
 
+    public void SetGender(EGender? gender)
+    {
+        Gender = gender;
+    }
+
     public IEnumerable<Claim> GetClaims()
     {
         return new[]

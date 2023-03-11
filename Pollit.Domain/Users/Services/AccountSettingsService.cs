@@ -8,6 +8,9 @@ namespace Pollit.Domain.Users.Services;
 [GenerateOneOf]
 public partial class SetPermanentUserNameResult : OneOfBase<Success, UserDoesNotExistError, UserNameIsAlreadyPermanentError, UserNameAlreadyExistsError> { }
 
+[GenerateOneOf]
+public partial class SetUserGenderResult : OneOfBase<Success, UserDoesNotExistError> { }
+
 public class AccountSettingsService
 {
     private readonly IUserRepository _userRepository;
@@ -30,6 +33,17 @@ public class AccountSettingsService
             return new UserNameAlreadyExistsError();
     
         user.SetPermanentUserName(userName);
+    
+        return new Success();
+    }
+
+    public async Task<SetUserGenderResult> SetUserGender(Guid userId, EGender? gender)
+    {
+        var user = await _userRepository.GetAsync(userId);
+        if (user is null)
+            return new UserDoesNotExistError();
+
+        user.SetGender(gender);
     
         return new Success();
     }

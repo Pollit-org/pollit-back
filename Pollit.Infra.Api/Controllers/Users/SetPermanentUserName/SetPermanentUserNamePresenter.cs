@@ -1,6 +1,6 @@
 ﻿using Pollit.Application.Users.SetPermanentUserName;
 
-namespace Pollit.Infra.Api.Controllers.Users;
+namespace Pollit.Infra.Api.Controllers.Users.SetPermanentUserName;
 
 public class SetPermanentUserNamePresenter : BasePresenter, ISetPermanentUserNamePresenter
 {

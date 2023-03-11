@@ -28,7 +28,7 @@ public class SetPermanentUserNameCommandHandler : CommandHandlerBase<SetPermanen
             },
             userDoesNotExistError => presenter.UserNotFound(),
             userNameIsAlreadyPermanentError => presenter.UsernameIsAlreadyPermanent(),
-            userNameAlreadyExistsError => presenter.UserNotFound()
+            userNameAlreadyExistsError => presenter.UserNameAlreadyExists()
         );
     }
 }

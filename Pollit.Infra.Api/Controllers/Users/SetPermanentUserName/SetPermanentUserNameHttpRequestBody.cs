@@ -1,4 +1,4 @@
-﻿namespace Pollit.Infra.Api.Controllers.Users;
+﻿namespace Pollit.Infra.Api.Controllers.Users.SetPermanentUserName;
 
 public class SetPermanentUserNameHttpRequestBody
 {

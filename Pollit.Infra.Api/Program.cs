@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Pollit.Domain._Ports;
@@ -18,7 +19,8 @@ var services = builder.Services;
 services
     .AddEndpointsApiExplorer()
     .AddLogging(logging => logging.AddConsole())
-    .AddControllers();
+    .AddControllers()
+    .AddJsonOptions(x => x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
 services.AddSwaggerGen();
 
@@ -35,6 +37,7 @@ services
     .BindConfigurationSectionAsSingleton<GoogleAuthenticatorConfig>(configuration.GetSection("Google"))
     .AddTransient<CredentialsAuthenticationService>()
     .AddTransient<GoogleAuthenticationService>()
+    .AddTransient<AccountSettingsService>()
     .AddQueryAndCommandHandlers()
     .AddJwtAuthentication(jwtConfig)
     .AddAuthorizationPolicies();

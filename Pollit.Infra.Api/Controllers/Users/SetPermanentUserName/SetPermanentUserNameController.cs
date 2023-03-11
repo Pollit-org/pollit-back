@@ -1,9 +1,8 @@
-﻿using System;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pollit.Application.Users.SetPermanentUserName;
 
-namespace Pollit.Infra.Api.Controllers.Users;
+namespace Pollit.Infra.Api.Controllers.Users.SetPermanentUserName;
 
 [ApiController]
 public class SetPermanentUserNameController : CommandControllerBase<SetPermanentUserNameCommand, ISetPermanentUserNamePresenter, SetPermanentUserNamePresenter, SetPermanentUserNameCommandHandler>
