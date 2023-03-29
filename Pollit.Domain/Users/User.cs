@@ -3,6 +3,7 @@ using System.Security.Claims;
 using OneOf;
 using OneOf.Types;
 using Pollit.Domain.Shared.Email;
+using Pollit.Domain.Users.Birthdates;
 using Pollit.Domain.Users.EncryptedPasswords;
 using Pollit.Domain.Users.Errors;
 using Pollit.Domain.Users.UserNames;
@@ -12,7 +13,7 @@ namespace Pollit.Domain.Users;
 
 public class User : EntityBase<UserId>
 {
-    public User(UserId id, Email email, UserName userName, bool hasTemporaryUserName, EncryptedPassword? encryptedPassword, HashSet<RefreshToken> refreshTokens, bool isEmailVerified, EGender? gender, DateTime? birthday, GoogleProfile? googleProfile, DateTime createdAt, DateTime? lastLoginAt)
+    public User(UserId id, Email email, UserName userName, bool hasTemporaryUserName, EncryptedPassword? encryptedPassword, HashSet<RefreshToken> refreshTokens, bool isEmailVerified, EGender? gender, Birthdate? birthdate, GoogleProfile? googleProfile, DateTime createdAt, DateTime? lastLoginAt)
     {
         Id = id;
         Email = email;
@@ -22,7 +23,7 @@ public class User : EntityBase<UserId>
         RefreshTokens = refreshTokens;
         IsEmailVerified = isEmailVerified;
         Gender = gender;
-        Birthday = birthday;
+        Birthdate = birthdate;
         GoogleProfile = googleProfile;
         CreatedAt = createdAt;
         LastLoginAt = lastLoginAt;
@@ -52,7 +53,7 @@ public class User : EntityBase<UserId>
     
     public EGender? Gender { get; protected set; }
     
-    public DateTime? Birthday { get; protected set; }
+    public Birthdate? Birthdate { get; protected set; }
 
     public GoogleProfile? GoogleProfile { get; protected set; }
 
@@ -72,7 +73,7 @@ public class User : EntityBase<UserId>
         LastLoginAt = DateTime.UtcNow;
 
         if (googleProfile is {BirthdayYear: { }, BirthdayMonth: { }, BirthdayDay: { }})
-            Birthday = new DateTime(googleProfile.BirthdayYear.Value, googleProfile.BirthdayMonth.Value, googleProfile.BirthdayDay.Value, 0, 0, 0, DateTimeKind.Utc);
+            Birthdate = new Birthdate(googleProfile.BirthdayYear.Value, googleProfile.BirthdayMonth.Value, googleProfile.BirthdayDay.Value);
 
         if (googleProfile.Gender is not null)
             Gender = googleProfile.Gender.ToLower() switch
@@ -114,6 +115,11 @@ public class User : EntityBase<UserId>
     public void SetGender(EGender? gender)
     {
         Gender = gender;
+    }
+    
+    public void SetBirthdate(Birthdate? birthdate)
+    {
+        Birthdate = birthdate;
     }
 
     public IEnumerable<Claim> GetClaims()

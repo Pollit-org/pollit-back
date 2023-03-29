@@ -1,5 +1,6 @@
 ﻿using OneOf;
 using OneOf.Types;
+using Pollit.Domain.Users.Birthdates;
 using Pollit.Domain.Users.Errors;
 using Pollit.Domain.Users.UserNames;
 
@@ -44,6 +45,17 @@ public class AccountSettingsService
             return new UserDoesNotExistError();
 
         user.SetGender(gender);
+    
+        return new Success();
+    }
+
+    public async Task<SetUserGenderResult> SetUserBirthdate(Guid userId, Birthdate? birthdate)
+    {
+        var user = await _userRepository.GetAsync(userId);
+        if (user is null)
+            return new UserDoesNotExistError();
+
+        user.SetBirthdate(birthdate);
     
         return new Success();
     }

@@ -1,5 +1,6 @@
 ﻿using Pollit.Domain.Shared.Email;
 using Pollit.Domain.Users;
+using Pollit.Domain.Users.Birthdates;
 using Pollit.Domain.Users.EncryptedPasswords;
 using Pollit.Domain.Users.UserNames;
 
@@ -15,7 +16,7 @@ public class UserBuilder : IFluentBuilder<User>
     private HashSet<RefreshToken> _refreshTokens = new();
     private bool _isEmailVerified = false;
     private EGender? _gender;
-    private DateTime? _birthday;
+    private Birthdate? _birthdate;
     private GoogleProfile? _googleProfile;
     private DateTime _createdAt = DateTime.UtcNow;
     private DateTime? _lastLoginAt;
@@ -75,9 +76,9 @@ public class UserBuilder : IFluentBuilder<User>
         return this;
     }
     
-    public UserBuilder WithBirthday(DateTime? birthday)
+    public UserBuilder WithBirthdate(Birthdate? birthday)
     {
-        _birthday = birthday;
+        _birthdate = birthday;
         return this;
     }
     
@@ -107,6 +108,6 @@ public class UserBuilder : IFluentBuilder<User>
 
     public User Build()
     {
-        return new User(_id, _email, _userName, _hasTemporaryUserName, _encryptedPassword, _refreshTokens, _isEmailVerified, _gender, _birthday, _googleProfile, _createdAt, _lastLoginAt);
+        return new User(_id, _email, _userName, _hasTemporaryUserName, _encryptedPassword, _refreshTokens, _isEmailVerified, _gender, _birthdate, _googleProfile, _createdAt, _lastLoginAt);
     }
 }

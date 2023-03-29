@@ -11,9 +11,9 @@
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=DC83F3F2163AC94DB0DFAE341CB6BBEA/Description/@EntryValue">&amp;Pollit Command Handler</s:String>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=DC83F3F2163AC94DB0DFAE341CB6BBEA/Text/@EntryValue">$HEADER$namespace $NAMESPACE$
 {
-  public class $COMMAND$CommandHandler
+  public class $COMMAND$CommandHandler : CommandHandlerBase&lt;$COMMAND$Command, I$COMMAND$Presenter&gt;
   {
-    public async Task HandleAsync($COMMAND$Command command, I$COMMAND$Presenter presenter)
+    protected override async Task HandleInternalAsync($COMMAND$Command command, I$COMMAND$Presenter presenter)
     {
         presenter.Success();
     }

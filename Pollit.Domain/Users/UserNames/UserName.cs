@@ -6,7 +6,7 @@ namespace Pollit.Domain.Users.UserNames;
 public class UserName : StringValueBase
 {
     private const int MinLength = 3;
-    public const int MaxLength = 24;
+    public const int MaxLength = 32;
     
     public UserName(string value) : base(value, false)
     {
