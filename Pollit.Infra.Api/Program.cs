@@ -10,6 +10,7 @@ using Pollit.Infra.EfCore.NpgSql.Repositories.Users;
 using Pollit.Infra.GoogleApi;
 using Pollit.Infra.Jwt;
 using Pollit.Infra.PasswordEncryptor;
+using Pollit.SeedWork;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +34,7 @@ services
     .AddSingleton<IAccessTokenManager, AccessTokenManager>()
     .AddSingleton<IPasswordEncryptor, PasswordEncryptor>()
     .AddSingleton<IGoogleAuthenticator, GoogleAuthenticator>()
+    .AddTransient<IDateTimeProvider, DateTimeProvider>()
     .BindConfigurationSectionAsSingleton<JwtConfig>(configuration.GetSection("JwtConfig"), out var jwtConfig)
     .BindConfigurationSectionAsSingleton<GoogleAuthenticatorConfig>(configuration.GetSection("Google"))
     .AddTransient<CredentialsAuthenticationService>()

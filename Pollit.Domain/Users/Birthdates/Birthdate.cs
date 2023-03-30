@@ -27,4 +27,7 @@ public class Birthdate : DateTimeValueBase
     {
         return $"{Value.Year}-{Value.Month}-{Value.Day}";
     }
+    
+    public static implicit operator Birthdate(DateTime dateTime) => new (dateTime.Year, dateTime.Month, dateTime.Day);
+    public static implicit operator DateTime(Birthdate birthdate) => birthdate.Value;
 }

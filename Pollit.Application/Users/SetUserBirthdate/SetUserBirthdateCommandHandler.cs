@@ -28,7 +28,8 @@ public class SetUserBirthdateCommandHandler : CommandHandlerBase<SetUserBirthdat
 
                 presenter.Success();
             },
-            userDoesNotExistError => presenter.UserNotFound()
+            userDoesNotExistError => presenter.UserNotFound(),
+            birthdateIsInTheFutureError => presenter.BirthdateIsInTheFuture()
         );
     }
 }

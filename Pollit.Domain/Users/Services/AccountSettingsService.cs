@@ -3,6 +3,7 @@ using OneOf.Types;
 using Pollit.Domain.Users.Birthdates;
 using Pollit.Domain.Users.Errors;
 using Pollit.Domain.Users.UserNames;
+using Pollit.SeedWork;
 
 namespace Pollit.Domain.Users.Services;
 
@@ -12,13 +13,18 @@ public partial class SetPermanentUserNameResult : OneOfBase<Success, UserDoesNot
 [GenerateOneOf]
 public partial class SetUserGenderResult : OneOfBase<Success, UserDoesNotExistError> { }
 
+[GenerateOneOf]
+public partial class SetUserBirthdayResult : OneOfBase<Success, UserDoesNotExistError, BirthdateIsInTheFutureError> { }
+
 public class AccountSettingsService
 {
+    private readonly IDateTimeProvider _dateTimeProvider;
     private readonly IUserRepository _userRepository;
 
-    public AccountSettingsService(IUserRepository userRepository)
+    public AccountSettingsService(IUserRepository userRepository, IDateTimeProvider dateTimeProvider)
     {
         _userRepository = userRepository;
+        _dateTimeProvider = dateTimeProvider;
     }
 
     public async Task<SetPermanentUserNameResult> SetPermanentUserNameAsync(UserId userId, UserName userName)
@@ -49,11 +55,14 @@ public class AccountSettingsService
         return new Success();
     }
 
-    public async Task<SetUserGenderResult> SetUserBirthdate(Guid userId, Birthdate? birthdate)
+    public async Task<SetUserBirthdayResult> SetUserBirthdate(Guid userId, Birthdate? birthdate)
     {
         var user = await _userRepository.GetAsync(userId);
         if (user is null)
             return new UserDoesNotExistError();
+
+        if (birthdate is not null && _dateTimeProvider.UtcNow <= birthdate)
+            return new BirthdateIsInTheFutureError();
 
         user.SetBirthdate(birthdate);
     

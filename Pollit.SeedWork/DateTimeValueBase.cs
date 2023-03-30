@@ -29,7 +29,7 @@ public abstract class DateTimeValueBase : IDateTimeValue, IEquatable<DateTimeVal
     public static bool operator ==(DateTimeValueBase? obj1, DateTimeValueBase? obj2) 
         => obj1?.Equals(obj2) ?? Equals(obj2, null);
 
-    public static bool operator !=(DateTimeValueBase x, DateTimeValueBase y)
+    public static bool operator !=(DateTimeValueBase? x, DateTimeValueBase? y)
         => !(x == y);
 
     public override string ToString() 

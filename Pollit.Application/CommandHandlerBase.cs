@@ -2,7 +2,11 @@
 
 namespace Pollit.Application;
 
-public abstract class CommandHandlerBase<TCommand, TPresenter>
+public abstract class CommandHandlerBase
+{
+}
+
+public abstract class CommandHandlerBase<TCommand, TPresenter> : CommandHandlerBase
 {
     public async Task HandleAsync(TCommand command, TPresenter presenter)
     {

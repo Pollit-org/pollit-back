@@ -9,4 +9,7 @@ public class SetUserBirthdatePresenter : BasePresenter, ISetUserBirthdatePresent
 
     public void UserNotFound(string error)
         => NotFound(error);
+
+    public void BirthdateIsInTheFuture(string error)
+        => BadRequest(error);
 }
