@@ -3,6 +3,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
+using Pollit.Application;
 using Pollit.Domain.Users;
 using Pollit.Infra.Jwt;
 
@@ -12,7 +13,7 @@ public static class ServicesExtensions
 {
     public static IServiceCollection AddQueryAndCommandHandlers(this IServiceCollection services)
     {
-        foreach (var handlerType in Assembly.Load("Pollit.Application")!.GetTypes().Where(t => t.Name.EndsWith("CommandHandler") || t.Name.EndsWith("QueryHandler"))) 
+        foreach (var handlerType in Assembly.Load("Pollit.Application")!.GetTypes().Where(t => t.IsAssignableTo(typeof(CommandHandlerBase)) && !t.IsAbstract))
             services.AddTransient(handlerType, handlerType);
 
         return services;
@@ -46,7 +47,7 @@ public static class ServicesExtensions
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtConfig.SecretKey)),
                 ValidateIssuer = true,
                 ValidateAudience = true,
-                ValidateLifetime = false,
+                ValidateLifetime = true,
                 ValidateIssuerSigningKey = true
             };
         });

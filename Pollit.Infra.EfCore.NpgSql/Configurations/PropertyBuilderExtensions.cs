@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Newtonsoft.Json;
 using Pollit.Domain.Shared.Email;
-using Pollit.Domain.Users;
+using Pollit.Domain.Users.Birthdates;
+using Pollit.Domain.Users.UserNames;
 
 namespace Pollit.Infra.EfCore.NpgSql.Configurations;
 
@@ -24,8 +21,27 @@ public static class PropertyBuilderExtensions
     {
         propertyBuilder
             .HasConversion(userName => userName.ToString(), userNameString => new UserName(userNameString))
-            .HasMaxLength(UserNameMustNotBeTooLongRule.MaxLength);
+            .HasMaxLength(UserName.MaxLength);
         
+        return propertyBuilder;
+    }
+    
+    public static PropertyBuilder<Birthdate> HasBirthdateConversion(this PropertyBuilder<Birthdate> propertyBuilder)
+    {
+        propertyBuilder
+            .HasConversion(birthdate => birthdate.ToString(), birthdateString => Birthdate.Parse(birthdateString))
+            .HasMaxLength(UserName.MaxLength);
+        
+        return propertyBuilder;
+    }
+    
+    public static PropertyBuilder<Birthdate?> HasNullableBirthdateConversion(this PropertyBuilder<Birthdate?> propertyBuilder)
+    {
+        propertyBuilder
+            .HasConversion(birthdate => birthdate!.ToString(), birthdateString => string.IsNullOrWhiteSpace(birthdateString) ? null : Birthdate.Parse(birthdateString))
+            .HasMaxLength(11)
+            .IsRequired(false);
+
         return propertyBuilder;
     }
     

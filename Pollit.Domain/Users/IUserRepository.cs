@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Pollit.Domain.Shared.Email;
+using Pollit.Domain.Users.UserNames;
 
 namespace Pollit.Domain.Users;
 

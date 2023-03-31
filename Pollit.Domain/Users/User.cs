@@ -1,17 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.Security.Claims;
-using System.Security.Cryptography.X509Certificates;
+using OneOf;
+using OneOf.Types;
 using Pollit.Domain.Shared.Email;
+using Pollit.Domain.Users.Birthdates;
 using Pollit.Domain.Users.EncryptedPasswords;
-using Pollit.Domain.Users.Exceptions;
+using Pollit.Domain.Users.Errors;
+using Pollit.Domain.Users.UserNames;
+using Pollit.SeedWork;
 
 namespace Pollit.Domain.Users;
 
-public class User
+public class User : EntityBase<UserId>
 {
-    public User(UserId id, Email email, UserName userName, bool hasTemporaryUserName, EncryptedPassword? encryptedPassword, HashSet<RefreshToken> refreshTokens, bool isEmailVerified, EGender? gender, DateTime? birthday, GoogleProfile? googleProfile, DateTime createdAt, DateTime? lastLoginAt)
+    public User(UserId id, Email email, UserName userName, bool hasTemporaryUserName, EncryptedPassword? encryptedPassword, HashSet<RefreshToken> refreshTokens, bool isEmailVerified, EGender? gender, Birthdate? birthdate, GoogleProfile? googleProfile, DateTime createdAt, DateTime? lastLoginAt)
     {
         Id = id;
         Email = email;
@@ -21,7 +23,7 @@ public class User
         RefreshTokens = refreshTokens;
         IsEmailVerified = isEmailVerified;
         Gender = gender;
-        Birthday = birthday;
+        Birthdate = birthdate;
         GoogleProfile = googleProfile;
         CreatedAt = createdAt;
         LastLoginAt = lastLoginAt;
@@ -33,7 +35,7 @@ public class User
     public static User NewUser(Email email) 
         => new (UserId.NewUserId(), email, UserName.RandomTemporary(), true, null, new HashSet<RefreshToken>(), true, null, null, null, DateTime.UtcNow, null);
 
-    public UserId Id { get; protected set; }
+    public override UserId Id { get; protected set; }
     
     public Email Email { get; protected set; }
     
@@ -51,7 +53,7 @@ public class User
     
     public EGender? Gender { get; protected set; }
     
-    public DateTime? Birthday { get; protected set; }
+    public Birthdate? Birthdate { get; protected set; }
 
     public GoogleProfile? GoogleProfile { get; protected set; }
 
@@ -59,7 +61,7 @@ public class User
     
     public DateTime? LastLoginAt { get; protected set; }
 
-    public void OnLoginWithCredentials()
+    public void OnSigninWithCredentials()
     {
         LastLoginAt = DateTime.UtcNow;
     }
@@ -71,15 +73,15 @@ public class User
         LastLoginAt = DateTime.UtcNow;
 
         if (googleProfile is {BirthdayYear: { }, BirthdayMonth: { }, BirthdayDay: { }})
-            Birthday = new DateTime(googleProfile.BirthdayYear.Value, googleProfile.BirthdayMonth.Value, googleProfile.BirthdayDay.Value, 0, 0, 0, DateTimeKind.Utc);
+            Birthdate = new Birthdate(googleProfile.BirthdayYear.Value, googleProfile.BirthdayMonth.Value, googleProfile.BirthdayDay.Value);
 
         if (googleProfile.Gender is not null)
             Gender = googleProfile.Gender.ToLower() switch
             {
                 "male" => EGender.Male,
                 "female" => EGender.Female,
-                null => EGender.None,
-                _ => EGender.Other
+                null => null,
+                _ => EGender.PreferNotToSay
             };
     }
     
@@ -99,13 +101,25 @@ public class User
         RefreshTokens.Remove(refreshToken);
     }
     
-    public void SetPermanentUserName(UserName userName)
+    public OneOf<Success, UserNameIsAlreadyPermanentError> SetPermanentUserName(UserName userName)
     {
         if (HasPermanentUserName)
-            throw new UserException("User already has a permanent user name.");
+            return new UserNameIsAlreadyPermanentError();
 
         UserName = userName;
         HasTemporaryUserName = false;
+
+        return new Success();
+    }
+
+    public void SetGender(EGender? gender)
+    {
+        Gender = gender;
+    }
+    
+    public void SetBirthdate(Birthdate? birthdate)
+    {
+        Birthdate = birthdate;
     }
 
     public IEnumerable<Claim> GetClaims()

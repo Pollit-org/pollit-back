@@ -30,8 +30,9 @@ namespace Pollit.Infra.SqlServer.Migrations
                         .HasColumnType("uuid")
                         .HasDefaultValueSql("gen_random_uuid ()");
 
-                    b.Property<DateTime?>("Birthday")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<string>("Birthdate")
+                        .HasMaxLength(11)
+                        .HasColumnType("character varying(11)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");

@@ -4,12 +4,12 @@ namespace Pollit.Application.Users.SetPermanentUserName;
 
 public class SetPermanentUserNameCommand
 {
-    public SetPermanentUserNameCommand(UserId userId, UserName userName)
+    public SetPermanentUserNameCommand(Guid userId, string userName)
     {
         UserId = userId;
         UserName = userName;
     }
 
-    public UserId UserId { get; }
-    public UserName UserName { get; }
+    public Guid UserId { get; }
+    public string UserName { get; }
 }

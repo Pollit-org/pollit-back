@@ -1,0 +1,47 @@
+﻿using System.Reflection;
+using Pollit.Domain.Users;
+using Pollit.SeedWork;
+using Pollit.Test.InMemoryDb.Users;
+
+namespace Pollit.Test.InMemoryDb;
+
+public class InMemoryDatabase
+{
+    private readonly IDictionary<Type, object> _repositories = new Dictionary<Type, object>();
+
+    public TRepository GetRepository<TRepository>()
+    {
+        if (_repositories.TryGetValue(typeof(TRepository), out var repo))
+            return (TRepository) repo;
+        
+        var inMemoryImplementationType = Assembly.GetExecutingAssembly().GetTypes().FirstOrDefault(t => t.IsAssignableTo(typeof(TRepository)));
+        var inMemoryImplementation = (TRepository) Activator.CreateInstance(inMemoryImplementationType);
+        _repositories.Add(typeof(TRepository), inMemoryImplementation);
+        
+        return inMemoryImplementation;
+    }
+    
+    public UserInMemoryRepository GetUserRepository()
+    {
+        if (_repositories.TryGetValue(typeof(IUserRepository), out var repo))
+            return (UserInMemoryRepository) repo;
+
+        var inMemoryImplementation = new UserInMemoryRepository();
+        _repositories.Add(typeof(IUserRepository), inMemoryImplementation);
+        
+        return inMemoryImplementation;
+    }
+
+    public InMemoryUnitOfWork GetUnitOfWork()
+    {
+        return new InMemoryUnitOfWork(OnSaveChanges);
+    }
+
+    private void OnSaveChanges()
+    {
+        foreach (var repository in this._repositories.Values)
+        {
+            ((BaseInMemoryRepository) repository).SaveChanges();
+        }
+    }
+}

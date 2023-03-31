@@ -1,8 +1,9 @@
 ﻿using System;
+using Pollit.SeedWork;
 
 namespace Pollit.Domain.Shared.Email
 {
-    public class EmailException : Exception
+    public class EmailException : PollitDomainException
     {
         private const string PublicMessage = "Email not valid.";
 

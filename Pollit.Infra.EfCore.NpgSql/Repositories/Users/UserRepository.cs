@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Pollit.Domain.Shared.Email;
 using Pollit.Domain.Users;
+using Pollit.Domain.Users.UserNames;
 
 namespace Pollit.Infra.EfCore.NpgSql.Repositories.Users;
 
@@ -26,22 +27,22 @@ public class UserRepository : IUserRepository
 
     public Task<bool> EmailExistsAsync(Email email)
     {
-        return _context.Users.AnyAsync(u => (string) (object) u.Email == email.Value);
+        return _context.Users.AnyAsync(u => u.Email == email);
     }
 
     public Task<bool> UserNameExistsAsync(UserName userName)
     {
-        return _context.Users.AnyAsync(u => (string) (object) u.UserName == userName.Value);
+        return _context.Users.AnyAsync(u => u.UserName == userName);
     }
 
     public Task<User?> FindByEmailAsync(Email email)
     {
-        return _context.Users.FirstOrDefaultAsync(u => (string) (object) u.Email == email.Value);
+        return _context.Users.FirstOrDefaultAsync(u => u.Email == email);
     }
 
     public Task<User?> FindByUserNameAsync(UserName userName)
     {
-        return _context.Users.FirstOrDefaultAsync(u => (string) (object) u.UserName == userName.Value);
+        return _context.Users.FirstOrDefaultAsync(u => u.UserName == userName);
     }
 
     public async Task<User?> GetAsync(UserId userId)

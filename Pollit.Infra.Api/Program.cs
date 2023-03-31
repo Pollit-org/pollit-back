@@ -1,13 +1,16 @@
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
-using Pollit.Application._Ports;
+using Pollit.Domain._Ports;
 using Pollit.Domain.Users;
+using Pollit.Domain.Users.Services;
 using Pollit.Infra.Api;
 using Pollit.Infra.EfCore.NpgSql;
 using Pollit.Infra.EfCore.NpgSql.Repositories.Users;
 using Pollit.Infra.GoogleApi;
 using Pollit.Infra.Jwt;
 using Pollit.Infra.PasswordEncryptor;
+using Pollit.SeedWork;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +20,8 @@ var services = builder.Services;
 services
     .AddEndpointsApiExplorer()
     .AddLogging(logging => logging.AddConsole())
-    .AddControllers();
+    .AddControllers()
+    .AddJsonOptions(x => x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
 services.AddSwaggerGen();
 
@@ -30,8 +34,12 @@ services
     .AddSingleton<IAccessTokenManager, AccessTokenManager>()
     .AddSingleton<IPasswordEncryptor, PasswordEncryptor>()
     .AddSingleton<IGoogleAuthenticator, GoogleAuthenticator>()
+    .AddTransient<IDateTimeProvider, DateTimeProvider>()
     .BindConfigurationSectionAsSingleton<JwtConfig>(configuration.GetSection("JwtConfig"), out var jwtConfig)
     .BindConfigurationSectionAsSingleton<GoogleAuthenticatorConfig>(configuration.GetSection("Google"))
+    .AddTransient<CredentialsAuthenticationService>()
+    .AddTransient<GoogleAuthenticationService>()
+    .AddTransient<AccountSettingsService>()
     .AddQueryAndCommandHandlers()
     .AddJwtAuthentication(jwtConfig)
     .AddAuthorizationPolicies();

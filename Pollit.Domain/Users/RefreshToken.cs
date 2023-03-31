@@ -18,4 +18,7 @@ public class RefreshToken : StringValueBase
         
         return new RefreshToken(Convert.ToBase64String(randomNumber).Replace(' ', '.'));
     }
+    
+    public static implicit operator RefreshToken(string refreshToken) => new (refreshToken);
+    public static implicit operator string(RefreshToken refreshToken) => refreshToken.Value;
 }
