@@ -1,6 +1,6 @@
 ﻿namespace Pollit.Application.Auth.SignupWithCredentials;
 
-public class SignupWithCredentialsCommand
+public class SignupWithCredentialsCommand : ICommand
 {
     public SignupWithCredentialsCommand(string email, string userName, string password)
     {

@@ -19,7 +19,7 @@ public class GoogleAuthenticator : IGoogleAuthenticator
         _config = config;
     }
 
-    public async Task<GoogleProfile> AuthenticateAsync(string code)
+    public async Task<GoogleProfileDto> AuthenticateAsync(string code)
     {
         var authorizationCodeFlow = new GoogleAuthorizationCodeFlow(new GoogleAuthorizationCodeFlow.Initializer
         {
@@ -39,7 +39,7 @@ public class GoogleAuthenticator : IGoogleAuthenticator
         return await GetProfile(tokenResponse.AccessToken);
     }
 
-    private async Task<GoogleProfile> GetProfile(string accessToken)
+    private async Task<GoogleProfileDto> GetProfile(string accessToken)
     {
         var userInfoAsync = GetUserInfoAsync(accessToken);
         var genderAndBirthdateAsync = GetGenderAndBirthdateAsync(accessToken);
@@ -47,7 +47,7 @@ public class GoogleAuthenticator : IGoogleAuthenticator
         var userInfo = await userInfoAsync;
         var (gender, birthDate) = await genderAndBirthdateAsync;
 
-        return new GoogleProfile()
+        return new GoogleProfileDto()
         {
             Email = userInfo.Email,
             Gender = gender,

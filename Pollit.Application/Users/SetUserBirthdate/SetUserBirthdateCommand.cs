@@ -1,6 +1,6 @@
 ﻿namespace Pollit.Application.Users.SetUserBirthdate;
 
-public class SetUserBirthdateCommand
+public class SetUserBirthdateCommand : ICommand
 {
     public SetUserBirthdateCommand(Guid userId, int year, int month, int day)
     {

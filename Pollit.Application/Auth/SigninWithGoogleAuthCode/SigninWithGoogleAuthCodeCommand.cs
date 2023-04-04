@@ -1,6 +1,6 @@
 ﻿namespace Pollit.Application.Auth.SigninWithGoogleAuthCode;
 
-public class SigninWithGoogleAuthCodeCommand
+public class SigninWithGoogleAuthCodeCommand : ICommand
 {
     public SigninWithGoogleAuthCodeCommand(string googleAuthenticationCode)
     {

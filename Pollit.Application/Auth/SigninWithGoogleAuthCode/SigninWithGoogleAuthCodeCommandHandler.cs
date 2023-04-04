@@ -1,4 +1,5 @@
 ﻿using Pollit.Domain._Ports;
+using Pollit.Domain.Users;
 using Pollit.Domain.Users.Services;
 using Pollit.SeedWork;
 
@@ -15,9 +16,9 @@ public class SigninWithGoogleAuthCodeCommandHandler : CommandHandlerBase<SigninW
         _googleAuthenticationService = googleAuthenticationService;
     }
     
-    protected override async Task HandleInternalAsync(SigninWithGoogleAuthCodeCommand command, ISigninWithGoogleAuthCodePresenter presenter)
+    protected override async Task HandleAsync(AuthorizedCommand<SigninWithGoogleAuthCodeCommand> authorizedCommand, ISigninWithGoogleAuthCodePresenter presenter)
     {
-        var result = await _googleAuthenticationService.SigninWithGoogleAuthCodeAsync(command.GoogleAuthenticationCode);
+        var result = await _googleAuthenticationService.SigninWithGoogleAuthCodeAsync(authorizedCommand.Command.GoogleAuthenticationCode);
 
         await result.SwitchAsync(
             async signinResult =>
@@ -28,4 +29,6 @@ public class SigninWithGoogleAuthCodeCommandHandler : CommandHandlerBase<SigninW
             googleAuthCodeAuthenticationError => presenter.GoogleAuthCodeAuthenticationFailed()
         );
     }
+
+    protected override Task<bool> IsAuthorized(UserId? userId, SigninWithGoogleAuthCodeCommand command) => Task.FromResult(userId is null);
 }

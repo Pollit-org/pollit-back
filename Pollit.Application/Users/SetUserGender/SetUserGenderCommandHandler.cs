@@ -1,4 +1,5 @@
 ﻿using Pollit.Domain._Ports;
+using Pollit.Domain.Users;
 using Pollit.Domain.Users.Services;
 using Pollit.SeedWork;
 
@@ -15,9 +16,9 @@ public class SetUserGenderCommandHandler : CommandHandlerBase<SetUserGenderComma
         _accountSettingsService = accountSettingsService;
     }
 
-    protected override async Task HandleInternalAsync(SetUserGenderCommand command, ISetUserGenderPresenter presenter)
+    protected override async Task HandleAsync(AuthorizedCommand<SetUserGenderCommand> authorizedCommand, ISetUserGenderPresenter presenter)
     {
-        var result = await _accountSettingsService.SetUserGender(command.UserId, command.Gender);
+        var result = await _accountSettingsService.SetUserGender(authorizedCommand.Command.UserId, authorizedCommand.Command.Gender);
 
         await result.SwitchAsync(
             async success =>
@@ -29,4 +30,6 @@ public class SetUserGenderCommandHandler : CommandHandlerBase<SetUserGenderComma
             userDoesNotExistError => presenter.UserNotFound()
         );
     }
+
+    protected override Task<bool> IsAuthorized(UserId? userId, SetUserGenderCommand command) => Task.FromResult(userId is not null && userId == command.UserId);
 }

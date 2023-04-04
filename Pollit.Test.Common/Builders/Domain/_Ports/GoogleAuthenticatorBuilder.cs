@@ -13,7 +13,7 @@ public class GoogleAuthenticatorBuilder : IFluentBuilder<IGoogleAuthenticator>
         _googleAuthenticatorMock.Setup(x => x.AuthenticateAsync(It.IsAny<string>())).Throws<Exception>();
     }
 
-    public GoogleAuthenticatorBuilder WithAuthCodeReturningProfile(string authCode, GoogleProfile profile)
+    public GoogleAuthenticatorBuilder WithAuthCodeReturningProfile(string authCode, GoogleProfileDto profile)
     {
         _googleAuthenticatorMock.Setup(x => x.AuthenticateAsync(It.Is<string>(c => c == authCode))).ReturnsAsync(profile);
         return this;

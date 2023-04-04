@@ -1,8 +1,8 @@
 ﻿namespace Pollit.Domain.Users;
 
-public class SigninResult
+public class SigninResultDto
 {
-    public SigninResult(AccessToken accessToken, RefreshToken refreshToken)
+    public SigninResultDto(AccessToken accessToken, RefreshToken refreshToken)
     {
         AccessToken = accessToken;
         RefreshToken = refreshToken;

@@ -7,7 +7,7 @@ public class SigninResultDto
     public string AccessToken { get; }
     public string RefreshToken { get; }
     
-    public SigninResultDto(SigninResult signinResult)
+    public SigninResultDto(Domain.Users.SigninResultDto signinResult)
     {
         AccessToken = signinResult.AccessToken;
         RefreshToken = signinResult.RefreshToken;

@@ -2,7 +2,7 @@
 
 namespace Pollit.Application.Auth.SigninWithCredentials;
 
-public class SigninWithCredentialsCommand
+public class SigninWithCredentialsCommand : ICommand
 {
     public SigninWithCredentialsCommand(string userNameOrEmail, string password)
     {

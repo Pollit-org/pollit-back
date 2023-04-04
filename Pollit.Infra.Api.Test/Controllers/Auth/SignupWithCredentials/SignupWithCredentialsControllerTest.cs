@@ -48,7 +48,7 @@ public class SignupWithCredentialsControllerTest
     
     [Theory]
     [InlineData("Mf")] // less than 3 characters
-    [InlineData("MrFlow-DelPueblo-DeLaNocce")] // more than 10 characters
+    [InlineData("MrFlow-DelPueblo-DeLaNocce-Di-Gonzales-Del-Mar")] // more than 32 characters
     [InlineData("Mr--Flow")] // 2 consecutive dashes
     [InlineData("Mr-Flow-")] // ends with dash
     [InlineData("-Mr-Flow")] // starts with dash

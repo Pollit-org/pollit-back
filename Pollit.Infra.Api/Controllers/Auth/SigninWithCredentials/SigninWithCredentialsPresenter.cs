@@ -6,7 +6,7 @@ namespace Pollit.Infra.Api.Controllers.Auth.SigninWithCredentials;
 
 public class SigninWithCredentialsPresenter : BasePresenter, ISigninWithCredentialsPresenter
 {
-    public void Success(SigninResult signinResult)
+    public void Success(Domain.Users.SigninResultDto signinResult)
     {
         ActionResult = new OkObjectResult(new SigninResultDto(signinResult));
     }

@@ -1,12 +1,13 @@
 ﻿using OneOf;
 using Pollit.Domain._Ports;
 using Pollit.Domain.Shared.Email;
+using Pollit.Domain.Users._Ports;
 using Pollit.Domain.Users.Errors;
 
 namespace Pollit.Domain.Users.Services;
 
 [GenerateOneOf]
-public partial class SigninWithGoogleAuthCodeResult : OneOfBase<SigninResult, GoogleAuthCodeAuthenticationError> { }
+public partial class SigninWithGoogleAuthCodeResult : OneOfBase<SigninResultDto, GoogleAuthCodeAuthenticationError> { }
 
 public class GoogleAuthenticationService
 {
@@ -23,7 +24,7 @@ public class GoogleAuthenticationService
     
     public async Task<SigninWithGoogleAuthCodeResult> SigninWithGoogleAuthCodeAsync(string googleAuthCode)
     {
-        GoogleProfile googleProfile;
+        GoogleProfileDto googleProfile;
         try
         {
             googleProfile = await _googleAuthenticator.AuthenticateAsync(googleAuthCode);
@@ -49,6 +50,6 @@ public class GoogleAuthenticationService
         
         user.AddRefreshToken(refreshToken);
         
-        return new SigninResult(accessToken, refreshToken);
+        return new SigninResultDto(accessToken, refreshToken);
     }
 }

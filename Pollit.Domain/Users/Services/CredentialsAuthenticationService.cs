@@ -2,6 +2,7 @@
 using OneOf.Types;
 using Pollit.Domain._Ports;
 using Pollit.Domain.Shared.Email;
+using Pollit.Domain.Users._Ports;
 using Pollit.Domain.Users.ClearPasswords;
 using Pollit.Domain.Users.Errors;
 using Pollit.Domain.Users.UserNames;
@@ -12,7 +13,7 @@ namespace Pollit.Domain.Users.Services;
 public partial class SignupWithCredentialsResult : OneOfBase<Success, EmailAlreadyExistsError, UserNameAlreadyExistsError> { }
 
 [GenerateOneOf]
-public partial class SigninWithCredentialsResult : OneOfBase<SigninResult, UserDoesNotExistError, UserHasNoPasswordError, PasswordMismatchError> { }
+public partial class SigninWithCredentialsResult : OneOfBase<SigninResultDto, UserDoesNotExistError, UserHasNoPasswordError, PasswordMismatchError> { }
 
 public class CredentialsAuthenticationService
 {
@@ -68,6 +69,6 @@ public class CredentialsAuthenticationService
         
         user.AddRefreshToken(refreshToken);
         
-        return new SigninResult(accessToken, refreshToken);
+        return new SigninResultDto(accessToken, refreshToken);
     }
 }

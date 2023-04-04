@@ -1,4 +1,5 @@
 ﻿using Pollit.Domain._Ports;
+using Pollit.Domain.Users;
 using Pollit.Domain.Users.Birthdates;
 using Pollit.Domain.Users.Services;
 using Pollit.SeedWork;
@@ -16,10 +17,10 @@ public class SetUserBirthdateCommandHandler : CommandHandlerBase<SetUserBirthdat
         _unitOfWork = unitOfWork;
     }
 
-    protected override async Task HandleInternalAsync(SetUserBirthdateCommand command, ISetUserBirthdatePresenter presenter)
+    protected override async Task HandleAsync(AuthorizedCommand<SetUserBirthdateCommand> authorizedCommand, ISetUserBirthdatePresenter presenter)
     {
-        var birthDate = new Birthdate(command.Year, command.Month, command.Day);
-        var result = await _accountSettingsService.SetUserBirthdate(command.UserId, birthDate);
+        var birthDate = new Birthdate(authorizedCommand.Command.Year, authorizedCommand.Command.Month, authorizedCommand.Command.Day);
+        var result = await _accountSettingsService.SetUserBirthdate(authorizedCommand.Command.UserId, birthDate);
 
         await result.SwitchAsync(
             async success =>
@@ -32,4 +33,6 @@ public class SetUserBirthdateCommandHandler : CommandHandlerBase<SetUserBirthdat
             birthdateIsInTheFutureError => presenter.BirthdateIsInTheFuture()
         );
     }
+
+    protected override Task<bool> IsAuthorized(UserId? userId, SetUserBirthdateCommand command) => Task.FromResult(userId is not null && userId == command.UserId);
 }

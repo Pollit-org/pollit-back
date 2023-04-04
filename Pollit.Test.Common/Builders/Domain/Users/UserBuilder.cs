@@ -17,7 +17,7 @@ public class UserBuilder : IFluentBuilder<User>
     private bool _isEmailVerified = false;
     private EGender? _gender;
     private Birthdate? _birthdate;
-    private GoogleProfile? _googleProfile;
+    private GoogleProfileDto? _googleProfile;
     private DateTime _createdAt = DateTime.UtcNow;
     private DateTime? _lastLoginAt;
 
@@ -82,7 +82,7 @@ public class UserBuilder : IFluentBuilder<User>
         return this;
     }
     
-    public UserBuilder WithGoogleProfile(GoogleProfile? googleProfile)
+    public UserBuilder WithGoogleProfile(GoogleProfileDto? googleProfile)
     {
         _googleProfile = googleProfile;
         return this;

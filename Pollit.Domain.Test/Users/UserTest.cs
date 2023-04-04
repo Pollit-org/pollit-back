@@ -9,18 +9,18 @@ namespace Pollit.Domain.Test.Users;
 public class UserTest
 {
     [Fact]
-    public void Given_AUserWasJustCreatedWithEmailUserNameAndPassword_Then_TheirGenderShouldBeNull()
+    public void Given_AUserWasJustCreatedWithEmailUserNameAndPassword_Then_TheirGenderShouldBePreferNotToSay()
     {
         var user = User.NewUser("florian@pollit.me", "MrFlow", new EncryptedPassword(new B64Salt("123"), "fefnwfwefbfwef"));
 
-        user.Gender.Should().BeNull();
+        user.Gender.Should().Be(EGender.PreferNotToSay);
     }
     
     [Fact]
-    public void Given_AUserWasJustCreatedWithJustAnEmail_Then_TheirGenderShouldBeNull()
+    public void Given_AUserWasJustCreatedWithJustAnEmail_Then_TheirGenderShouldBePreferNotToSay()
     {
         var user = User.NewUser("florian@pollit.me");
 
-        user.Gender.Should().BeNull();
+        user.Gender.Should().Be(EGender.PreferNotToSay);
     }
 }

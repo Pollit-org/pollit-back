@@ -8,7 +8,7 @@ public class ScenarioWhereGoogleAuthenticatorReturnsAValidProfileFromMyAuthCode
 {
     private readonly GoogleAuthenticatorBuilder _googleAuthenticatorBuilder;
     private string _authCode = "wenfqbffqoenfquifgq";
-    private GoogleProfile _googleProfile = new() {Email = "fwnjfnewj@nj.cece"};
+    private GoogleProfileDto _googleProfile = new() {Email = "fwnjfnewj@nj.cece"};
 
     public ScenarioWhereGoogleAuthenticatorReturnsAValidProfileFromMyAuthCode(GoogleAuthenticatorBuilder googleAuthenticatorBuilder)
     {

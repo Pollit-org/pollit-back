@@ -1,4 +1,5 @@
 ﻿using Pollit.Domain._Ports;
+using Pollit.Domain.Users;
 using Pollit.Domain.Users.Services;
 using Pollit.SeedWork;
 
@@ -15,9 +16,9 @@ public class SigninWithCredentialsCommandHandler : CommandHandlerBase<SigninWith
         _credentialsAuthenticationService = credentialsAuthenticationService;
     }
 
-    protected override async Task HandleInternalAsync(SigninWithCredentialsCommand command, ISigninWithCredentialsPresenter presenter)
+    protected override async Task HandleAsync(AuthorizedCommand<SigninWithCredentialsCommand> authorizedCommand, ISigninWithCredentialsPresenter presenter)
     {
-        var result = await _credentialsAuthenticationService.SigninWithCredentialsAsync(command.UserNameOrEmail, command.Password);
+        var result = await _credentialsAuthenticationService.SigninWithCredentialsAsync(authorizedCommand.Command.UserNameOrEmail, authorizedCommand.Command.Password);
 
         await result.SwitchAsync(
             async signinResult =>
@@ -30,4 +31,7 @@ public class SigninWithCredentialsCommandHandler : CommandHandlerBase<SigninWith
             passwordMismatchError => presenter.LoginFailed()
         );
     }
+
+    protected override Task<bool> IsAuthorized(UserId? userId, SigninWithCredentialsCommand command) 
+        => Task.FromResult(userId is null);
 }

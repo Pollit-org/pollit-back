@@ -34,7 +34,7 @@ namespace Pollit.Infra.SqlServer.Migrations
                 type: "integer",
                 nullable: true);
 
-            migrationBuilder.AddColumn<GoogleProfile>(
+            migrationBuilder.AddColumn<GoogleProfileDto>(
                 name: "GoogleProfile",
                 table: "Users",
                 type: "jsonb",

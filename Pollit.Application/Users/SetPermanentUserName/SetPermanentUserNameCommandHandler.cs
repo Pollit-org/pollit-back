@@ -1,4 +1,5 @@
 ﻿using Pollit.Domain._Ports;
+using Pollit.Domain.Users;
 using Pollit.Domain.Users.Services;
 using Pollit.SeedWork;
 
@@ -15,9 +16,9 @@ public class SetPermanentUserNameCommandHandler : CommandHandlerBase<SetPermanen
         _accountSettingsService = accountSettingsService;
     }
 
-    protected override async Task HandleInternalAsync(SetPermanentUserNameCommand command, ISetPermanentUserNamePresenter presenter)
+    protected override async Task HandleAsync(AuthorizedCommand<SetPermanentUserNameCommand> command, ISetPermanentUserNamePresenter presenter)
     {
-        var result = await _accountSettingsService.SetPermanentUserNameAsync(command.UserId, command.UserName);
+        var result = await _accountSettingsService.SetPermanentUserNameAsync(command.Command.UserId, command.Command.UserName);
 
         await result.SwitchAsync(
             async success =>
@@ -31,4 +32,6 @@ public class SetPermanentUserNameCommandHandler : CommandHandlerBase<SetPermanen
             userNameAlreadyExistsError => presenter.UserNameAlreadyExists()
         );
     }
+
+    protected override Task<bool> IsAuthorized(UserId? userId, SetPermanentUserNameCommand command) => Task.FromResult(userId is not null && userId == command.UserId);
 }
