@@ -1,6 +1,6 @@
 ﻿namespace Pollit.Application.Users.GetUserPrivateProfile;
 
-public interface IGetUserPrivateProfilePresenter
+public interface IGetUserPrivateProfilePresenter : IPresenter
 {
     void Success();
 }

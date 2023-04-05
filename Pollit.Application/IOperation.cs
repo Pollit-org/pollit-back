@@ -1,6 +1,6 @@
 ﻿namespace Pollit.Application;
 
-public interface ICommand
+public interface IOperation
 {
     
 }

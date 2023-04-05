@@ -10,10 +10,10 @@ public class PollitControllerBase : ControllerBase
 }
 
 public abstract class CommandControllerBase<TCommand, TPresenter, TPresenterImpl, TCommandHandler> : PollitControllerBase 
-    where TCommandHandler : CommandHandlerBase<TCommand, TPresenter>
+    where TCommandHandler : OperationHandlerBase<TCommand, TPresenter>
     where TPresenter : IPresenter
     where TPresenterImpl: BasePresenter, TPresenter
-    where TCommand : ICommand
+    where TCommand : IOperation
 {
     private readonly TCommandHandler _commandHandler;
 

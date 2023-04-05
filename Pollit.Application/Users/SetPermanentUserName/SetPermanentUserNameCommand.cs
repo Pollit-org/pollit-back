@@ -2,7 +2,7 @@ using Pollit.Domain.Users;
 
 namespace Pollit.Application.Users.SetPermanentUserName;
 
-public class SetPermanentUserNameCommand : ICommand
+public class SetPermanentUserNameCommand : IOperation
 {
     public SetPermanentUserNameCommand(Guid userId, string userName)
     {

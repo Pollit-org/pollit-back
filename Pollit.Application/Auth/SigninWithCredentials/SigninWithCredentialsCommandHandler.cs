@@ -5,7 +5,7 @@ using Pollit.SeedWork;
 
 namespace Pollit.Application.Auth.SigninWithCredentials;
 
-public class SigninWithCredentialsCommandHandler : CommandHandlerBase<SigninWithCredentialsCommand, ISigninWithCredentialsPresenter>
+public class SigninWithCredentialsCommandHandler : OperationHandlerBase<SigninWithCredentialsCommand, ISigninWithCredentialsPresenter>
 {
     private readonly CredentialsAuthenticationService _credentialsAuthenticationService;
     private readonly IUnitOfWork _unitOfWork;
@@ -16,9 +16,9 @@ public class SigninWithCredentialsCommandHandler : CommandHandlerBase<SigninWith
         _credentialsAuthenticationService = credentialsAuthenticationService;
     }
 
-    protected override async Task HandleAsync(AuthorizedCommand<SigninWithCredentialsCommand> authorizedCommand, ISigninWithCredentialsPresenter presenter)
+    protected override async Task HandleAsync(AuthorizedOperation<SigninWithCredentialsCommand> authorizedCommand, ISigninWithCredentialsPresenter presenter)
     {
-        var result = await _credentialsAuthenticationService.SigninWithCredentialsAsync(authorizedCommand.Command.UserNameOrEmail, authorizedCommand.Command.Password);
+        var result = await _credentialsAuthenticationService.SigninWithCredentialsAsync(authorizedCommand.Value.UserNameOrEmail, authorizedCommand.Value.Password);
 
         await result.SwitchAsync(
             async signinResult =>
@@ -31,7 +31,4 @@ public class SigninWithCredentialsCommandHandler : CommandHandlerBase<SigninWith
             passwordMismatchError => presenter.LoginFailed()
         );
     }
-
-    protected override Task<bool> IsAuthorized(UserId? userId, SigninWithCredentialsCommand command) 
-        => Task.FromResult(userId is null);
 }

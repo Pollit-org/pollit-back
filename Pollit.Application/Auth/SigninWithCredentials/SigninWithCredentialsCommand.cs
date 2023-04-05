@@ -1,8 +1,7 @@
-﻿using Pollit.Domain.Users.ClearPasswords;
+﻿namespace Pollit.Application.Auth.SigninWithCredentials;
 
-namespace Pollit.Application.Auth.SigninWithCredentials;
-
-public class SigninWithCredentialsCommand : ICommand
+[OperationAuthorizedForAnyone]
+public class SigninWithCredentialsCommand : IOperation
 {
     public SigninWithCredentialsCommand(string userNameOrEmail, string password)
     {

@@ -1,6 +1,12 @@
 ﻿namespace Pollit.Application.Users.GetUserPrivateProfile;
 
-public class GetUserPrivateProfileQuery
+public class GetUserPrivateProfileQuery : IOperation
 {
-    public object Prop { get; }
+    public GetUserPrivateProfileQuery(Guid userId)
+    {
+        UserId = userId;
+    }
+
+    [OperationAuthorizedFor]
+    public Guid UserId { get; }
 }

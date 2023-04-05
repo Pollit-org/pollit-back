@@ -5,7 +5,7 @@ using Pollit.SeedWork;
 
 namespace Pollit.Application.Auth.SignupWithCredentials;
 
-public class SignupWithCredentialsCommandHandler : CommandHandlerBase<SignupWithCredentialsCommand, ISignupWithCredentialsPresenter>
+public class SignupWithCredentialsCommandHandler : OperationHandlerBase<SignupWithCredentialsCommand, ISignupWithCredentialsPresenter>
 {
     private readonly CredentialsAuthenticationService _credentialsAuthenticationService;
     private readonly IUnitOfWork _unitOfWork;
@@ -16,9 +16,9 @@ public class SignupWithCredentialsCommandHandler : CommandHandlerBase<SignupWith
         _unitOfWork = unitOfWork;
     }
     
-    protected override async Task HandleAsync(AuthorizedCommand<SignupWithCredentialsCommand> authorizedCommand, ISignupWithCredentialsPresenter presenter)
+    protected override async Task HandleAsync(AuthorizedOperation<SignupWithCredentialsCommand> authorizedCommand, ISignupWithCredentialsPresenter presenter)
     {
-        var result = await _credentialsAuthenticationService.SignupWithCredentialsAsync(authorizedCommand.Command.Email, authorizedCommand.Command.UserName, authorizedCommand.Command.Password);
+        var result = await _credentialsAuthenticationService.SignupWithCredentialsAsync(authorizedCommand.Value.Email, authorizedCommand.Value.UserName, authorizedCommand.Value.Password);
 
         await result.SwitchAsync(
             async success =>
@@ -30,6 +30,4 @@ public class SignupWithCredentialsCommandHandler : CommandHandlerBase<SignupWith
             userNameAlreadyExistsError => presenter.UserNameAlreadyExists()
         );
     }
-
-    protected override Task<bool> IsAuthorized(UserId? userId, SignupWithCredentialsCommand command) => Task.FromResult(userId is null);
 }

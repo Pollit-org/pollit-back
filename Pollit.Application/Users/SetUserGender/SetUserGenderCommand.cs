@@ -2,7 +2,7 @@ using Pollit.Domain.Users;
 
 namespace Pollit.Application.Users.SetUserGender;
 
-public class SetUserGenderCommand : ICommand
+public class SetUserGenderCommand : IOperation
 {
 
     public SetUserGenderCommand(Guid userId, EGender gender)
@@ -11,6 +11,6 @@ public class SetUserGenderCommand : ICommand
         UserId = userId;
     }
 
-    public Guid UserId { get; }
+    [OperationAuthorizedFor] public Guid UserId { get; }
     public EGender Gender;
 }

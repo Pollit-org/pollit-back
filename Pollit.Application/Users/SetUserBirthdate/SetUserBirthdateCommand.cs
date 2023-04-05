@@ -1,6 +1,6 @@
 ﻿namespace Pollit.Application.Users.SetUserBirthdate;
 
-public class SetUserBirthdateCommand : ICommand
+public class SetUserBirthdateCommand : IOperation
 {
     public SetUserBirthdateCommand(Guid userId, int year, int month, int day)
     {
@@ -10,7 +10,7 @@ public class SetUserBirthdateCommand : ICommand
         Day = day;
     }
 
-    public Guid UserId { get; }
+    [OperationAuthorizedFor] public Guid UserId { get; }
     public int Year { get; }
     public int Month { get; }
     public int Day { get; }

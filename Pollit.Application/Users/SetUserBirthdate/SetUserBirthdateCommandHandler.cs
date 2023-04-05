@@ -6,7 +6,7 @@ using Pollit.SeedWork;
 
 namespace Pollit.Application.Users.SetUserBirthdate;
 
-public class SetUserBirthdateCommandHandler : CommandHandlerBase<SetUserBirthdateCommand, ISetUserBirthdatePresenter>
+public class SetUserBirthdateCommandHandler : OperationHandlerBase<SetUserBirthdateCommand, ISetUserBirthdatePresenter>
 {
     private readonly AccountSettingsService _accountSettingsService;
     private readonly IUnitOfWork _unitOfWork;
@@ -17,10 +17,10 @@ public class SetUserBirthdateCommandHandler : CommandHandlerBase<SetUserBirthdat
         _unitOfWork = unitOfWork;
     }
 
-    protected override async Task HandleAsync(AuthorizedCommand<SetUserBirthdateCommand> authorizedCommand, ISetUserBirthdatePresenter presenter)
+    protected override async Task HandleAsync(AuthorizedOperation<SetUserBirthdateCommand> authorizedCommand, ISetUserBirthdatePresenter presenter)
     {
-        var birthDate = new Birthdate(authorizedCommand.Command.Year, authorizedCommand.Command.Month, authorizedCommand.Command.Day);
-        var result = await _accountSettingsService.SetUserBirthdate(authorizedCommand.Command.UserId, birthDate);
+        var birthDate = new Birthdate(authorizedCommand.Value.Year, authorizedCommand.Value.Month, authorizedCommand.Value.Day);
+        var result = await _accountSettingsService.SetUserBirthdate(authorizedCommand.Value.UserId, birthDate);
 
         await result.SwitchAsync(
             async success =>
@@ -33,6 +33,4 @@ public class SetUserBirthdateCommandHandler : CommandHandlerBase<SetUserBirthdat
             birthdateIsInTheFutureError => presenter.BirthdateIsInTheFuture()
         );
     }
-
-    protected override Task<bool> IsAuthorized(UserId? userId, SetUserBirthdateCommand command) => Task.FromResult(userId is not null && userId == command.UserId);
 }
