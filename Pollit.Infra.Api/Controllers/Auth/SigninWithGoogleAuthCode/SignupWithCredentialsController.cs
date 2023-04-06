@@ -5,7 +5,7 @@ using Pollit.Application.Auth.SigninWithGoogleAuthCode;
 namespace Pollit.Infra.Api.Controllers.Auth.SigninWithGoogleAuthCode;
 
 [ApiController]
-public class SigninWithGoogleAuthCodeController : CommandControllerBase<SigninWithGoogleAuthCodeCommand, ISigninWithGoogleAuthCodePresenter, SigninWithGoogleAuthCodePresenter, SigninWithGoogleAuthCodeCommandHandler>
+public class SigninWithGoogleAuthCodeController : OperationControllerBase<SigninWithGoogleAuthCodeCommand, ISigninWithGoogleAuthCodePresenter, SigninWithGoogleAuthCodePresenter, SigninWithGoogleAuthCodeCommandHandler>
 {
     public SigninWithGoogleAuthCodeController(SigninWithGoogleAuthCodeCommandHandler commandHandler) : base(commandHandler)
     {
@@ -19,7 +19,7 @@ public class SigninWithGoogleAuthCodeController : CommandControllerBase<SigninWi
 
         var presenter = new SigninWithGoogleAuthCodePresenter();
         
-        await HandleCommandAsync(command, presenter);
+        await HandleOperationAsync(command, presenter);
         
         return presenter.ActionResult;
     }

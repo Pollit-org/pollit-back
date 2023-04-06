@@ -5,7 +5,7 @@ using Pollit.Application.Users.SetPermanentUserName;
 namespace Pollit.Infra.Api.Controllers.Users.SetPermanentUserName;
 
 [ApiController]
-public class SetPermanentUserNameController : CommandControllerBase<SetPermanentUserNameCommand, ISetPermanentUserNamePresenter, SetPermanentUserNamePresenter, SetPermanentUserNameCommandHandler>
+public class SetPermanentUserNameController : OperationControllerBase<SetPermanentUserNameCommand, ISetPermanentUserNamePresenter, SetPermanentUserNamePresenter, SetPermanentUserNameCommandHandler>
 {
 
     public SetPermanentUserNameController(SetPermanentUserNameCommandHandler commandHandler) : base(commandHandler)
@@ -20,7 +20,7 @@ public class SetPermanentUserNameController : CommandControllerBase<SetPermanent
 
         var presenter = new SetPermanentUserNamePresenter();
 
-        await HandleCommandAsync(command, presenter);
+        await HandleOperationAsync(command, presenter);
 
         return presenter.ActionResult;
     }

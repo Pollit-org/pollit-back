@@ -8,11 +8,7 @@ namespace Pollit.Infra.Api.Controllers.Auth.SigninWithGoogleAuthCode;
 
 public class SigninWithGoogleAuthCodePresenter : BasePresenter, ISigninWithGoogleAuthCodePresenter
 {
-    public void Success(SigninResultDto signinResult)
-    {
-        ActionResult = new OkObjectResult(new SigninWithCredentials.SigninResultDto(signinResult));
-    }
+    public void Success(SigninResultDto signinResult) => Ok(new SigninWithCredentials.SigninResultDto(signinResult));
 
-    public void GoogleAuthCodeAuthenticationFailed(string error)
-        => Unauthorized(error);
+    public void GoogleAuthCodeAuthenticationFailed(string error) => Unauthorized(error);
 }

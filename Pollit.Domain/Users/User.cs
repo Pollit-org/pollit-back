@@ -61,9 +61,9 @@ public class User : EntityBase<UserId>
     
     public DateTime? LastLoginAt { get; protected set; }
     
-    public UserPrivateProfileDto PrivateProfile() => new(this);
+    public UserPrivateProfileDto PrivateProfile => new(this);
     
-    public UserPublicProfileDto PublicProfile() => new(this);
+    public UserPublicProfileDto PublicProfile => new(this);
 
     public void OnSigninWithCredentials()
     {

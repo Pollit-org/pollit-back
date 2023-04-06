@@ -5,7 +5,7 @@ using Pollit.Application.Auth.SignupWithCredentials;
 namespace Pollit.Infra.Api.Controllers.Auth.SignupWithCredentials;
 
 [ApiController]
-public class SignupWithCredentialsController : CommandControllerBase<SignupWithCredentialsCommand, ISignupWithCredentialsPresenter, SignupWithCredentialsPresenter, SignupWithCredentialsCommandHandler>
+public class SignupWithCredentialsController : OperationControllerBase<SignupWithCredentialsCommand, ISignupWithCredentialsPresenter, SignupWithCredentialsPresenter, SignupWithCredentialsCommandHandler>
 {
     public SignupWithCredentialsController(SignupWithCredentialsCommandHandler commandHandler) : base(commandHandler)
     {
@@ -19,7 +19,7 @@ public class SignupWithCredentialsController : CommandControllerBase<SignupWithC
 
         var presenter = new SignupWithCredentialsPresenter();
         
-        await HandleCommandAsync(command, presenter);
+        await HandleOperationAsync(command, presenter);
         
         return presenter.ActionResult;
     }

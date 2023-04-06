@@ -8,6 +8,9 @@ public class BasePresenter : IPresenter
 {
     public IActionResult? ActionResult { get; protected set; }
 
+    public void Ok<T>(T result)
+        => ActionResult = new OkObjectResult(result);
+    
     public void OkNoContent()
         => ActionResult = new NoContentResult();
     
