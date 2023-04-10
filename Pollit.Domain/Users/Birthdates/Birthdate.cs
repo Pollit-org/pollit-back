@@ -25,7 +25,7 @@ public class Birthdate : DateTimeValueBase
 
     public override string ToString()
     {
-        return $"{Value.Year}-{Value.Month}-{Value.Day}";
+        return $"{Value.Year}-{Value.Month.ToString().PadLeft(2, '0')}-{Value.Day.ToString().PadLeft(2, '0')}";
     }
     
     public static implicit operator Birthdate(DateTime dateTime) => new (dateTime.Year, dateTime.Month, dateTime.Day);
