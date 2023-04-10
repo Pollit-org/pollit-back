@@ -1,7 +1,6 @@
 ﻿using System.Reflection;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using Pollit.Application;
 using Pollit.Domain.Users;
@@ -13,7 +12,7 @@ public static class ServicesExtensions
 {
     public static IServiceCollection AddQueryAndCommandHandlers(this IServiceCollection services)
     {
-        foreach (var handlerType in Assembly.Load("Pollit.Application")!.GetTypes().Where(t => t.IsAssignableTo(typeof(CommandHandlerBase)) && !t.IsAbstract))
+        foreach (var handlerType in Assembly.Load("Pollit.Application")!.GetTypes().Where(t => t.IsAssignableTo(typeof(OperationHandlerBase)) && !t.IsAbstract))
             services.AddTransient(handlerType, handlerType);
 
         return services;

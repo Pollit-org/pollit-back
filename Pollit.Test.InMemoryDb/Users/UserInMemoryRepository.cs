@@ -1,5 +1,6 @@
 ﻿using Pollit.Domain.Shared.Email;
 using Pollit.Domain.Users;
+using Pollit.Domain.Users._Ports;
 using Pollit.Domain.Users.UserNames;
 
 namespace Pollit.Test.InMemoryDb.Users;

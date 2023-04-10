@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Pollit.Domain._Ports;
 using Pollit.Domain.Users;
+using Pollit.Domain.Users._Ports;
 using Pollit.Domain.Users.Services;
 using Pollit.Infra.Api;
 using Pollit.Infra.EfCore.NpgSql;

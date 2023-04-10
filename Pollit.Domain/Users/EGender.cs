@@ -2,7 +2,8 @@
 
 public enum EGender
 {
+    PreferNotToSay = 0,
     Male = 1,
     Female = 2,
-    PreferNotToSay = 3
+    Other = 3,
 }

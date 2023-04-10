@@ -1,6 +1,7 @@
 ﻿namespace Pollit.Application.Auth.SigninWithGoogleAuthCode;
 
-public class SigninWithGoogleAuthCodeCommand
+[OperationAuthorizedForAnyone]
+public class SigninWithGoogleAuthCodeCommand : IOperation
 {
     public SigninWithGoogleAuthCodeCommand(string googleAuthenticationCode)
     {

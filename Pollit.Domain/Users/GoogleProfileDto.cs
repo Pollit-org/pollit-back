@@ -1,6 +1,6 @@
 ﻿namespace Pollit.Domain.Users;
 
-public class GoogleProfile // DTO
+public class GoogleProfileDto
 {
     public string Email { get; set; }
     

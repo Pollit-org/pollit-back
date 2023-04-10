@@ -1,6 +1,6 @@
 namespace Pollit.Application.Users.SetUserGender;
 
-public interface ISetUserGenderPresenter
+public interface ISetUserGenderPresenter : IPresenter
 {
     void Success();
     

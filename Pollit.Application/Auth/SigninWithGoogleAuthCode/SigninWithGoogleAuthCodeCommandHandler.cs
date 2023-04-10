@@ -4,7 +4,7 @@ using Pollit.SeedWork;
 
 namespace Pollit.Application.Auth.SigninWithGoogleAuthCode;
 
-public class SigninWithGoogleAuthCodeCommandHandler : CommandHandlerBase<SigninWithGoogleAuthCodeCommand, ISigninWithGoogleAuthCodePresenter>
+public class SigninWithGoogleAuthCodeCommandHandler : OperationHandlerBase<SigninWithGoogleAuthCodeCommand, ISigninWithGoogleAuthCodePresenter>
 {
     private readonly GoogleAuthenticationService _googleAuthenticationService;
     private readonly IUnitOfWork _unitOfWork;
@@ -15,9 +15,9 @@ public class SigninWithGoogleAuthCodeCommandHandler : CommandHandlerBase<SigninW
         _googleAuthenticationService = googleAuthenticationService;
     }
     
-    protected override async Task HandleInternalAsync(SigninWithGoogleAuthCodeCommand command, ISigninWithGoogleAuthCodePresenter presenter)
+    protected override async Task HandleAsync(AuthorizedOperation<SigninWithGoogleAuthCodeCommand> authorizedCommand, ISigninWithGoogleAuthCodePresenter presenter)
     {
-        var result = await _googleAuthenticationService.SigninWithGoogleAuthCodeAsync(command.GoogleAuthenticationCode);
+        var result = await _googleAuthenticationService.SigninWithGoogleAuthCodeAsync(authorizedCommand.Value.GoogleAuthenticationCode);
 
         await result.SwitchAsync(
             async signinResult =>

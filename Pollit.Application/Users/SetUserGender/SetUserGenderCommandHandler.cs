@@ -1,10 +1,11 @@
 ﻿using Pollit.Domain._Ports;
+using Pollit.Domain.Users;
 using Pollit.Domain.Users.Services;
 using Pollit.SeedWork;
 
 namespace Pollit.Application.Users.SetUserGender;
 
-public class SetUserGenderCommandHandler : CommandHandlerBase<SetUserGenderCommand, ISetUserGenderPresenter>
+public class SetUserGenderCommandHandler : OperationHandlerBase<SetUserGenderCommand, ISetUserGenderPresenter>
 {
     private readonly AccountSettingsService _accountSettingsService;
     private readonly IUnitOfWork _unitOfWork;
@@ -15,9 +16,9 @@ public class SetUserGenderCommandHandler : CommandHandlerBase<SetUserGenderComma
         _accountSettingsService = accountSettingsService;
     }
 
-    protected override async Task HandleInternalAsync(SetUserGenderCommand command, ISetUserGenderPresenter presenter)
+    protected override async Task HandleAsync(AuthorizedOperation<SetUserGenderCommand> authorizedCommand, ISetUserGenderPresenter presenter)
     {
-        var result = await _accountSettingsService.SetUserGender(command.UserId, command.Gender);
+        var result = await _accountSettingsService.SetUserGender(authorizedCommand.Value.UserId, authorizedCommand.Value.Gender);
 
         await result.SwitchAsync(
             async success =>

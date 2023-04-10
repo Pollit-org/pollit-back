@@ -7,6 +7,9 @@
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/QuickList/=F0CA621CDF5AB24282D8CDC11C520997/Entry/=DC83F3F2163AC94DB0DFAE341CB6BBEA/@KeyIndexDefined">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/QuickList/=F0CA621CDF5AB24282D8CDC11C520997/Entry/=DC83F3F2163AC94DB0DFAE341CB6BBEA/EntryName/@EntryValue">Class</s:String>
 	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/QuickList/=F0CA621CDF5AB24282D8CDC11C520997/Entry/=DC83F3F2163AC94DB0DFAE341CB6BBEA/Position/@EntryValue">10</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/QuickList/=F0CA621CDF5AB24282D8CDC11C520997/Entry/=F3FF91D10A24E84787511F4B0F160DF8/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/QuickList/=F0CA621CDF5AB24282D8CDC11C520997/Entry/=F3FF91D10A24E84787511F4B0F160DF8/EntryName/@EntryValue">Pollit Command Handler</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/QuickList/=F0CA621CDF5AB24282D8CDC11C520997/Entry/=F3FF91D10A24E84787511F4B0F160DF8/Position/@EntryValue">11</s:Int64>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=DC83F3F2163AC94DB0DFAE341CB6BBEA/@KeyIndexDefined">True</s:Boolean>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=DC83F3F2163AC94DB0DFAE341CB6BBEA/Applicability/=File/@EntryIndexedValue">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=DC83F3F2163AC94DB0DFAE341CB6BBEA/CustomProperties/=Category/@EntryIndexedValue">Primary</s:String>
@@ -35,4 +38,67 @@
   public class $CLASS$ {$END$}
 }</s:String>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=DC83F3F2163AC94DB0DFAE341CB6BBEA/UITag/@EntryValue">Class/Interface</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F3FF91D10A24E84787511F4B0F160DF8/@KeyIndexDefined">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F3FF91D10A24E84787511F4B0F160DF8/Applicability/=File/@EntryIndexedValue">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F3FF91D10A24E84787511F4B0F160DF8/CustomProperties/=Category/@EntryIndexedValue">Primary</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F3FF91D10A24E84787511F4B0F160DF8/CustomProperties/=Extension/@EntryIndexedValue">cs</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F3FF91D10A24E84787511F4B0F160DF8/CustomProperties/=FileName/@EntryIndexedValue">Controller</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F3FF91D10A24E84787511F4B0F160DF8/CustomProperties/=ValidateFileName/@EntryIndexedValue">True</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F3FF91D10A24E84787511F4B0F160DF8/Description/@EntryValue">&amp;Pollit Controller for  Command Handler</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F3FF91D10A24E84787511F4B0F160DF8/Field/=CONTROLLER/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F3FF91D10A24E84787511F4B0F160DF8/Field/=CONTROLLER/Expression/@EntryValue">getAlphaNumericFileNameWithoutExtension()</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F3FF91D10A24E84787511F4B0F160DF8/Field/=CONTROLLER/Order/@EntryValue">2</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F3FF91D10A24E84787511F4B0F160DF8/Field/=HEADER/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F3FF91D10A24E84787511F4B0F160DF8/Field/=HEADER/Expression/@EntryValue">fileheader()</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F3FF91D10A24E84787511F4B0F160DF8/Field/=HEADER/Order/@EntryValue">0</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F3FF91D10A24E84787511F4B0F160DF8/Field/=NAME/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F3FF91D10A24E84787511F4B0F160DF8/Field/=NAME/Expression/@EntryValue">constant("Toto")</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F3FF91D10A24E84787511F4B0F160DF8/Field/=NAME/Order/@EntryValue">4</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F3FF91D10A24E84787511F4B0F160DF8/Field/=NAMESPACE/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F3FF91D10A24E84787511F4B0F160DF8/Field/=NAMESPACE/Expression/@EntryValue">fileDefaultNamespace()</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F3FF91D10A24E84787511F4B0F160DF8/Field/=NAMESPACE/InitialRange/@EntryValue">-1</s:Int64>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F3FF91D10A24E84787511F4B0F160DF8/Field/=NAMESPACE/Order/@EntryValue">1</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F3FF91D10A24E84787511F4B0F160DF8/Field/=ROUTE/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F3FF91D10A24E84787511F4B0F160DF8/Field/=ROUTE/Expression/@EntryValue">constant("toto/tata")</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F3FF91D10A24E84787511F4B0F160DF8/Field/=ROUTE/Order/@EntryValue">3</s:Int64>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F3FF91D10A24E84787511F4B0F160DF8/Image/@EntryValue">CSharp</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F3FF91D10A24E84787511F4B0F160DF8/Reformat/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F3FF91D10A24E84787511F4B0F160DF8/Scope/=E8F0594528C33E45BBFEC6CFE851095D/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F3FF91D10A24E84787511F4B0F160DF8/Scope/=E8F0594528C33E45BBFEC6CFE851095D/Type/@EntryValue">InCSharpProjectFile</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F3FF91D10A24E84787511F4B0F160DF8/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F3FF91D10A24E84787511F4B0F160DF8/Text/@EntryValue">using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+
+$HEADER$namespace $NAMESPACE$;
+
+[ApiController]
+public class $CONTROLLER$Controller : CommandControllerBase&lt;$CONTROLLER$Command, I$CONTROLLER$Presenter, $CONTROLLER$Presenter, $CONTROLLER$CommandHandler&gt;
+{
+    public $CONTROLLER$Controller($CONTROLLER$CommandHandler commandHandler) : base(commandHandler)
+    {
+    }
+
+    [Authorize(Policy = CPolicies.Authenticated)]
+    [HttpPost("$ROUTE$", Name = "$NAME$")]
+    public async Task&lt;IActionResult?&gt; $CONTROLLER$Async([FromBody] $CONTROLLER$HttpRequestBody requestBody)
+    {
+        var command = new $CONTROLLER$Command();
+
+        var presenter = new $CONTROLLER$Presenter();
+        
+        await HandleCommandAsync(command, presenter);
+        
+        return presenter.ActionResult;
+    }
+}
+
+public class $CONTROLLER$HttpRequestBody 
+{
+}
+
+public class $CONTROLLER$Presenter : BasePresenter, I$CONTROLLER$Presenter 
+{
+}
+</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F3FF91D10A24E84787511F4B0F160DF8/UITag/@EntryValue">Class/Interface</s:String>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Pollit/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>

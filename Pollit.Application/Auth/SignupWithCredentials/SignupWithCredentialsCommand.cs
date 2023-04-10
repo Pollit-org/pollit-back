@@ -1,6 +1,7 @@
 ﻿namespace Pollit.Application.Auth.SignupWithCredentials;
 
-public class SignupWithCredentialsCommand
+[OperationAuthorizedForAnyone]
+public class SignupWithCredentialsCommand : IOperation
 {
     public SignupWithCredentialsCommand(string email, string userName, string password)
     {

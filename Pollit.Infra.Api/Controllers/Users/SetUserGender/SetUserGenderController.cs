@@ -5,7 +5,7 @@ using Pollit.Application.Users.SetUserGender;
 namespace Pollit.Infra.Api.Controllers.Users.SetUserGender;
 
 [ApiController]
-public class SetUserGenderController : CommandControllerBase<SetUserGenderCommand, ISetUserGenderPresenter, SetUserGenderPresenter, SetUserGenderCommandHandler>
+public class SetUserGenderController : OperationControllerBase<SetUserGenderCommand, ISetUserGenderPresenter, SetUserGenderPresenter, SetUserGenderCommandHandler>
 {
 
     public SetUserGenderController(SetUserGenderCommandHandler commandHandler) : base(commandHandler)
@@ -20,7 +20,7 @@ public class SetUserGenderController : CommandControllerBase<SetUserGenderComman
 
         var presenter = new SetUserGenderPresenter();
 
-        await HandleCommandAsync(command, presenter);
+        await HandleOperationAsync(command, presenter);
 
         return presenter.ActionResult;
     }

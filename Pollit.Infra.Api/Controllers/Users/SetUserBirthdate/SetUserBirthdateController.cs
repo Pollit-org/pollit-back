@@ -5,7 +5,7 @@ using Pollit.Application.Users.SetUserBirthdate;
 namespace Pollit.Infra.Api.Controllers.Users.SetUserBirthdate;
 
 [ApiController]
-public class SetUserBirthdateController : CommandControllerBase<SetUserBirthdateCommand, ISetUserBirthdatePresenter, SetUserBirthdatePresenter, SetUserBirthdateCommandHandler>
+public class SetUserBirthdateController : OperationControllerBase<SetUserBirthdateCommand, ISetUserBirthdatePresenter, SetUserBirthdatePresenter, SetUserBirthdateCommandHandler>
 {
     public SetUserBirthdateController(SetUserBirthdateCommandHandler commandHandler) : base(commandHandler)
     {
@@ -19,7 +19,7 @@ public class SetUserBirthdateController : CommandControllerBase<SetUserBirthdate
 
         var presenter = new SetUserBirthdatePresenter();
 
-        await HandleCommandAsync(command, presenter);
+        await HandleOperationAsync(command, presenter);
 
         return presenter.ActionResult;
     }

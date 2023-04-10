@@ -1,6 +1,6 @@
 namespace Pollit.Application.Users.SetPermanentUserName;
 
-public interface ISetPermanentUserNamePresenter
+public interface ISetPermanentUserNamePresenter : IPresenter
 {
     void Success();
 

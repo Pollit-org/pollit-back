@@ -6,7 +6,7 @@ using Pollit.Domain.Users.ClearPasswords;
 namespace Pollit.Infra.Api.Controllers.Auth.SigninWithCredentials;
 
 [ApiController]
-public class SigninWithCredentialsController : CommandControllerBase<SigninWithCredentialsCommand, ISigninWithCredentialsPresenter, SigninWithCredentialsPresenter,SigninWithCredentialsCommandHandler>
+public class SigninWithCredentialsController : OperationControllerBase<SigninWithCredentialsCommand, ISigninWithCredentialsPresenter, SigninWithCredentialsPresenter,SigninWithCredentialsCommandHandler>
 {
 
     public SigninWithCredentialsController(SigninWithCredentialsCommandHandler commandHandler) : base(commandHandler)
@@ -21,7 +21,7 @@ public class SigninWithCredentialsController : CommandControllerBase<SigninWithC
 
         var presenter = new SigninWithCredentialsPresenter();
         
-        await HandleCommandAsync(command, presenter);
+        await HandleOperationAsync(command, presenter);
         
         return presenter.ActionResult;
     }

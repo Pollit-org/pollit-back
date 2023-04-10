@@ -1,10 +1,11 @@
 ﻿using Pollit.Domain._Ports;
+using Pollit.Domain.Users;
 using Pollit.Domain.Users.Services;
 using Pollit.SeedWork;
 
 namespace Pollit.Application.Auth.SigninWithCredentials;
 
-public class SigninWithCredentialsCommandHandler : CommandHandlerBase<SigninWithCredentialsCommand, ISigninWithCredentialsPresenter>
+public class SigninWithCredentialsCommandHandler : OperationHandlerBase<SigninWithCredentialsCommand, ISigninWithCredentialsPresenter>
 {
     private readonly CredentialsAuthenticationService _credentialsAuthenticationService;
     private readonly IUnitOfWork _unitOfWork;
@@ -15,9 +16,9 @@ public class SigninWithCredentialsCommandHandler : CommandHandlerBase<SigninWith
         _credentialsAuthenticationService = credentialsAuthenticationService;
     }
 
-    protected override async Task HandleInternalAsync(SigninWithCredentialsCommand command, ISigninWithCredentialsPresenter presenter)
+    protected override async Task HandleAsync(AuthorizedOperation<SigninWithCredentialsCommand> authorizedCommand, ISigninWithCredentialsPresenter presenter)
     {
-        var result = await _credentialsAuthenticationService.SigninWithCredentialsAsync(command.UserNameOrEmail, command.Password);
+        var result = await _credentialsAuthenticationService.SigninWithCredentialsAsync(authorizedCommand.Value.UserNameOrEmail, authorizedCommand.Value.Password);
 
         await result.SwitchAsync(
             async signinResult =>

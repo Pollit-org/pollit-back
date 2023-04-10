@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Pollit.Application;
+using Pollit.Domain.Users;
 
 namespace Pollit.Infra.Api.Controllers;
 
@@ -8,21 +9,33 @@ public class PollitControllerBase : ControllerBase
     
 }
 
-public abstract class CommandControllerBase<TCommand, TPresenter, TPresenterImpl, TCommandHandler> : PollitControllerBase 
-    where TCommandHandler : CommandHandlerBase<TCommand, TPresenter> where TPresenterImpl: BasePresenter, TPresenter
+public abstract class OperationControllerBase<TCommand, TPresenter, TPresenterImpl, TOperationHandler> : PollitControllerBase 
+    where TOperationHandler : OperationHandlerBase<TCommand, TPresenter>
+    where TPresenter : IPresenter
+    where TPresenterImpl: BasePresenter, TPresenter
+    where TCommand : IOperation
 {
-    private readonly TCommandHandler _commandHandler;
+    private readonly TOperationHandler _opHandler;
 
-    public CommandControllerBase(TCommandHandler commandHandler)
+    public OperationControllerBase(TOperationHandler opHandler)
     {
-        _commandHandler = commandHandler;
+        _opHandler = opHandler;
+    }
+    
+    public UserId? AuthenticatedUserId
+    {
+        get
+        {
+            var value = HttpContext?.User?.Claims.FirstOrDefault(c => c.Type == CClaimTypes.UserId)?.Value;
+            return value != null ? new UserId(Guid.Parse(value)) : null;
+        }
     }
 
-    protected async Task HandleCommandAsync(TCommand command, TPresenterImpl presenter)
+    protected async Task HandleOperationAsync(TCommand command, TPresenterImpl presenter)
     {
         try
         {
-            await _commandHandler.HandleAsync(command, presenter);
+            await _opHandler.HandleAsync(AuthenticatedUserId, command, presenter);
         }
         catch (Exception exception)
         {

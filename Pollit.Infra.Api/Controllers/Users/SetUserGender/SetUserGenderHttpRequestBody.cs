@@ -5,5 +5,5 @@ namespace Pollit.Infra.Api.Controllers.Users.SetUserGender;
 
 public class SetUserGenderHttpRequestBody
 {
-    public EGender? Gender { get; set; }
+    public EGender Gender { get; set; }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Pollit.Application.Users.SetUserBirthdate;
 
-public interface ISetUserBirthdatePresenter
+public interface ISetUserBirthdatePresenter : IPresenter
 {
     void Success();
     

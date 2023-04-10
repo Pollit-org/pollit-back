@@ -1,6 +1,6 @@
 ﻿namespace Pollit.Application.Auth.SignupWithCredentials;
 
-public interface ISignupWithCredentialsPresenter
+public interface ISignupWithCredentialsPresenter : IPresenter
 {
     void Success();
 

@@ -2,9 +2,9 @@
 
 namespace Pollit.Application.Auth.SigninWithGoogleAuthCode;
 
-public interface ISigninWithGoogleAuthCodePresenter
+public interface ISigninWithGoogleAuthCodePresenter : IPresenter
 {
-    void Success(SigninResult signinResult);
+    void Success(SigninResultDto signinResult);
 
     void GoogleAuthCodeAuthenticationFailed(string error = ApplicationError.GoogleSigninFailed);
 }

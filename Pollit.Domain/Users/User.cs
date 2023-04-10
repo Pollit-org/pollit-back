@@ -13,7 +13,7 @@ namespace Pollit.Domain.Users;
 
 public class User : EntityBase<UserId>
 {
-    public User(UserId id, Email email, UserName userName, bool hasTemporaryUserName, EncryptedPassword? encryptedPassword, HashSet<RefreshToken> refreshTokens, bool isEmailVerified, EGender? gender, Birthdate? birthdate, GoogleProfile? googleProfile, DateTime createdAt, DateTime? lastLoginAt)
+    public User(UserId id, Email email, UserName userName, bool hasTemporaryUserName, EncryptedPassword? encryptedPassword, HashSet<RefreshToken> refreshTokens, bool isEmailVerified, EGender? gender, Birthdate? birthdate, GoogleProfileDto? googleProfile, DateTime createdAt, DateTime? lastLoginAt)
     {
         Id = id;
         Email = email;
@@ -22,7 +22,7 @@ public class User : EntityBase<UserId>
         EncryptedPassword = encryptedPassword;
         RefreshTokens = refreshTokens;
         IsEmailVerified = isEmailVerified;
-        Gender = gender;
+        Gender = gender ?? EGender.PreferNotToSay;
         Birthdate = birthdate;
         GoogleProfile = googleProfile;
         CreatedAt = createdAt;
@@ -55,18 +55,22 @@ public class User : EntityBase<UserId>
     
     public Birthdate? Birthdate { get; protected set; }
 
-    public GoogleProfile? GoogleProfile { get; protected set; }
+    public GoogleProfileDto? GoogleProfile { get; protected set; }
 
     public DateTime CreatedAt { get; protected set; }
     
     public DateTime? LastLoginAt { get; protected set; }
+    
+    public UserPrivateProfileDto PrivateProfile => new(this);
+    
+    public UserPublicProfileDto PublicProfile => new(this);
 
     public void OnSigninWithCredentials()
     {
         LastLoginAt = DateTime.UtcNow;
     }
     
-    public void OnLoginWithGoogle(GoogleProfile googleProfile)
+    public void OnLoginWithGoogle(GoogleProfileDto googleProfile)
     {
         GoogleProfile = googleProfile;
         IsEmailVerified = true;
@@ -80,8 +84,8 @@ public class User : EntityBase<UserId>
             {
                 "male" => EGender.Male,
                 "female" => EGender.Female,
-                null => null,
-                _ => EGender.PreferNotToSay
+                null => EGender.PreferNotToSay,
+                _ => EGender.Other
             };
     }
     
@@ -112,7 +116,7 @@ public class User : EntityBase<UserId>
         return new Success();
     }
 
-    public void SetGender(EGender? gender)
+    public void SetGender(EGender gender)
     {
         Gender = gender;
     }

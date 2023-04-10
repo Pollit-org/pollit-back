@@ -49,7 +49,7 @@ namespace Pollit.Infra.SqlServer.Migrations
                     b.Property<int?>("Gender")
                         .HasColumnType("integer");
 
-                    b.Property<GoogleProfile>("GoogleProfile")
+                    b.Property<GoogleProfileDto>("GoogleProfile")
                         .HasColumnType("jsonb");
 
                     b.Property<bool>("HasTemporaryUserName")
