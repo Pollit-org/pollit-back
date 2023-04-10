@@ -1,7 +1,9 @@
 ﻿using System.Reflection;
+using Pollit.Domain.Poll._Ports;
 using Pollit.Domain.Users;
 using Pollit.Domain.Users._Ports;
 using Pollit.SeedWork;
+using Pollit.Test.InMemoryDb.Polls;
 using Pollit.Test.InMemoryDb.Users;
 
 namespace Pollit.Test.InMemoryDb;
@@ -29,6 +31,17 @@ public class InMemoryDatabase
 
         var inMemoryImplementation = new UserInMemoryRepository();
         _repositories.Add(typeof(IUserRepository), inMemoryImplementation);
+        
+        return inMemoryImplementation;
+    }
+    
+    public PollInMemoryRepository GetPollRepository()
+    {
+        if (_repositories.TryGetValue(typeof(IPollRepository), out var repo))
+            return (PollInMemoryRepository) repo;
+
+        var inMemoryImplementation = new PollInMemoryRepository();
+        _repositories.Add(typeof(IPollRepository), inMemoryImplementation);
         
         return inMemoryImplementation;
     }

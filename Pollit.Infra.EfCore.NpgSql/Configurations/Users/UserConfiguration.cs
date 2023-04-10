@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Pollit.Domain.Users;
 using Pollit.Domain.Users.EncryptedPasswords;
+using Pollit.Domain.Users.UserNames;
 
 namespace Pollit.Infra.EfCore.NpgSql.Configurations.Users;
 
@@ -26,7 +27,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.Property(u => u.Email).HasEmailConversion();
 
-        builder.Property(u => u.UserName).HasUserNameConversion();
+        builder.Property(u => u.UserName).HasStringValueConversion(str => new UserName(str), UserName.MaxLength);
         
         builder.Property(u => u.RefreshTokens).HasHashSetDelimiterSeparatedConversion(" ", token => token.ToString(), s => new RefreshToken(s));
         

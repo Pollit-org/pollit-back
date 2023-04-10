@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pollit.Application.Users.SetPermanentUserName;
+using Pollit.Infra.Api.AuthenticatedUserProviders;
 
 namespace Pollit.Infra.Api.Controllers.Users.SetPermanentUserName;
 
@@ -8,7 +9,7 @@ namespace Pollit.Infra.Api.Controllers.Users.SetPermanentUserName;
 public class SetPermanentUserNameController : OperationControllerBase<SetPermanentUserNameCommand, ISetPermanentUserNamePresenter, SetPermanentUserNamePresenter, SetPermanentUserNameCommandHandler>
 {
 
-    public SetPermanentUserNameController(SetPermanentUserNameCommandHandler commandHandler) : base(commandHandler)
+    public SetPermanentUserNameController(SetPermanentUserNameCommandHandler commandHandler, IAuthenticatedUserProvider authenticatedUserprovider) : base(commandHandler, authenticatedUserprovider)
     {
     }
 

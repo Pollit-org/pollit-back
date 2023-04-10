@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Pollit.Domain.Shared.Email;
 using Pollit.Domain.Users.Birthdates;
 using Pollit.Domain.Users.UserNames;
+using Pollit.SeedWork;
 
 namespace Pollit.Infra.EfCore.NpgSql.Configurations;
 
@@ -16,12 +17,12 @@ public static class PropertyBuilderExtensions
         
         return propertyBuilder;
     }
-    
-    public static PropertyBuilder<UserName> HasUserNameConversion(this PropertyBuilder<UserName> propertyBuilder)
+
+    public static PropertyBuilder<T> HasStringValueConversion<T>(this PropertyBuilder<T> propertyBuilder, Func<string, T> conversionFromString, int maxLength) where T : IStringValue
     {
         propertyBuilder
-            .HasConversion(userName => userName.ToString(), userNameString => new UserName(userNameString))
-            .HasMaxLength(UserName.MaxLength);
+            .HasConversion(userName => userName.ToString(), str => conversionFromString(str))
+            .HasMaxLength(maxLength);
         
         return propertyBuilder;
     }

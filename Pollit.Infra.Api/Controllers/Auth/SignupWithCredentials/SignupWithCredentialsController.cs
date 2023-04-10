@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pollit.Application.Auth.SignupWithCredentials;
+using Pollit.Infra.Api.AuthenticatedUserProviders;
 
 namespace Pollit.Infra.Api.Controllers.Auth.SignupWithCredentials;
 
 [ApiController]
 public class SignupWithCredentialsController : OperationControllerBase<SignupWithCredentialsCommand, ISignupWithCredentialsPresenter, SignupWithCredentialsPresenter, SignupWithCredentialsCommandHandler>
 {
-    public SignupWithCredentialsController(SignupWithCredentialsCommandHandler commandHandler) : base(commandHandler)
+    public SignupWithCredentialsController(SignupWithCredentialsCommandHandler commandHandler, IAuthenticatedUserProvider authenticatedUserprovider) : base(commandHandler, authenticatedUserprovider)
     {
     }
 

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pollit.Application.Users.SetUserGender;
+using Pollit.Infra.Api.AuthenticatedUserProviders;
 
 namespace Pollit.Infra.Api.Controllers.Users.SetUserGender;
 
@@ -8,7 +9,7 @@ namespace Pollit.Infra.Api.Controllers.Users.SetUserGender;
 public class SetUserGenderController : OperationControllerBase<SetUserGenderCommand, ISetUserGenderPresenter, SetUserGenderPresenter, SetUserGenderCommandHandler>
 {
 
-    public SetUserGenderController(SetUserGenderCommandHandler commandHandler) : base(commandHandler)
+    public SetUserGenderController(SetUserGenderCommandHandler commandHandler, IAuthenticatedUserProvider authenticatedUserprovider) : base(commandHandler, authenticatedUserprovider)
     {
     }
 

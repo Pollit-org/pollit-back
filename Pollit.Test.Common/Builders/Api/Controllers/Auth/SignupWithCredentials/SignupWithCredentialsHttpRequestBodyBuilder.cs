@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Pollit.Infra.Api.Controllers.Auth.SignupWithCredentials;
 
-namespace Pollit.Test.Common.Builders.Api.Controllers.SignupWithCredentialsControllerBuilder;
+namespace Pollit.Test.Common.Builders.Api.Controllers.Auth.SignupWithCredentials;
 
 public class SignupWithCredentialsHttpRequestBodyBuilder : IFluentBuilder<SignupWithCredentialsHttpRequestBody>
 {

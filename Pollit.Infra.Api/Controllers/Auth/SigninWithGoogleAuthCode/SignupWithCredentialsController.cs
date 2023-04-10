@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pollit.Application.Auth.SigninWithGoogleAuthCode;
+using Pollit.Infra.Api.AuthenticatedUserProviders;
 
 namespace Pollit.Infra.Api.Controllers.Auth.SigninWithGoogleAuthCode;
 
 [ApiController]
 public class SigninWithGoogleAuthCodeController : OperationControllerBase<SigninWithGoogleAuthCodeCommand, ISigninWithGoogleAuthCodePresenter, SigninWithGoogleAuthCodePresenter, SigninWithGoogleAuthCodeCommandHandler>
 {
-    public SigninWithGoogleAuthCodeController(SigninWithGoogleAuthCodeCommandHandler commandHandler) : base(commandHandler)
+    public SigninWithGoogleAuthCodeController(SigninWithGoogleAuthCodeCommandHandler commandHandler, IAuthenticatedUserProvider authenticatedUserprovider) : base(commandHandler, authenticatedUserprovider)
     {
     }
 

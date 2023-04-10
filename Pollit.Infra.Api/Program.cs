@@ -2,11 +2,14 @@ using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Pollit.Domain._Ports;
+using Pollit.Domain.Poll._Ports;
 using Pollit.Domain.Users;
 using Pollit.Domain.Users._Ports;
 using Pollit.Domain.Users.Services;
 using Pollit.Infra.Api;
+using Pollit.Infra.Api.AuthenticatedUserProviders;
 using Pollit.Infra.EfCore.NpgSql;
+using Pollit.Infra.EfCore.NpgSql.Repositories.Polls;
 using Pollit.Infra.EfCore.NpgSql.Repositories.Users;
 using Pollit.Infra.GoogleApi;
 using Pollit.Infra.Jwt;
@@ -31,6 +34,7 @@ services.AddDbContext<PollitDbContext>(options =>
 
 services
     .AddScoped<IUserRepository, UserRepository>()
+    .AddScoped<IPollRepository, PollRepository>()
     .AddTransient<IUnitOfWork, UnitOfWork>()
     .AddSingleton<IAccessTokenManager, AccessTokenManager>()
     .AddSingleton<IPasswordEncryptor, PasswordEncryptor>()
@@ -43,7 +47,9 @@ services
     .AddTransient<AccountSettingsService>()
     .AddQueryAndCommandHandlers()
     .AddJwtAuthentication(jwtConfig)
-    .AddAuthorizationPolicies();
+    .AddAuthorizationPolicies()
+    .AddHttpContextAccessor()
+    .AddTransient<IAuthenticatedUserProvider, HttpContextAuthenticatedUserProvider>();
 
 var app = builder.Build();
 

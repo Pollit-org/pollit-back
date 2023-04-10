@@ -2,7 +2,7 @@
 using FluentAssertions;
 using FluentAssertions.AspNetCore.Mvc;
 using Pollit.Infra.Api.Test.x_FluentAssertionExtensions;
-using Pollit.Test.Common.Builders.Api.Controllers.SignupWithCredentialsControllerBuilder;
+using Pollit.Test.Common.Builders.Api.Controllers.Auth.SignupWithCredentials;
 using Pollit.Test.Common.Builders.Application.Auth.SignupWithCredentials;
 using Pollit.Test.InMemoryDb;
 using Xunit;

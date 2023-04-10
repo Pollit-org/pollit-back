@@ -30,7 +30,7 @@ public abstract class OperationHandlerBase<TOperation, TPresenter> : OperationHa
         }
     }
 
-    protected abstract Task HandleAsync(AuthorizedOperation<TOperation> authorizedQuery, TPresenter presenter);
+    protected abstract Task HandleAsync(AuthorizedOperation<TOperation> authorizedOperation, TPresenter presenter);
 
     protected virtual Task<bool> IsAuthorized(UserId? userId, TOperation query)
     {

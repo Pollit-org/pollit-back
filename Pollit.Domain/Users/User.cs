@@ -35,7 +35,7 @@ public class User : EntityBase<UserId>
     public static User NewUser(Email email) 
         => new (UserId.NewUserId(), email, UserName.RandomTemporary(), true, null, new HashSet<RefreshToken>(), true, null, null, null, DateTime.UtcNow, null);
 
-    public override UserId Id { get; protected set; }
+    public sealed override UserId Id { get; protected set; }
     
     public Email Email { get; protected set; }
     

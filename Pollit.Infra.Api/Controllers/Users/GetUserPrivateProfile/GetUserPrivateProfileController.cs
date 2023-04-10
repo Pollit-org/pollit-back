@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pollit.Application.Users.GetUserPrivateProfile;
+using Pollit.Infra.Api.AuthenticatedUserProviders;
 
 namespace Pollit.Infra.Api.Controllers.Users.GetUserPrivateProfile;
 
 [ApiController]
 public class GetUserPrivateProfileController : OperationControllerBase<GetUserPrivateProfileQuery, IGetUserPrivateProfilePresenter, GetUserPrivateProfilePresenter, GetUserPrivateProfileQueryHandler>
 {
-    public GetUserPrivateProfileController(GetUserPrivateProfileQueryHandler queryHandler) : base(queryHandler)
+    public GetUserPrivateProfileController(GetUserPrivateProfileQueryHandler queryHandler, IAuthenticatedUserProvider authenticatedUserProvider) : base(queryHandler, authenticatedUserProvider)
     {
     }
 

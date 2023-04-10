@@ -8,10 +8,6 @@ public class PollitDomainException : Exception
     {
     }
 
-    public PollitDomainException(string? message) : base(message)
-    {
-    }
-
     public PollitDomainException(string? message, Exception? innerException) : base(message, innerException)
     {
     }
