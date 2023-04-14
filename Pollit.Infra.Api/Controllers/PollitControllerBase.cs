@@ -49,6 +49,8 @@ public abstract class OperationControllerBase<TCommand, TPresenter, TPresenterIm
         {
             if (exception is PollitApplicationException e) 
                 presenter.BadRequest(e.ErrorCode);
+            else
+                throw;
         }
     }
 }

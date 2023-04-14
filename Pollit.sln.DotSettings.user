@@ -16,6 +16,7 @@
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=c4809dee_002Dd4d9_002D4863_002D9980_002D8c6fb0f5ebb5/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from UserTest.cs" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;ProjectFile&gt;188A0F38-EFC8-4D51-825C-A357EFC62211/d:Users/f:UserTest.cs&lt;/ProjectFile&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A54F55ABA84CA04AA15840C4A9F260F4/Field/=HEADER/Expression/@EntryValue">fileheader()</s:String>
 	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=DC83F3F2163AC94DB0DFAE341CB6BBEA/Field/=NAMESPACE/Order/@EntryValue">1</s:Int64>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=DC83F3F2163AC94DB0DFAE341CB6BBEA/Field/=CLASS/@KeyIndexDefined">False</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=DC83F3F2163AC94DB0DFAE341CB6BBEA/Description/@EntryValue">&amp;Pollit Command Handler</s:String>

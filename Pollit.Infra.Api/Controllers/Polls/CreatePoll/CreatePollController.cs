@@ -8,7 +8,7 @@ namespace Pollit.Infra.Api.Controllers.Polls.CreatePoll;
 [ApiController]
 public class CreatePollController : OperationControllerBase<CreatePollCommand, ICreatePollPresenter, CreatePollPresenter, CreatePollCommandHandler>
 {
-    public CreatePollController(CreatePollCommandHandler commandHandler, IAuthenticatedUserProvider authenticatedUserprovider) : base(commandHandler, authenticatedUserprovider)
+    public CreatePollController(CreatePollCommandHandler commandHandler, IAuthenticatedUserProvider authenticatedUserProvider) : base(commandHandler, authenticatedUserProvider)
     {
     }
 

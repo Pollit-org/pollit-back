@@ -17,4 +17,13 @@
       <ProjectReference Include="..\Pollit.Domain\Pollit.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <EmbeddedResource Include="Migrations\20230414101226_GetPollFeedSqlView.Create.sql"><!--        <DependentUpon>20230414101226_GetPollFeedSqlView.cs</DependentUpon>-->
+      
+      </EmbeddedResource>
+      <EmbeddedResource Include="Migrations\20230414101226_GetPollFeedSqlView.Drop.sql"><!--        <DependentUpon>20230414101226_GetPollFeedSqlView.cs</DependentUpon>-->
+      
+      </EmbeddedResource>
+    </ItemGroup>
+
 </Project>
