@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using FluentAssertions.AspNetCore.Mvc;
-using Pollit.Domain.Poll;
 using Pollit.Infra.Api.Controllers.Polls.CreatePoll;
 using Pollit.Infra.Api.Test.x_FluentAssertionExtensions;
 using Pollit.Test.Common.Builders.Api;

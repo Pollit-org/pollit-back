@@ -1,11 +1,11 @@
 ﻿using OneOf;
-using Pollit.Domain.Poll.Errors;
-using Pollit.Domain.Poll.PollOptionTitles;
-using Pollit.Domain.Poll.PollTitles;
+using Pollit.Domain.Polls.Errors;
+using Pollit.Domain.Polls.PollOptionTitles;
+using Pollit.Domain.Polls.PollTitles;
 using Pollit.Domain.Users;
 using Pollit.SeedWork;
 
-namespace Pollit.Domain.Poll;
+namespace Pollit.Domain.Polls;
 
 [GenerateOneOf]
 public partial class PollCreationResult : OneOfBase<Poll, PollMustHaveAtLeastTwoOptionsError> { }

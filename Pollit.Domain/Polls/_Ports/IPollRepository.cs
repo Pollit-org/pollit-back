@@ -1,4 +1,4 @@
-﻿namespace Pollit.Domain.Poll._Ports;
+﻿namespace Pollit.Domain.Polls._Ports;
 
 public interface IPollRepository
 {

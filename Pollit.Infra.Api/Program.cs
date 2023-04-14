@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Pollit.Domain._Ports;
-using Pollit.Domain.Poll._Ports;
+using Pollit.Domain.Polls._Ports;
 using Pollit.Domain.Users;
 using Pollit.Domain.Users._Ports;
 using Pollit.Domain.Users.Services;

@@ -1,5 +1,5 @@
 ﻿using Pollit.Application.Polls.CreatePoll;
-using Pollit.Domain.Poll;
+using Pollit.Domain.Polls;
 
 namespace Pollit.Infra.Api.Controllers.Polls.CreatePoll;
 

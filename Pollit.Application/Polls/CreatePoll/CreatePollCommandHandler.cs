@@ -1,7 +1,7 @@
 ﻿using Pollit.Domain._Ports;
-using Pollit.Domain.Poll;
-using Pollit.Domain.Poll._Ports;
-using Pollit.Domain.Poll.PollOptionTitles;
+using Pollit.Domain.Polls;
+using Pollit.Domain.Polls._Ports;
+using Pollit.Domain.Polls.PollOptionTitles;
 using Pollit.SeedWork;
 
 namespace Pollit.Application.Polls.CreatePoll;

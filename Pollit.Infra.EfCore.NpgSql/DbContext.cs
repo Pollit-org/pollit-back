@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Pollit.Domain.Poll;
+using Pollit.Domain.Polls;
 using Pollit.Domain.Users;
 
 namespace Pollit.Infra.EfCore.NpgSql;

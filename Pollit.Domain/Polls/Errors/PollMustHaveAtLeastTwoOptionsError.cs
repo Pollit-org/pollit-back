@@ -1,4 +1,4 @@
-﻿namespace Pollit.Domain.Poll.Errors;
+﻿namespace Pollit.Domain.Polls.Errors;
 
 public class PollMustHaveAtLeastTwoOptionsError
 {

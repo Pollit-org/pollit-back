@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Pollit.Domain.Poll;
-using Pollit.Domain.Poll.PollOptionTitles;
+using Pollit.Domain.Polls;
+using Pollit.Domain.Polls.PollOptionTitles;
 
 namespace Pollit.Infra.EfCore.NpgSql.Configurations.Polls;
 

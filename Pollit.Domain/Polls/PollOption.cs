@@ -1,7 +1,7 @@
-﻿using Pollit.Domain.Poll.PollOptionTitles;
+﻿using Pollit.Domain.Polls.PollOptionTitles;
 using Pollit.Domain.Users;
 
-namespace Pollit.Domain.Poll;
+namespace Pollit.Domain.Polls;
 
 public class PollOption
 {

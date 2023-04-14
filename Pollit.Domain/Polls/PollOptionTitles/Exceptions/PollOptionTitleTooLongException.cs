@@ -1,4 +1,4 @@
-﻿namespace Pollit.Domain.Poll.PollOptionTitles.Exceptions;
+﻿namespace Pollit.Domain.Polls.PollOptionTitles.Exceptions;
 
 public class PollOptionTitleTooLongException : PollOptionTitleException
 {

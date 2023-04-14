@@ -1,7 +1,7 @@
-﻿using Pollit.Domain.Poll.PollOptionTitles.Exceptions;
+﻿using Pollit.Domain.Polls.PollOptionTitles.Exceptions;
 using Pollit.SeedWork;
 
-namespace Pollit.Domain.Poll.PollOptionTitles;
+namespace Pollit.Domain.Polls.PollOptionTitles;
 
 public class PollOptionTitle : StringValueBase
 {

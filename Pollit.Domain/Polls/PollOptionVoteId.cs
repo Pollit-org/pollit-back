@@ -1,6 +1,6 @@
 ﻿using Pollit.SeedWork;
 
-namespace Pollit.Domain.Poll;
+namespace Pollit.Domain.Polls;
 
 public class PollOptionVoteId : IdValueBase
 {

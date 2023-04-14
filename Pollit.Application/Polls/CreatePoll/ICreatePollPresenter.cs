@@ -1,4 +1,4 @@
-﻿using Pollit.Domain.Poll;
+﻿using Pollit.Domain.Polls;
 
 namespace Pollit.Application.Polls.CreatePoll;
 

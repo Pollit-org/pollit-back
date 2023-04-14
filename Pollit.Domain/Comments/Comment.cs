@@ -1,4 +1,4 @@
-﻿using Pollit.Domain.Poll;
+﻿using Pollit.Domain.Polls;
 using Pollit.Domain.Users;
 
 namespace Pollit.Domain.Comments;

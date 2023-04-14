@@ -1,5 +1,5 @@
-﻿using Pollit.Domain.Poll.PollOptionTitles.Exceptions;
-using Pollit.Domain.Poll.PollTitles.Exceptions;
+﻿using Pollit.Domain.Polls.PollOptionTitles.Exceptions;
+using Pollit.Domain.Polls.PollTitles.Exceptions;
 using Pollit.Domain.Shared.Email;
 using Pollit.Domain.Users.Birthdates.Exceptions;
 using Pollit.Domain.Users.ClearPasswords.Exceptions;

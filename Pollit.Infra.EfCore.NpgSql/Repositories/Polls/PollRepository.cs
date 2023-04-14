@@ -1,5 +1,5 @@
-﻿using Pollit.Domain.Poll;
-using Pollit.Domain.Poll._Ports;
+﻿using Pollit.Domain.Polls;
+using Pollit.Domain.Polls._Ports;
 
 namespace Pollit.Infra.EfCore.NpgSql.Repositories.Polls;
 
