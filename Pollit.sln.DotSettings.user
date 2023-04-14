@@ -1,31 +1,76 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 	<s:String x:Key="/Default/Environment/Highlighting/HighlightingSourceSnapshotLocation/@EntryValue">C:\Users\MrFlow\AppData\Local\JetBrains\Rider2022.3\resharper-host\temp\Rider\vAny\CoverageData\_Pollit.-161142402\Snapshot\snapshot.utdcvr</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=36db42aa_002D99d0_002D4845_002D92b6_002Dcd46f3016eac/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="CreatePollControllerTest" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::0CA038E9-EE59-4743-8118-8AE49FA2B1F3::net7.0::Pollit.Infra.Api.Test.Controllers.Polls.CreatePoll.CreatePollControllerTest&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=5128f66b_002Dea22_002D40c9_002Da9f1_002Dc2fa900b1697/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="T" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::718C69F1-8EFA-40BB-B20B-F4D23A9D9CD2::net7.0::Pollit.Application.Test.UnitTest1.T&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=82f4c026_002D0652_002D4c8d_002Db460_002Daf29ab1daf8b/@EntryIndexedValue">&lt;SessionState ContinuousTestingIsOn="True" ContinuousTestingMode="1" IsActive="True" Name="All tests from UserTest.cs #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Project Location="D:\Documents\Pollit\pollit-back" Presentation="&amp;lt;Tests&amp;gt;" /&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=c4809dee_002Dd4d9_002D4863_002D9980_002D8c6fb0f5ebb5/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from UserTest.cs" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;ProjectFile&gt;188A0F38-EFC8-4D51-825C-A357EFC62211/d:Users/f:UserTest.cs&lt;/ProjectFile&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A54F55ABA84CA04AA15840C4A9F260F4/Field/=HEADER/Expression/@EntryValue">fileheader()</s:String>
 	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=DC83F3F2163AC94DB0DFAE341CB6BBEA/Field/=NAMESPACE/Order/@EntryValue">1</s:Int64>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=DC83F3F2163AC94DB0DFAE341CB6BBEA/Field/=CLASS/@KeyIndexDefined">False</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=DC83F3F2163AC94DB0DFAE341CB6BBEA/Description/@EntryValue">&amp;Pollit Command Handler</s:String>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=DC83F3F2163AC94DB0DFAE341CB6BBEA/Text/@EntryValue">$HEADER$namespace $NAMESPACE$
 {
-  public class $COMMAND$CommandHandler : CommandHandlerBase&lt;$COMMAND$Command, I$COMMAND$Presenter&gt;
+  public class $COMMAND$CommandHandler : OperationHandlerBase&lt;$COMMAND$Command, I$COMMAND$Presenter&gt;
   {
-    protected override async Task HandleInternalAsync($COMMAND$Command command, I$COMMAND$Presenter presenter)
+    protected override async Task HandleAsync(AuthorizedOperation&lt;$COMMAND$Command&gt; command, I$COMMAND$Presenter presenter)
     {
         presenter.Success();
     }
   }
   
-  public class $COMMAND$Command
+  public class $COMMAND$Command : IOperation
   {
     public object $PROP$ { get; }
   }
   
-  public interface I$COMMAND$Presenter
+  public interface I$COMMAND$Presenter : IPresenter
 {
     void Success();
 }</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F3FF91D10A24E84787511F4B0F160DF8/Text/@EntryValue">using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+
+$HEADER$namespace $NAMESPACE$;
+
+[ApiController]
+public class $CONTROLLER$Controller : OperationControllerBase&lt;$CONTROLLER$Command, I$CONTROLLER$Presenter, $CONTROLLER$Presenter, $CONTROLLER$CommandHandler&gt;
+{
+    public $CONTROLLER$Controller($CONTROLLER$CommandHandler commandHandler) : base(commandHandler)
+    {
+    }
+
+    [Authorize(Policy = CPolicies.Authenticated)]
+    [HttpPost("$ROUTE$", Name = "$NAME$")]
+    public async Task&lt;IActionResult?&gt; $CONTROLLER$Async([FromBody] $CONTROLLER$HttpRequestBody requestBody)
+    {
+        var command = new $CONTROLLER$Command();
+
+        var presenter = new $CONTROLLER$Presenter();
+        
+        await HandleOperationAsync(command, presenter);
+        
+        return presenter.ActionResult;
+    }
+}
+
+public class $CONTROLLER$HttpRequestBody 
+{
+}
+
+public class $CONTROLLER$Presenter : BasePresenter, I$CONTROLLER$Presenter 
+{
+}
+</s:String>
 	</wpf:ResourceDictionary>

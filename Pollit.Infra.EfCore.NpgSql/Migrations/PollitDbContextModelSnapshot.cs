@@ -23,6 +23,78 @@ namespace Pollit.Infra.SqlServer.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("Pollit.Domain.Polls.Poll", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasDefaultValueSql("gen_random_uuid ()");
+
+                    b.Property<Guid>("AuthorId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Tags")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(125)
+                        .HasColumnType("character varying(125)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Polls", (string)null);
+                });
+
+            modelBuilder.Entity("Pollit.Domain.Polls.PollOption", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasDefaultValueSql("gen_random_uuid ()");
+
+                    b.Property<Guid?>("PollId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(55)
+                        .HasColumnType("character varying(55)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PollId");
+
+                    b.ToTable("Polls.Options", (string)null);
+                });
+
+            modelBuilder.Entity("Pollit.Domain.Polls.PollOptionVote", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasDefaultValueSql("gen_random_uuid ()");
+
+                    b.Property<Guid?>("PollOptionId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("VotedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("VoterId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PollOptionId");
+
+                    b.ToTable("Polls.Options.Votes", (string)null);
+                });
+
             modelBuilder.Entity("Pollit.Domain.Users.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -77,6 +149,30 @@ namespace Pollit.Infra.SqlServer.Migrations
                     b.HasIndex("UserName");
 
                     b.ToTable("Users", (string)null);
+                });
+
+            modelBuilder.Entity("Pollit.Domain.Polls.PollOption", b =>
+                {
+                    b.HasOne("Pollit.Domain.Polls.Poll", null)
+                        .WithMany("Options")
+                        .HasForeignKey("PollId");
+                });
+
+            modelBuilder.Entity("Pollit.Domain.Polls.PollOptionVote", b =>
+                {
+                    b.HasOne("Pollit.Domain.Polls.PollOption", null)
+                        .WithMany("Votes")
+                        .HasForeignKey("PollOptionId");
+                });
+
+            modelBuilder.Entity("Pollit.Domain.Polls.Poll", b =>
+                {
+                    b.Navigation("Options");
+                });
+
+            modelBuilder.Entity("Pollit.Domain.Polls.PollOption", b =>
+                {
+                    b.Navigation("Votes");
                 });
 #pragma warning restore 612, 618
         }

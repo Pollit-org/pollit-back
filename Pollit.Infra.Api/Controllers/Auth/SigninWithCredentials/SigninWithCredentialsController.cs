@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Pollit.Application.Auth.SigninWithCredentials;
 using Pollit.Domain.Users.ClearPasswords;
+using Pollit.Infra.Api.AuthenticatedUserProviders;
 
 namespace Pollit.Infra.Api.Controllers.Auth.SigninWithCredentials;
 
@@ -9,7 +10,7 @@ namespace Pollit.Infra.Api.Controllers.Auth.SigninWithCredentials;
 public class SigninWithCredentialsController : OperationControllerBase<SigninWithCredentialsCommand, ISigninWithCredentialsPresenter, SigninWithCredentialsPresenter,SigninWithCredentialsCommandHandler>
 {
 
-    public SigninWithCredentialsController(SigninWithCredentialsCommandHandler commandHandler) : base(commandHandler)
+    public SigninWithCredentialsController(SigninWithCredentialsCommandHandler commandHandler, IAuthenticatedUserProvider authenticatedUserprovider) : base(commandHandler, authenticatedUserprovider)
     {
     }
 

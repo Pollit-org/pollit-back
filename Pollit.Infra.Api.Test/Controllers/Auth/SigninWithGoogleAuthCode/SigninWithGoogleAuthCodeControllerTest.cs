@@ -5,7 +5,7 @@ using Pollit.Infra.Api.Controllers.Auth.SigninWithCredentials;
 using Pollit.Infra.Api.Controllers.Auth.SigninWithGoogleAuthCode;
 using Pollit.Infra.Api.Test.x_FluentAssertionExtensions;
 using Pollit.Infra.Api.Test.x_Scenario;
-using Pollit.Test.Common.Builders.Api.Controllers.SigninWithGoogleAuthCodeControllerBuilder;
+using Pollit.Test.Common.Builders.Api.Controllers.Auth.SigninWithGoogleAuthCode;
 using Pollit.Test.Common.Builders.Application.Auth.SignupWithGoogleAuthCode;
 using Pollit.Test.Common.Builders.Domain._Ports;
 using Pollit.Test.InMemoryDb;

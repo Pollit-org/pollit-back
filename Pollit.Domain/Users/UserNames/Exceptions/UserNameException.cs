@@ -2,7 +2,7 @@
 
 namespace Pollit.Domain.Users.UserNames.Exceptions;
 
-public class UserNameException : PollitDomainException
+public abstract class UserNameException : PollitDomainException
 {
     
 }

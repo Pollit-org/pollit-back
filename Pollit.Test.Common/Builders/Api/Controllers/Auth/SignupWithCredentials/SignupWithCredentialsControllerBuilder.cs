@@ -1,10 +1,9 @@
 ﻿using Pollit.Application.Auth.SignupWithCredentials;
 using Pollit.Infra.Api.Controllers.Auth.SignupWithCredentials;
-using Pollit.Test.Common.Builders.Application.Auth.SignupWithCredentials;
 
-namespace Pollit.Test.Common.Builders.Api.Controllers.SignupWithCredentialsControllerBuilder;
+namespace Pollit.Test.Common.Builders.Api.Controllers.Auth.SignupWithCredentials;
 
-public class SignupWithCredentialsControllerBuilder : IFluentBuilder<SignupWithCredentialsController>
+public class SignupWithCredentialsControllerBuilder : ControllerBuilderBase<SignupWithCredentialsController>
 {
     private SignupWithCredentialsCommandHandler _commandHandler;
 
@@ -14,8 +13,8 @@ public class SignupWithCredentialsControllerBuilder : IFluentBuilder<SignupWithC
         return this;
     }
     
-    public SignupWithCredentialsController Build()
+    public override SignupWithCredentialsController Build()
     {
-        return new SignupWithCredentialsController(_commandHandler);
+        return new SignupWithCredentialsController(_commandHandler, _authenticatedUserProvider);
     }
 }

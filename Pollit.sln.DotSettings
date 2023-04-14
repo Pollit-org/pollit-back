@@ -10,6 +10,7 @@
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/QuickList/=F0CA621CDF5AB24282D8CDC11C520997/Entry/=F3FF91D10A24E84787511F4B0F160DF8/@KeyIndexDefined">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/QuickList/=F0CA621CDF5AB24282D8CDC11C520997/Entry/=F3FF91D10A24E84787511F4B0F160DF8/EntryName/@EntryValue">Pollit Command Handler</s:String>
 	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/QuickList/=F0CA621CDF5AB24282D8CDC11C520997/Entry/=F3FF91D10A24E84787511F4B0F160DF8/Position/@EntryValue">11</s:Int64>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A54F55ABA84CA04AA15840C4A9F260F4/Field/=HEADER/Expression/@EntryValue">getAlphaNumericFileNameWithoutExtension()</s:String>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=DC83F3F2163AC94DB0DFAE341CB6BBEA/@KeyIndexDefined">True</s:Boolean>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=DC83F3F2163AC94DB0DFAE341CB6BBEA/Applicability/=File/@EntryIndexedValue">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=DC83F3F2163AC94DB0DFAE341CB6BBEA/CustomProperties/=Category/@EntryIndexedValue">Primary</s:String>

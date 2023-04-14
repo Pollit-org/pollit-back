@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pollit.Application.Users.SetUserBirthdate;
+using Pollit.Infra.Api.AuthenticatedUserProviders;
 
 namespace Pollit.Infra.Api.Controllers.Users.SetUserBirthdate;
 
 [ApiController]
 public class SetUserBirthdateController : OperationControllerBase<SetUserBirthdateCommand, ISetUserBirthdatePresenter, SetUserBirthdatePresenter, SetUserBirthdateCommandHandler>
 {
-    public SetUserBirthdateController(SetUserBirthdateCommandHandler commandHandler) : base(commandHandler)
+    public SetUserBirthdateController(SetUserBirthdateCommandHandler commandHandler, IAuthenticatedUserProvider authenticatedUserprovider) : base(commandHandler, authenticatedUserprovider)
     {
     }
 
