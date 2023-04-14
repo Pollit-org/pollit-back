@@ -13,7 +13,7 @@ public class PollConfiguration : IEntityTypeConfiguration<Poll>
         builder.ToTable("Polls");
 
         builder.HasKey(p => p.Id);
-        builder.Property(p => p.Id).HasDefaultValueSql("gen_random_uuid ()").IsRequired();
+        builder.Property(p => p.Id).ValueGeneratedNever().IsRequired();
         
         builder.Property(p => p.Id).HasConversion(id => id.Value, id => new PollId(id));
         builder.Property(p => p.AuthorId).HasConversion(id => id.Value, id => new UserId(id));
