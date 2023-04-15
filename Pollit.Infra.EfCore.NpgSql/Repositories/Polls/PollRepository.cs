@@ -1,4 +1,5 @@
-﻿using Pollit.Domain.Polls;
+﻿using Microsoft.EntityFrameworkCore;
+using Pollit.Domain.Polls;
 using Pollit.Domain.Polls._Ports;
 
 namespace Pollit.Infra.EfCore.NpgSql.Repositories.Polls;
@@ -17,8 +18,16 @@ public class PollRepository : IPollRepository
         await _context.Polls.AddAsync(poll);
     }
 
-    public async Task<Poll?> GetAsync(PollId pollId)
+    public void Update(Poll poll)
     {
-        return await _context.Polls.FindAsync(pollId);
+        _context.Update(poll);
+    }
+
+    public Task<Poll?> GetAsync(PollId pollId)
+    {
+        return _context.Polls
+            .Include(p => p.Options)
+            .ThenInclude(o => o.Votes)
+            .FirstOrDefaultAsync(p => p.Id == pollId);
     }
 }

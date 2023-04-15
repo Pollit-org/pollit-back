@@ -1,4 +1,6 @@
-﻿using OneOf;
+﻿using System.Collections.ObjectModel;
+using OneOf;
+using OneOf.Types;
 using Pollit.Domain.Polls.Errors;
 using Pollit.Domain.Polls.PollOptionTitles;
 using Pollit.Domain.Polls.PollTitles;
@@ -9,6 +11,9 @@ namespace Pollit.Domain.Polls;
 
 [GenerateOneOf]
 public partial class PollCreationResult : OneOfBase<Poll, PollMustHaveAtLeastTwoOptionsError> { }
+
+[GenerateOneOf]
+public partial class CastVoteResult : OneOfBase<Success, OptionDoesNotExistError, UserHasAlreadyVotedError> { }
 
 public class Poll : EntityBase<PollId>
 {
@@ -49,15 +54,22 @@ public class Poll : EntityBase<PollId>
     
     public DateTime CreatedAt { get; protected set; }
 
-    public void AddVote(PollOptionId optionId, UserId userId)
+    public CastVoteResult CastVote(User voter, PollOptionId optionId)
     {
+        if (UserHasVoted(voter))
+            return new UserHasAlreadyVotedError();
+        
         var option = _options.FirstOrDefault(opt => opt.Id == optionId);
         if (option is null)
-        {
-            //todo
-            throw new Exception();
-        }
-        
-        option.AddVote(userId);
+            return new OptionDoesNotExistError();
+
+        option.AddVote(voter.Id);
+
+        return new Success();
+    }
+
+    private bool UserHasVoted(User user)
+    {
+        return Options.Any(o => o.Votes.Any(v => v.VoterId == user.Id));
     }
 }

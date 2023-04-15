@@ -9,5 +9,7 @@ public class GetPollFeedQueryResultItemConfiguration : IEntityTypeConfiguration<
     public void Configure(EntityTypeBuilder<GetPollFeedQueryResultItem> builder)
     {
         builder.ToView("Polls.GetPollFeed").HasKey(x => x.PollId);
+
+        builder.Property(x => x.Options).HasColumnType("jsonb");
     }
 }
