@@ -9,7 +9,7 @@
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
     <data-source source="LOCAL" name="pollit - Flo" uuid="5ac41592-9560-4c79-b3b2-1b04decefe59">
-      <driver-ref>postgresql</driver-ref>
+      <driver-ref>cockroach</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://pollit-1-5407.7tc.cockroachlabs.cloud:26257/flodb</jdbc-url>
