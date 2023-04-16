@@ -13,7 +13,7 @@ public class PollOptionConfiguration : IEntityTypeConfiguration<PollOption>
         
         builder.HasKey(o => o.Id);
         builder.Property(o => o.Id).ValueGeneratedNever().IsRequired();
-        
+
         builder.Property(o => o.Id).HasConversion(id => id.Value, id => new PollOptionId(id));
 
         builder.Property(o => o.Title).HasConversion(title => title.ToString(), titleString => new PollOptionTitle(titleString)).HasMaxLength(PollOptionTitle.MaxLength);

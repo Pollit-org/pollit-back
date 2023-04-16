@@ -14,6 +14,8 @@ public class PollOptionVoteConfiguration : IEntityTypeConfiguration<PollOptionVo
         builder.HasKey(v => v.Id);
         builder.Property(v => v.Id).ValueGeneratedNever().IsRequired();
         
+        builder.HasIndex(v => v.VoterId);
+        
         builder.Property(v => v.Id).HasConversion(id => id.Value, id => new PollOptionVoteId(id));
         builder.Property(v => v.VoterId).HasConversion(id => id.Value, id => new UserId(id));
     }
