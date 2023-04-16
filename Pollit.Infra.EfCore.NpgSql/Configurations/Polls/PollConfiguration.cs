@@ -14,7 +14,10 @@ public class PollConfiguration : IEntityTypeConfiguration<Poll>
 
         builder.HasKey(p => p.Id);
         builder.Property(p => p.Id).ValueGeneratedNever().IsRequired();
-        
+
+        builder.HasIndex(p => p.AuthorId);
+        builder.HasIndex(p => p.CreatedAt);
+
         builder.Property(p => p.Id).HasConversion(id => id.Value, id => new PollId(id));
         builder.Property(p => p.AuthorId).HasConversion(id => id.Value, id => new UserId(id));
 

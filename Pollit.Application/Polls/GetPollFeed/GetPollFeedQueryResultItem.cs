@@ -4,6 +4,7 @@ public class GetPollFeedQueryResultItem
 {
     public Guid PollId { get; set; }
     public string Title { get; set; }
+    public bool HasMyVote { get; set; }
     public GetPollFeedQueryResultItemOption[] Options { get; set; }
     public int TotalVotesCount { get; set; }
     public string[] Tags { get; set; }
@@ -15,5 +16,6 @@ public class GetPollFeedQueryResultItemOption
 {
     public Guid Id { get; set; }
     public string Title { get; set; }
-    public int VotesCount { get; set; }
+    public int? VotesCount { get; set; }
+    public bool? HasMyVote { get; set; }
 }

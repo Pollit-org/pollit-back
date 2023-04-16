@@ -11,7 +11,7 @@ public class GetPollFeedQueryHandler : OperationHandlerBase<GetPollFeedQuery, IG
 
     protected override Task HandleAsync(AuthorizedOperation<GetPollFeedQuery> query, IGetPollFeedPresenter presenter)
     {
-        var result = _pollFeedProjection.GetPolLFeed(query.Value);
+        var result = _pollFeedProjection.GetPollFeed(query.Value, query.AuthorizedFor);
         
         presenter.Success(result);
 

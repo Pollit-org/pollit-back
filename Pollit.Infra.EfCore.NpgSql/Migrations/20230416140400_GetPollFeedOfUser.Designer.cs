@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Pollit.Application.Polls.GetPollFeed;
@@ -13,9 +14,11 @@ using Pollit.Infra.EfCore.NpgSql;
 namespace Pollit.Infra.SqlServer.Migrations
 {
     [DbContext(typeof(PollitDbContext))]
-    partial class PollitDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230416140400_GetPollFeedOfUser")]
+    partial class GetPollFeedOfUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,9 +35,6 @@ namespace Pollit.Infra.SqlServer.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("HasMyVote")
-                        .HasColumnType("boolean");
 
                     b.Property<GetPollFeedQueryResultItemOption[]>("Options")
                         .IsRequired()
@@ -81,10 +81,6 @@ namespace Pollit.Infra.SqlServer.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AuthorId");
-
-                    b.HasIndex("CreatedAt");
-
                     b.ToTable("Polls", (string)null);
                 });
 
@@ -125,8 +121,6 @@ namespace Pollit.Infra.SqlServer.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("PollOptionId");
-
-                    b.HasIndex("VoterId");
 
                     b.ToTable("Polls.Options.Votes", (string)null);
                 });
