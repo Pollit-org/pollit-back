@@ -24,6 +24,8 @@
       <EmbeddedResource Include="Migrations\20230414101226_GetPollFeedSqlView.Drop.sql"><!--        <DependentUpon>20230414101226_GetPollFeedSqlView.cs</DependentUpon>-->
       
       </EmbeddedResource>
+      <EmbeddedResource Include="Migrations\20230416140400_GetPollFeedOfUser.Down.sql" />
+      <EmbeddedResource Include="Migrations\20230416140400_GetPollFeedOfUser.Up.sql" />
       <None Remove="Migrations\20230415001402_EnhancePollFeedSqlView.Down.sql" />
       <EmbeddedResource Include="Migrations\20230415001402_EnhancePollFeedSqlView.Down.sql" />
       <None Remove="Migrations\20230415001402_EnhancePollFeedSqlView.Up.sql" />

@@ -15,15 +15,6 @@ public class PollitControllerBase : ControllerBase
     }
 
     public UserId? AuthenticatedUserId => _authenticatedUserProvider.GetAuthenticatedUserId();
-
-    // public UserId? AuthenticatedUserId
-    // {
-    //     get
-    //     {
-    //         var value = HttpContext?.User?.Claims.FirstOrDefault(c => c.Type == CClaimTypes.UserId)?.Value;
-    //         return value != null ? new UserId(Guid.Parse(value)) : null;
-    //     }
-    // }
 }
 
 public abstract class OperationControllerBase<TCommand, TPresenter, TPresenterImpl, TOperationHandler> : PollitControllerBase 

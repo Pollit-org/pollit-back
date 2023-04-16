@@ -1,4 +1,6 @@
-﻿using Pollit.Application.Polls.GetPollFeed;
+﻿using Microsoft.EntityFrameworkCore;
+using Pollit.Application.Polls.GetPollFeed;
+using Pollit.Domain.Users;
 using Pollit.SeedWork.Querying;
 using Pollit.SeedWork.Querying.Pagination;
 
@@ -12,10 +14,10 @@ public class PollFeedProjection : IPollFeedProjection
     {
         _context = context;
     }
-    
-    public PaginationResult<GetPollFeedQueryResultItem> GetPolLFeed(GetPollFeedQuery query)
+
+    public PaginationResult<GetPollFeedQueryResultItem> GetPollFeed(GetPollFeedQuery query, UserId? requestingUserId)
     {
-        var dbQuery = _context.PollFeedItems.AsQueryable();
+        var dbQuery = _context.PollFeedItems.FromSql(@$"select (""Polls.GetPollFeedOfUser""({requestingUserId?.ToString()})).*");
         if (query.Author is not null)
             dbQuery = dbQuery.Where(x => x.Author == query.Author);
         if (query.CreatedBefore is not null)

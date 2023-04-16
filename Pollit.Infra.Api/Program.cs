@@ -1,10 +1,8 @@
 using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Pollit.Application.Polls.GetPollFeed;
 using Pollit.Domain._Ports;
 using Pollit.Domain.Polls._Ports;
-using Pollit.Domain.Users;
 using Pollit.Domain.Users._Ports;
 using Pollit.Domain.Users.Services;
 using Pollit.Infra.Api;

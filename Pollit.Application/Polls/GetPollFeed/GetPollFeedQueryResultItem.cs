@@ -16,4 +16,5 @@ public class GetPollFeedQueryResultItemOption
     public Guid Id { get; set; }
     public string Title { get; set; }
     public int VotesCount { get; set; }
+    public bool? HasMyVote { get; set; }
 }
