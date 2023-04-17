@@ -2,6 +2,8 @@ using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using Pollit.Application.Polls.GetPollFeed;
 using Pollit.Domain._Ports;
+using Pollit.Domain.Comments;
+using Pollit.Domain.Comments._Ports;
 using Pollit.Domain.Polls._Ports;
 using Pollit.Domain.Users._Ports;
 using Pollit.Domain.Users.Services;
@@ -9,6 +11,7 @@ using Pollit.Infra.Api;
 using Pollit.Infra.Api.AuthenticatedUserProviders;
 using Pollit.Infra.EfCore.NpgSql;
 using Pollit.Infra.EfCore.NpgSql.Projections.Polls;
+using Pollit.Infra.EfCore.NpgSql.Repositories.Comments;
 using Pollit.Infra.EfCore.NpgSql.Repositories.Polls;
 using Pollit.Infra.EfCore.NpgSql.Repositories.Users;
 using Pollit.Infra.GoogleApi;
@@ -36,6 +39,7 @@ services
     .AddScoped<IUserRepository, UserRepository>()
     .AddScoped<IPollRepository, PollRepository>()
     .AddScoped<IPollFeedProjection, PollFeedProjection>()
+    .AddScoped<ICommentRepository, CommentRepository>()
     .AddTransient<IUnitOfWork, UnitOfWork>()
     .AddSingleton<IAccessTokenManager, AccessTokenManager>()
     .AddSingleton<IPasswordEncryptor, PasswordEncryptor>()
@@ -46,6 +50,7 @@ services
     .AddTransient<CredentialsAuthenticationService>()
     .AddTransient<GoogleAuthenticationService>()
     .AddTransient<AccountSettingsService>()
+    .AddTransient<PollCommentingService>()
     .AddQueryAndCommandHandlers()
     .AddJwtAuthentication(jwtConfig)
     .AddAuthorizationPolicies()

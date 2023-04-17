@@ -5,31 +5,40 @@ namespace Pollit.Domain.Comments;
 
 public class Comment
 {
-    public Comment(CommentId id, PollId pollId, CommentId? parentCommentId, UserId authorId, CommentBody body, CommentVote votes, DateTime createdAt, DateTime? deletedAt)
+    [Obsolete("For EFCore 💩💩💩💩💩💩")]
+    private Comment() { }
+    
+    public Comment(CommentId id, PollId pollId, CommentId? parentCommentId, UserId authorId, CommentBody body, IEnumerable<CommentVote> votes, DateTime createdAt, DateTime? deletedAt)
     {
         Id = id;
         PollId = pollId;
         ParentCommentId = parentCommentId;
         AuthorId = authorId;
         Body = body;
-        Votes = votes;
+        _votes = votes.ToList();
         CreatedAt = createdAt;
         DeletedAt = deletedAt;
     }
 
-    public CommentId Id { get; }
+    internal static Comment NewComment(PollId pollId, CommentId? parentCommentId, UserId authorId, CommentBody body)
+        => new(CommentId.NewCommentId(), pollId, parentCommentId, authorId, body, Enumerable.Empty<CommentVote>(), DateTime.UtcNow, null);
+
+    public CommentId Id { get; protected set; }
     
-    public PollId PollId { get; }
+    public PollId PollId { get; protected set; }
     
-    public CommentId? ParentCommentId { get; }
+    public CommentId? ParentCommentId { get; protected set; }
     
-    public UserId AuthorId { get; }
+    public UserId AuthorId { get; protected set; }
     
-    public CommentBody Body { get; }
+    public CommentBody Body { get; protected set; }
     
-    public CommentVote Votes { get; }
+    private readonly IList<CommentVote> _votes;
+    public IReadOnlyCollection<CommentVote> Votes => _votes.AsReadOnly();
+
+    public DateTime CreatedAt { get; protected set; }
     
-    public DateTime CreatedAt { get; }
-    
-    public DateTime? DeletedAt { get; }
+    public DateTime? DeletedAt { get; protected set; }
+
+    public bool IsDeleted => DeletedAt != null;
 }

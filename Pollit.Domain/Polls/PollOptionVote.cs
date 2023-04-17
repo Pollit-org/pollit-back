@@ -4,7 +4,7 @@ namespace Pollit.Domain.Polls;
 
 public class PollOptionVote
 {
-    public PollOptionVote(PollOptionVoteId id, UserId voterId, DateTime votedAt)
+    private PollOptionVote(PollOptionVoteId id, UserId voterId, DateTime votedAt)
     {
         Id = id;
         VoterId = voterId;

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Pollit.Application.Polls.GetPollFeed;
+using Pollit.Domain.Comments;
 using Pollit.Domain.Polls;
 using Pollit.Domain.Users;
 
@@ -16,6 +17,8 @@ public class PollitDbContext : DbContext
     public DbSet<Poll> Polls { get; set; } = null!;
     
     public DbSet<GetPollFeedQueryResultItem> PollFeedItems { get; set; }
+    
+    public DbSet<Comment> Comments { get; set; } = null!;
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

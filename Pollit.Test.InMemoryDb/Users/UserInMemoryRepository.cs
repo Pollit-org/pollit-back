@@ -10,6 +10,8 @@ public class UserInMemoryRepository : BaseInMemoryRepository<User, UserId>, IUse
     Task IUserRepository.AddAsync(User user) => base.AddAsync(user);
 
     void IUserRepository.Update(User user) => base.Update(user);
+    
+    public Task<bool> ExistsAsync(UserId userId) => base.ExistsAsync(u => u.Id == userId);
 
     Task<bool> IUserRepository.EmailExistsAsync(Email email) => base.ExistsAsync(u => u.Email == email);
 
