@@ -2,6 +2,6 @@
 
 public enum ECommentVoteDirection
 {
-    Down = 1,
-    Up = 2
+    Down = -1,
+    Up = 1
 }

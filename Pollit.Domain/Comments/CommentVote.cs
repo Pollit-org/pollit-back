@@ -4,16 +4,19 @@ namespace Pollit.Domain.Comments;
 
 public class CommentVote
 {
-    public CommentVote(CommentId commentId, UserId voterId, ECommentVoteDirection direction)
+    [Obsolete("For EFCore 💩💩💩💩💩💩")]
+    private CommentVote() { }
+    
+    private CommentVote(CommentVoteId id, UserId voterId, ECommentVoteDirection direction)
     {
-        CommentId = commentId;
+        Id = id;
         VoterId = voterId;
         Direction = direction;
     }
 
-    public CommentId CommentId { get; }
+    public CommentVoteId Id { get; protected set; }
     
-    public UserId VoterId { get; }
+    public UserId VoterId { get; protected set; }
     
-    public ECommentVoteDirection Direction { get; }
+    public ECommentVoteDirection Direction { get; protected set; }
 }

@@ -17,12 +17,7 @@ public class PollRepository : IPollRepository
     {
         await _context.Polls.AddAsync(poll);
     }
-
-    public void Update(Poll poll)
-    {
-        _context.Update(poll);
-    }
-
+    
     public Task<Poll?> GetAsync(PollId pollId)
     {
         return _context.Polls

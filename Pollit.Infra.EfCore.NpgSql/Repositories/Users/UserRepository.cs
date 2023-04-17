@@ -26,6 +26,11 @@ public class UserRepository : IUserRepository
         _context.Users.Update(user);
     }
 
+    public Task<bool> ExistsAsync(UserId userId)
+    {
+        return _context.Users.AnyAsync(u => u.Id == userId);
+    }
+
     public Task<bool> EmailExistsAsync(Email email)
     {
         return _context.Users.AnyAsync(u => u.Email == email);

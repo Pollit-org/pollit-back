@@ -20,7 +20,7 @@ public class Poll : EntityBase<PollId>
     [Obsolete("For EFCore 💩💩💩💩💩💩")]
     private Poll() { }
     
-    public Poll(PollId id, UserId authorId, PollTitle title, IEnumerable<PollOption> options, IEnumerable<PollTag> tags, DateTime createdAt)
+    private Poll(PollId id, UserId authorId, PollTitle title, IEnumerable<PollOption> options, IEnumerable<PollTag> tags, DateTime createdAt)
     {
         Id = id;
         AuthorId = authorId;

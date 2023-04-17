@@ -28,10 +28,9 @@ public class PollFeedProjection : IPollFeedProjection
         dbQuery = query.OrderBy switch
         {
             null => dbQuery,
-            GetPollFeedQueryOrderBy.CreatedAt => dbQuery.OrderBy(x => x.CreatedAt, query.Order!.Value),
+            EGetPollFeedQueryOrderBy.CreatedAt => dbQuery.OrderBy(x => x.CreatedAt, query.Order!.Value),
             _ => throw new ArgumentOutOfRangeException(nameof(query.OrderBy))
         };
-        
 
         return dbQuery.Paginate(query.PaginationOptions);
     }
@@ -46,7 +45,8 @@ select
     "Options",
     "TotalVotesCount",
     "Users"."UserName" AS "Author",
-    "HasMyVote"
+    "HasMyVote",
+    coalesce("CommentCount", 0) as "CommentCount"
 from "Polls"
  join (
     select
@@ -75,5 +75,10 @@ from "Polls"
     group by "PollId"
 ) PO on "Polls"."Id" = PO."PollId"
 join "Users" on "AuthorId" = "Users"."Id"
+left join (
+    select "PollId", count(*) as "CommentCount"
+    from "Comments"
+    group by "PollId"
+) Comments on Comments."PollId" = "Polls"."Id"
 """;
 }
