@@ -7,6 +7,7 @@ public class GetPollFeedQueryResultItem
     public bool HasMyVote { get; set; }
     public GetPollFeedQueryResultItemOption[] Options { get; set; }
     public int TotalVotesCount { get; set; }
+    public int CommentCount { get; set; }
     public string[] Tags { get; set; }
     public string Author { get; set; }
     public DateTime CreatedAt { get; set; }
