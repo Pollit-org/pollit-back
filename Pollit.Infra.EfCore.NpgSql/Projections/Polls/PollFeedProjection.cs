@@ -28,10 +28,9 @@ public class PollFeedProjection : IPollFeedProjection
         dbQuery = query.OrderBy switch
         {
             null => dbQuery,
-            GetPollFeedQueryOrderBy.CreatedAt => dbQuery.OrderBy(x => x.CreatedAt, query.Order!.Value),
+            EGetPollFeedQueryOrderBy.CreatedAt => dbQuery.OrderBy(x => x.CreatedAt, query.Order!.Value),
             _ => throw new ArgumentOutOfRangeException(nameof(query.OrderBy))
         };
-        
 
         return dbQuery.Paginate(query.PaginationOptions);
     }

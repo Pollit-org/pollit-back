@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
+using Pollit.Application.Comments.GetCommentsOfAPoll;
 using Pollit.Application.Polls.GetPollFeed;
 using Pollit.Domain._Ports;
 using Pollit.Domain.Comments;
@@ -10,6 +11,7 @@ using Pollit.Domain.Users.Services;
 using Pollit.Infra.Api;
 using Pollit.Infra.Api.AuthenticatedUserProviders;
 using Pollit.Infra.EfCore.NpgSql;
+using Pollit.Infra.EfCore.NpgSql.Projections.Comments;
 using Pollit.Infra.EfCore.NpgSql.Projections.Polls;
 using Pollit.Infra.EfCore.NpgSql.Repositories.Comments;
 using Pollit.Infra.EfCore.NpgSql.Repositories.Polls;
@@ -40,6 +42,7 @@ services
     .AddScoped<IPollRepository, PollRepository>()
     .AddScoped<IPollFeedProjection, PollFeedProjection>()
     .AddScoped<ICommentRepository, CommentRepository>()
+    .AddScoped<IGetCommentsOfAPollProjection, GetCommentsOfAPollProjection>()
     .AddTransient<IUnitOfWork, UnitOfWork>()
     .AddSingleton<IAccessTokenManager, AccessTokenManager>()
     .AddSingleton<IPasswordEncryptor, PasswordEncryptor>()

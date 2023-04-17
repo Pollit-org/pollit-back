@@ -5,12 +5,12 @@ namespace Pollit.SeedWork.Querying;
 
 public static class QueryableExtensions
 {
-    public static IOrderedQueryable<T> OrderBy<T, TKey>(this IQueryable<T> queryable, Expression<Func<T, TKey>> selector, QueryOrder order)
+    public static IOrderedQueryable<T> OrderBy<T, TKey>(this IQueryable<T> queryable, Expression<Func<T, TKey>> selector, EQueryOrder order)
     {
         return order switch
         {
-            QueryOrder.Ascending => queryable.OrderBy(selector),
-            QueryOrder.Descending => queryable.OrderByDescending(selector),
+            EQueryOrder.Ascending => queryable.OrderBy(selector),
+            EQueryOrder.Descending => queryable.OrderByDescending(selector),
             _ => throw new ArgumentOutOfRangeException(nameof(order), order, null)
         };
     }

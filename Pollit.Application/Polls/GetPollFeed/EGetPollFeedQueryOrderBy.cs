@@ -1,6 +1,6 @@
 ﻿namespace Pollit.Application.Polls.GetPollFeed;
 
-public enum GetPollFeedQueryOrderBy
+public enum EGetPollFeedQueryOrderBy
 {
     CreatedAt = 1
 }

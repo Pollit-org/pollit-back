@@ -1,6 +1,6 @@
 ﻿namespace Pollit.SeedWork.Querying;
 
-public enum QueryOrder
+public enum EQueryOrder
 {
     Descending = -1,
     Ascending = 1
