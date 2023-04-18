@@ -1,6 +1,7 @@
 ﻿using System;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Auth.OAuth2.Flows;
+using Google.Apis.Oauth2.v2;
 using Google.Apis.Oauth2.v2.Data;
 using Google.Apis.Services;
 using Pollit.Domain.Users;
@@ -19,7 +20,7 @@ public class GoogleAuthenticator : IGoogleAuthenticator
         _config = config;
     }
 
-    public async Task<GoogleProfileDto> AuthenticateAsync(string code)
+    public async Task<GoogleProfileDto> AuthenticateWithAuthCodeAsync(string code)
     {
         var authorizationCodeFlow = new GoogleAuthorizationCodeFlow(new GoogleAuthorizationCodeFlow.Initializer
         {
@@ -37,6 +38,24 @@ public class GoogleAuthenticator : IGoogleAuthenticator
             CancellationToken.None);
 
         return await GetProfile(tokenResponse.AccessToken);
+    }
+
+    public async Task<GoogleProfileDto> AuthenticateWithAccessTokenAsync(string accessToken)
+    {
+        var tokenInfoRequest = new Oauth2Service(new BaseClientService.Initializer
+        {
+            ApplicationName = "Pollit",
+            ApiKey = _config.ApiKey,
+        }).Tokeninfo();
+
+        tokenInfoRequest.AccessToken = accessToken;
+        var tokenInfoResponse = await tokenInfoRequest.ExecuteAsync();
+        
+        return new GoogleProfileDto
+        {
+            Email = tokenInfoResponse.Email,
+            VerifiedEmail = tokenInfoResponse.VerifiedEmail
+        };
     }
 
     private async Task<GoogleProfileDto> GetProfile(string accessToken)

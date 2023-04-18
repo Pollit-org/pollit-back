@@ -10,12 +10,12 @@ public class GoogleAuthenticatorBuilder : IFluentBuilder<IGoogleAuthenticator>
 
     public GoogleAuthenticatorBuilder()
     {
-        _googleAuthenticatorMock.Setup(x => x.AuthenticateAsync(It.IsAny<string>())).Throws<Exception>();
+        _googleAuthenticatorMock.Setup(x => x.AuthenticateWithAuthCodeAsync(It.IsAny<string>())).Throws<Exception>();
     }
 
     public GoogleAuthenticatorBuilder WithAuthCodeReturningProfile(string authCode, GoogleProfileDto profile)
     {
-        _googleAuthenticatorMock.Setup(x => x.AuthenticateAsync(It.Is<string>(c => c == authCode))).ReturnsAsync(profile);
+        _googleAuthenticatorMock.Setup(x => x.AuthenticateWithAuthCodeAsync(It.Is<string>(c => c == authCode))).ReturnsAsync(profile);
         return this;
     }
     

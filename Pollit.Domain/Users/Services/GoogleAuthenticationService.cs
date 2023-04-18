@@ -9,6 +9,9 @@ namespace Pollit.Domain.Users.Services;
 [GenerateOneOf]
 public partial class SigninWithGoogleAuthCodeResult : OneOfBase<SigninResultDto, GoogleAuthCodeAuthenticationError> { }
 
+[GenerateOneOf]
+public partial class SigninWithGoogleAccessTokenResult : OneOfBase<SigninResultDto, GoogleAccessTokenAuthenticationError> { }
+
 public class GoogleAuthenticationService
 {
     private readonly IUserRepository _userRepository;
@@ -27,11 +30,42 @@ public class GoogleAuthenticationService
         GoogleProfileDto googleProfile;
         try
         {
-            googleProfile = await _googleAuthenticator.AuthenticateAsync(googleAuthCode);
+            googleProfile = await _googleAuthenticator.AuthenticateWithAuthCodeAsync(googleAuthCode);
         }
         catch (Exception e)
         {
             return new GoogleAuthCodeAuthenticationError();
+        }
+
+        var email = new Email(googleProfile.Email);
+        
+        var user = await _userRepository.FindByEmailAsync(email);
+        if (user is null)
+        {
+            user = User.NewUser(email);
+            await _userRepository.AddAsync(user);
+        }
+
+        user.OnLoginWithGoogle(googleProfile);
+        
+        var accessToken = _accessTokenManager.Build(user.GetClaims());
+        var refreshToken = RefreshToken.Generate();
+        
+        user.AddRefreshToken(refreshToken);
+        
+        return new SigninResultDto(accessToken, refreshToken);
+    }
+    
+    public async Task<SigninWithGoogleAccessTokenResult> SigninWithGoogleAccessTokenAsync(string googleAccessToken)
+    {
+        GoogleProfileDto googleProfile;
+        try
+        {
+            googleProfile = await _googleAuthenticator.AuthenticateWithAccessTokenAsync(googleAccessToken);
+        }
+        catch (Exception e)
+        {
+            return new GoogleAccessTokenAuthenticationError();
         }
 
         var email = new Email(googleProfile.Email);
