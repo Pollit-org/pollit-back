@@ -4,5 +4,7 @@ namespace Pollit.Domain._Ports;
 
 public interface IGoogleAuthenticator
 {
-    Task<GoogleProfileDto> AuthenticateAsync(string code);
+    Task<GoogleProfileDto> AuthenticateWithAuthCodeAsync(string code);
+    
+    Task<GoogleProfileDto> AuthenticateWithAccessTokenAsync(string accessToken);
 }
