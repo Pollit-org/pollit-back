@@ -34,7 +34,7 @@ public class AccessTokenManager : IAccessTokenManager
         return new AccessToken(new JwtSecurityTokenHandler().WriteToken(token));
     }
 
-    public bool IsValid(AccessToken accessToken, out Dictionary<string, string> decodedToken)
+    public bool IsValid(AccessToken accessToken, bool validateLifetime, out Dictionary<string, string> decodedToken)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
 
@@ -46,6 +46,7 @@ public class AccessTokenManager : IAccessTokenManager
             ValidateAudience = true,
             ValidIssuer = _config.Issuer,
             ValidateIssuer = true,
+            ValidateLifetime = validateLifetime
         };
 
         decodedToken = new Dictionary<string, string>();

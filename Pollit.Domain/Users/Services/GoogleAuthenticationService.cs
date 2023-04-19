@@ -7,10 +7,10 @@ using Pollit.Domain.Users.Errors;
 namespace Pollit.Domain.Users.Services;
 
 [GenerateOneOf]
-public partial class SigninWithGoogleAuthCodeResult : OneOfBase<SigninResultDto, GoogleAuthCodeAuthenticationError> { }
+public partial class SigninWithGoogleAuthCodeResult : OneOfBase<SigninResult, GoogleAuthCodeAuthenticationError> { }
 
 [GenerateOneOf]
-public partial class SigninWithGoogleAccessTokenResult : OneOfBase<SigninResultDto, GoogleAccessTokenAuthenticationError> { }
+public partial class SigninWithGoogleAccessTokenResult : OneOfBase<SigninResult, GoogleAccessTokenAuthenticationError> { }
 
 public class GoogleAuthenticationService
 {
@@ -53,7 +53,7 @@ public class GoogleAuthenticationService
         
         user.AddRefreshToken(refreshToken);
         
-        return new SigninResultDto(accessToken, refreshToken);
+        return new SigninResult(accessToken, refreshToken);
     }
     
     public async Task<SigninWithGoogleAccessTokenResult> SigninWithGoogleAccessTokenAsync(string googleAccessToken)
@@ -84,6 +84,6 @@ public class GoogleAuthenticationService
         
         user.AddRefreshToken(refreshToken);
         
-        return new SigninResultDto(accessToken, refreshToken);
+        return new SigninResult(accessToken, refreshToken);
     }
 }

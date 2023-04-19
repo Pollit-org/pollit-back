@@ -6,7 +6,7 @@ namespace Pollit.Infra.Api.Controllers.Auth.SigninWithCredentials;
 
 public class SigninWithCredentialsPresenter : BasePresenter, ISigninWithCredentialsPresenter
 {
-    public void Success(Domain.Users.SigninResultDto signinResult) => Ok(new SigninResultDto(signinResult));
+    public void Success(SigninResult signinResult) => Ok(new SigninResultDto(signinResult));
 
     public void LoginFailed(string error) => Unauthorized(error);
 }

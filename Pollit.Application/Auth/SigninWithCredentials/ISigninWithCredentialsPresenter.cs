@@ -4,7 +4,7 @@ namespace Pollit.Application.Auth.SigninWithCredentials;
 
 public interface ISigninWithCredentialsPresenter : IPresenter
 {
-    void Success(SigninResultDto signinResult);
+    void Success(SigninResult signinResult);
     
     void LoginFailed(string error = ApplicationError.CredentialsSigninFailed);
 }

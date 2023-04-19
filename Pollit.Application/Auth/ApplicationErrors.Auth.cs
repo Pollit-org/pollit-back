@@ -12,4 +12,6 @@ public partial class ApplicationError
     public const string CredentialsSigninFailed = $"{AuthErrorPrefix}:CREDENTIALS_SIGNIN_FAILED";
     public const string GoogleSigninFailed = $"{AuthErrorPrefix}:GOOGLE_SIGNIN_FAILED";
     public const string ForbiddenAccess = $"{AuthErrorPrefix}:FORBIDDEN_ACCESS";
+    public const string ExpiredAccessTokenIsInvalid = $"{AuthErrorPrefix}:EXPIRED_ACCESS_TOKEN_IS_INVALID";
+    public const string RefreshTokenIsInvalid = $"{AuthErrorPrefix}:REFRESH_TOKEN_IS_INVALID";
 }

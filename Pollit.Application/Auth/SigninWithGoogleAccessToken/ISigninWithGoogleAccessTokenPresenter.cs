@@ -4,7 +4,7 @@ namespace Pollit.Application.Auth.SigninWithGoogleAccessToken;
 
 public interface ISigninWithGoogleAccessTokenPresenter : IPresenter
 {
-    void Success(SigninResultDto signinResult);
+    void Success(SigninResult signinResult);
     
     void GoogleAccessTokenAuthenticationFailed(string error = ApplicationError.GoogleSigninFailed);
 }
