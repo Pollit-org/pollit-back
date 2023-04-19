@@ -70,6 +70,11 @@ public class User : EntityBase<UserId>
         LastLoginAt = DateTime.UtcNow;
     }
     
+    public void OnSigninWithRefreshToken()
+    {
+        LastLoginAt = DateTime.UtcNow;
+    }
+    
     public void OnLoginWithGoogle(GoogleProfileDto googleProfile)
     {
         GoogleProfile = googleProfile;
@@ -98,11 +103,11 @@ public class User : EntityBase<UserId>
         RefreshTokens = new HashSet<RefreshToken>(RefreshTokens) { refreshToken };
     }
 
-    public void RemoveRefreshToken(RefreshToken refreshToken)
+    public bool RemoveRefreshToken(RefreshToken refreshToken)
     {
         // degueu mais EFCore detecte pas la modif sur les hashet si je fais pas ca
         RefreshTokens = new HashSet<RefreshToken>(RefreshTokens);
-        RefreshTokens.Remove(refreshToken);
+        return RefreshTokens.Remove(refreshToken);
     }
     
     public OneOf<Success, UserNameIsAlreadyPermanentError> SetPermanentUserName(UserName userName)

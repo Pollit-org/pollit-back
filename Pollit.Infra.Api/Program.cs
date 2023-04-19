@@ -51,6 +51,7 @@ services
     .BindConfigurationSectionAsSingleton<JwtConfig>(configuration.GetSection("JwtConfig"), out var jwtConfig)
     .BindConfigurationSectionAsSingleton<GoogleAuthenticatorConfig>(configuration.GetSection("Google"))
     .AddTransient<CredentialsAuthenticationService>()
+    .AddTransient<RefreshTokenAuthenticationService>()
     .AddTransient<GoogleAuthenticationService>()
     .AddTransient<AccountSettingsService>()
     .AddTransient<PollCommentingService>()
