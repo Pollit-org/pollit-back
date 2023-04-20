@@ -2,4 +2,7 @@
 
 public class GetPollFeedHttpRequestQueryParams
 {
+    public uint? Page { get; set; }
+    
+    public uint? PageSize { get; set; }
 }

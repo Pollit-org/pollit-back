@@ -13,11 +13,11 @@ public class GetPollFeedController : OperationControllerBase<GetPollFeedQuery, I
     {
     }
     
-    [Authorize(Policy = CPolicies.Authenticated)]
+    [AllowAnonymous]
     [HttpGet("polls/feed", Name = "GetPollFeed")]
     public async Task<IActionResult?> GetPollFeedAsync([FromQuery] GetPollFeedHttpRequestQueryParams requestQueryParams)
     {
-        var query = new GetPollFeedQuery(null, null, null, null, null, new PaginationOptions(0, 50));
+        var query = new GetPollFeedQuery(null, null, null, null, null, new PaginationOptions(requestQueryParams.Page ?? 0, requestQueryParams.PageSize ?? 50));
 
         var presenter = new GetPollFeedPresenter();
 
