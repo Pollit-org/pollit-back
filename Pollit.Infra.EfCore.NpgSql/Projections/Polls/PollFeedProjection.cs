@@ -24,6 +24,8 @@ public class PollFeedProjection : IPollFeedProjection
             dbQuery = dbQuery.Where(x => x.CreatedAt <= query.CreatedBefore);
         if (query.CreatedAfter is not null)
             dbQuery = dbQuery.Where(x => x.CreatedAt >= query.CreatedAfter);
+        if (query.PollId is not null)
+            dbQuery = dbQuery.Where(x => x.PollId == query.PollId);
         
         dbQuery = query.OrderBy switch
         {

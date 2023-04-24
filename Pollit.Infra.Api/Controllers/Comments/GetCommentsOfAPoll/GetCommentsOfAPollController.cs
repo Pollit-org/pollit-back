@@ -14,7 +14,7 @@ public class GetCommentsOfAPollController : OperationControllerBase<GetCommentsO
     {
     }
 
-    [Authorize(Policy = CPolicies.PermanentUserNameAndEmailVerified)]
+    [AllowAnonymous]
     [HttpGet("polls/{pollId:guid}/comments", Name = "GetCommentsOfAPoll")]
     public async Task<IActionResult?> GetCommentsOfAPollAsync([FromRoute] Guid pollId, [FromQuery] GetCommentsOfAPollHttpRequestQueryParams requestQueryParams)
     {
