@@ -6,7 +6,7 @@ namespace Pollit.Application.Polls.GetPollFeed;
 [OperationAuthorizedForAnyone]
 public class GetPollFeedQuery : IOperation
 {
-    public GetPollFeedQuery(EGetPollFeedQueryOrderBy? orderBy, EQueryOrder? order, string? author, DateTime? createdBefore, DateTime? createdAfter, Guid? pollId, PaginationOptions paginationOptions)
+    public GetPollFeedQuery(EGetPollFeedQueryOrderBy? orderBy, EQueryOrder? order, string? author, DateTime? createdBefore, DateTime? createdAfter, Guid? pollId, IEnumerable<string>? tags, PaginationOptions paginationOptions)
     {
         OrderBy = orderBy;
         Order = order;
@@ -18,6 +18,7 @@ public class GetPollFeedQuery : IOperation
         CreatedBefore = createdBefore;
         CreatedAfter = createdAfter;
         PollId = pollId;
+        Tags = tags ?? Array.Empty<string>();
         PaginationOptions = paginationOptions;
     }
 
@@ -33,5 +34,7 @@ public class GetPollFeedQuery : IOperation
     
     public Guid? PollId { get; }
     
+    public IEnumerable<string> Tags { get; set; }
+
     public PaginationOptions PaginationOptions { get; }
 }

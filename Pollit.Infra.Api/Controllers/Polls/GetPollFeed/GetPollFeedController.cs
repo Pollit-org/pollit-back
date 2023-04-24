@@ -24,6 +24,7 @@ public class GetPollFeedController : OperationControllerBase<GetPollFeedQuery, I
             queryParams.CreatedBefore,
             queryParams.CreatedAfter,
             queryParams.PollId,
+            queryParams.Tags,
             new PaginationOptions(queryParams.Page ?? 0, queryParams.PageSize ?? 50));
 
         var presenter = new GetPollFeedPresenter();
