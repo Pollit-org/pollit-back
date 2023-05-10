@@ -6,6 +6,7 @@ using Pollit.Domain.Shared.Email;
 using Pollit.Domain.Users.Birthdates;
 using Pollit.Domain.Users.EncryptedPasswords;
 using Pollit.Domain.Users.Errors;
+using Pollit.Domain.Users.Events;
 using Pollit.Domain.Users.UserNames;
 using Pollit.SeedWork;
 
@@ -29,11 +30,21 @@ public class User : EntityBase<UserId>
         LastLoginAt = lastLoginAt;
     }
 
-    public static User NewUser(Email email, UserName userName, EncryptedPassword encryptedPassword) 
-        => new (UserId.NewUserId(), email, userName, false, encryptedPassword, new HashSet<RefreshToken>(), false, null, null, null, DateTime.UtcNow, null);
-    
-    public static User NewUser(Email email) 
-        => new (UserId.NewUserId(), email, UserName.RandomTemporary(), true, null, new HashSet<RefreshToken>(), true, null, null, null, DateTime.UtcNow, null);
+    public static User NewUser(Email email, UserName userName, EncryptedPassword encryptedPassword)
+    {
+        var user = new User(UserId.NewUserId(), email, userName, false, encryptedPassword, new HashSet<RefreshToken>(), false, null, null, null, DateTime.UtcNow, null);
+        user.AddDomainEvent(new UserCreatedEvent(user));
+
+        return user;
+    }
+
+    public static User NewUser(Email email)
+    {
+        var user = new User(UserId.NewUserId(), email, UserName.RandomTemporary(), true, null, new HashSet<RefreshToken>(), true, null, null, null, DateTime.UtcNow, null);
+        user.AddDomainEvent(new UserCreatedEvent(user));
+
+        return user;
+    }
 
     public sealed override UserId Id { get; protected set; }
     

@@ -2,11 +2,13 @@ using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using Pollit.Application.Comments.GetCommentsOfAPoll;
 using Pollit.Application.Polls.GetPollFeed;
+using Pollit.Application.Users.SendEmailConfirmationEmailToUser;
 using Pollit.Domain._Ports;
 using Pollit.Domain.Comments;
 using Pollit.Domain.Comments._Ports;
 using Pollit.Domain.Polls._Ports;
 using Pollit.Domain.Users._Ports;
+using Pollit.Domain.Users.Events;
 using Pollit.Domain.Users.Services;
 using Pollit.Infra.Api;
 using Pollit.Infra.Api.AuthenticatedUserProviders;
@@ -20,6 +22,7 @@ using Pollit.Infra.GoogleApi;
 using Pollit.Infra.Jwt;
 using Pollit.Infra.PasswordEncryptor;
 using Pollit.SeedWork;
+using Pollit.SeedWork.Eventing;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,6 +47,7 @@ services
     .AddScoped<ICommentRepository, CommentRepository>()
     .AddScoped<IGetCommentsOfAPollProjection, GetCommentsOfAPollProjection>()
     .AddTransient<IUnitOfWork, UnitOfWork>()
+    .AddSingleton<DomainEventBus>()
     .AddSingleton<IAccessTokenManager, AccessTokenManager>()
     .AddSingleton<IPasswordEncryptor, PasswordEncryptor>()
     .AddSingleton<IGoogleAuthenticator, GoogleAuthenticator>()
@@ -56,6 +60,7 @@ services
     .AddTransient<AccountSettingsService>()
     .AddTransient<PollCommentingService>()
     .AddQueryAndCommandHandlers()
+    .AddDomainEventHandlers()
     .AddJwtAuthentication(jwtConfig)
     .AddAuthorizationPolicies()
     .AddHttpContextAccessor()
@@ -78,10 +83,8 @@ app.UseAuthorization();
 
 app.MapControllers().RequireAuthorization();
 
-using (var scope = app.Services.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<PollitDbContext>();
-    db.Database.Migrate();
-}
+app.RegisterDomainEventHandler<UserCreatedEvent, SendEmailConfirmationToUserEventConsumer>();
+
+app.ApplyDbMigrations();
 
 app.Run();
