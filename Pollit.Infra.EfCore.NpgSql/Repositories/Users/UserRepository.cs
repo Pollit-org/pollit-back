@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Pollit.Domain.Shared.Email;
 using Pollit.Domain.Users;
 using Pollit.Domain.Users._Ports;

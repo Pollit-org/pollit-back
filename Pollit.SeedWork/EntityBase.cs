@@ -1,9 +1,21 @@
-﻿namespace Pollit.SeedWork;
+﻿using Pollit.SeedWork.Eventing;
 
-public abstract class EntityBase<TIdentifier> : IEquatable<EntityBase<TIdentifier>>
+namespace Pollit.SeedWork;
+
+public abstract class EntityBase<TIdentifier> : IEntity, IEquatable<EntityBase<TIdentifier>>
 {
     public abstract TIdentifier Id { get; protected set; }
 
+    private readonly List<IDomainEvent> _domainEvents = new();
+    
+    public IReadOnlyCollection<IDomainEvent> DomainEvents => _domainEvents.AsReadOnly();
+    
+    protected void AddDomainEvent(IDomainEvent domainEvent)
+        => _domainEvents.Add(domainEvent);
+
+    public void ClearDomainEvents()
+        => _domainEvents.Clear();
+    
     public bool Equals(EntityBase<TIdentifier>? other)
     {
         if (ReferenceEquals(null, other)) return false;

@@ -1,5 +1,5 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-	<s:String x:Key="/Default/Environment/Highlighting/HighlightingSourceSnapshotLocation/@EntryValue">C:\Users\MrFlow\AppData\Local\JetBrains\Rider2022.3\resharper-host\temp\Rider\vAny\CoverageData\_Pollit.-161142402\Snapshot\snapshot.utdcvr</s:String>
+	
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=36db42aa_002D99d0_002D4845_002D92b6_002Dcd46f3016eac/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="CreatePollControllerTest" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;xUnit::0CA038E9-EE59-4743-8118-8AE49FA2B1F3::net7.0::Pollit.Infra.Api.Test.Controllers.Polls.CreatePoll.CreatePollControllerTest&lt;/TestId&gt;&#xD;

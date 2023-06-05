@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using Pollit.Application;
 using Pollit.Domain.Users;
 using Pollit.Infra.Jwt;
+using Pollit.SeedWork.Eventing;
 
 namespace Pollit.Infra.Api;
 
@@ -13,6 +14,14 @@ public static class ServicesExtensions
     public static IServiceCollection AddQueryAndCommandHandlers(this IServiceCollection services)
     {
         foreach (var handlerType in Assembly.Load("Pollit.Application")!.GetTypes().Where(t => t.IsAssignableTo(typeof(OperationHandlerBase)) && !t.IsAbstract))
+            services.AddTransient(handlerType, handlerType);
+
+        return services;
+    }
+    
+    public static IServiceCollection AddDomainEventHandlers(this IServiceCollection services)
+    {
+        foreach (var handlerType in Assembly.Load("Pollit.Application")!.GetTypes().Where(t => t.IsAssignableTo(typeof(IDomainEventConsumer)) && !t.IsAbstract))
             services.AddTransient(handlerType, handlerType);
 
         return services;

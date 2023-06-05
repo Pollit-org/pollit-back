@@ -8,4 +8,5 @@ public partial class ApplicationError
     public const string UserNameIsAlreadyPermanent = $"{UsersErrorPrefix}:USER_NAME_IS_ALREADY_PERMANENT";
     public const string BirthdateIsInTheFuture = $"{UsersErrorPrefix}:BIRTHDATE_IS_IN_THE_FUTURE";
     public const string BirthdateMalformed = $"{UsersErrorPrefix}:BIRTHDATE_IS_MALFORMED";
+    public const string EmailVerificationTokenMismatch = $"{UsersErrorPrefix}:EMAIL_VERIFICATION_TOKEN_MISMATCH";
 }
