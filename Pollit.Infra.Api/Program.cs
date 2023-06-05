@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
+using Pollit.Application._Ports;
 using Pollit.Application.Comments.GetCommentsOfAPoll;
 using Pollit.Application.Polls.GetPollFeed;
 using Pollit.Application.Users.SendEmailConfirmationEmailToUser;
@@ -18,8 +19,11 @@ using Pollit.Infra.EfCore.NpgSql.Projections.Polls;
 using Pollit.Infra.EfCore.NpgSql.Repositories.Comments;
 using Pollit.Infra.EfCore.NpgSql.Repositories.Polls;
 using Pollit.Infra.EfCore.NpgSql.Repositories.Users;
+using Pollit.Infra.FrontApp.UrlBuilder;
+using Pollit.Infra.FrontApp.UrlBuilder.Config;
 using Pollit.Infra.GoogleApi;
 using Pollit.Infra.Jwt;
+using Pollit.Infra.Mailing.Mailjet;
 using Pollit.Infra.PasswordEncryptor;
 using Pollit.SeedWork;
 using Pollit.SeedWork.Eventing;
@@ -52,8 +56,12 @@ services
     .AddSingleton<IPasswordEncryptor, PasswordEncryptor>()
     .AddSingleton<IGoogleAuthenticator, GoogleAuthenticator>()
     .AddTransient<IDateTimeProvider, DateTimeProvider>()
+    .AddTransient<IEmailVerificationEmailSender, EmailSender>()
+    .AddTransient<IFrontAppUrlBuilder, FrontAppUrlBuilder>()
     .BindConfigurationSectionAsSingleton<JwtConfig>(configuration.GetSection("JwtConfig"), out var jwtConfig)
     .BindConfigurationSectionAsSingleton<GoogleAuthenticatorConfig>(configuration.GetSection("Google"))
+    .BindConfigurationSectionAsSingleton<MailjetConfig>(configuration.GetSection("Mailjet"))
+    .BindConfigurationSectionAsSingleton<FrontAppConfig>(configuration.GetSection("FrontApp"))
     .AddTransient<CredentialsAuthenticationService>()
     .AddTransient<RefreshTokenAuthenticationService>()
     .AddTransient<GoogleAuthenticationService>()

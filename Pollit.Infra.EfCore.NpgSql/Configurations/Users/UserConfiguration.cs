@@ -34,5 +34,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(u => u.GoogleProfile).HasColumnType("jsonb");
 
         builder.Property(u => u.Birthdate).HasNullableBirthdateConversion();
+        
+        builder.Property(u => u.EmailVerificationToken).HasConversion(t => t.Value, t => new EmailVerificationToken(t));
     }
 }

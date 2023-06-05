@@ -20,6 +20,7 @@ public class UserBuilder : IFluentBuilder<User>
     private GoogleProfileDto? _googleProfile;
     private DateTime _createdAt = DateTime.UtcNow;
     private DateTime? _lastLoginAt;
+    private EmailVerificationToken _emailVerificationToken = EmailVerificationToken.NewToken();
 
     public UserBuilder WithId(UserId id)
     {
@@ -100,6 +101,12 @@ public class UserBuilder : IFluentBuilder<User>
         return this;
     }
     
+    public UserBuilder WithEmailVerificationToken(EmailVerificationToken emailVerificationToken)
+    {
+        _emailVerificationToken = emailVerificationToken;
+        return this;
+    }
+    
     public UserBuilder WithoutPassword()
     {
         _encryptedPassword = null;
@@ -108,6 +115,6 @@ public class UserBuilder : IFluentBuilder<User>
 
     public User Build()
     {
-        return new User(_id, _email, _userName, _hasTemporaryUserName, _encryptedPassword, _refreshTokens, _isEmailVerified, _gender, _birthdate, _googleProfile, _createdAt, _lastLoginAt);
+        return new User(_id, _email, _userName, _hasTemporaryUserName, _encryptedPassword, _refreshTokens, _isEmailVerified, _gender, _birthdate, _googleProfile, _createdAt, _lastLoginAt, _emailVerificationToken);
     }
 }

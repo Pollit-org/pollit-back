@@ -14,7 +14,7 @@ namespace Pollit.Domain.Users;
 
 public class User : EntityBase<UserId>
 {
-    public User(UserId id, Email email, UserName userName, bool hasTemporaryUserName, EncryptedPassword? encryptedPassword, HashSet<RefreshToken> refreshTokens, bool isEmailVerified, EGender? gender, Birthdate? birthdate, GoogleProfileDto? googleProfile, DateTime createdAt, DateTime? lastLoginAt)
+    public User(UserId id, Email email, UserName userName, bool hasTemporaryUserName, EncryptedPassword? encryptedPassword, HashSet<RefreshToken> refreshTokens, bool isEmailVerified, EGender? gender, Birthdate? birthdate, GoogleProfileDto? googleProfile, DateTime createdAt, DateTime? lastLoginAt, EmailVerificationToken emailVerificationToken)
     {
         Id = id;
         Email = email;
@@ -28,11 +28,12 @@ public class User : EntityBase<UserId>
         GoogleProfile = googleProfile;
         CreatedAt = createdAt;
         LastLoginAt = lastLoginAt;
+        EmailVerificationToken = emailVerificationToken;
     }
 
     public static User NewUser(Email email, UserName userName, EncryptedPassword encryptedPassword)
     {
-        var user = new User(UserId.NewUserId(), email, userName, false, encryptedPassword, new HashSet<RefreshToken>(), false, null, null, null, DateTime.UtcNow, null);
+        var user = new User(UserId.NewUserId(), email, userName, false, encryptedPassword, new HashSet<RefreshToken>(), false, null, null, null, DateTime.UtcNow, null, EmailVerificationToken.NewToken());
         user.AddDomainEvent(new UserCreatedEvent(user));
 
         return user;
@@ -40,7 +41,7 @@ public class User : EntityBase<UserId>
 
     public static User NewUser(Email email)
     {
-        var user = new User(UserId.NewUserId(), email, UserName.RandomTemporary(), true, null, new HashSet<RefreshToken>(), true, null, null, null, DateTime.UtcNow, null);
+        var user = new User(UserId.NewUserId(), email, UserName.RandomTemporary(), true, null, new HashSet<RefreshToken>(), true, null, null, null, DateTime.UtcNow, null, EmailVerificationToken.NewToken());
         user.AddDomainEvent(new UserCreatedEvent(user));
 
         return user;
@@ -72,6 +73,8 @@ public class User : EntityBase<UserId>
     
     public DateTime? LastLoginAt { get; protected set; }
     
+    public EmailVerificationToken EmailVerificationToken { get; protected set; }
+
     public UserPrivateProfileDto PrivateProfile => new(this);
     
     public UserPublicProfileDto PublicProfile => new(this);
@@ -103,6 +106,16 @@ public class User : EntityBase<UserId>
                 null => EGender.PreferNotToSay,
                 _ => EGender.Other
             };
+    }
+
+    public OneOf<Success, VerificationTokenMismatchError> VerifyEmail(EmailVerificationToken emailVerificationToken)
+    {
+        if (EmailVerificationToken is null || EmailVerificationToken != emailVerificationToken)
+            return new VerificationTokenMismatchError();
+
+        IsEmailVerified = true;
+        
+        return new Success();
     }
     
     public bool HasRefreshToken(RefreshToken refreshToken)

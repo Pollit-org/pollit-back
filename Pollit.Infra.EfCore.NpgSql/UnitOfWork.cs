@@ -25,10 +25,10 @@ public class UnitOfWork : IUnitOfWork
             .Where(x => x.GetType().IsAssignableTo(typeof(IEntity)))
             .ToArray();
         
-        await _context.SaveChangesAsync();
-        
         foreach (var savedEntity in savedEntities) 
             FlushEvents((IEntity) savedEntity);
+        
+        await _context.SaveChangesAsync();
     }
 
     private void FlushEvents(IEntity entity)
