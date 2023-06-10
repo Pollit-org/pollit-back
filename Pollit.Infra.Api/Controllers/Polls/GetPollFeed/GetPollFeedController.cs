@@ -20,6 +20,7 @@ public class GetPollFeedController : OperationControllerBase<GetPollFeedQuery, I
         var query = new GetPollFeedQuery(
             queryParams.OrderBy,
             queryParams.Order,
+            queryParams.Search,
             queryParams.Author,
             queryParams.CreatedBefore,
             queryParams.CreatedAfter,

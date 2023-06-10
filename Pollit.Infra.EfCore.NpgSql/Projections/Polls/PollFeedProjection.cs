@@ -17,7 +17,7 @@ public class PollFeedProjection : IPollFeedProjection
 
     public PaginationResult<GetPollFeedQueryResultItem> GetPollFeed(GetPollFeedQuery query, UserId? requestingUserId)
     {
-        var dbQuery = _context.PollFeedItems.FromSql(BuildBaseQuery(requestingUserId));
+        var dbQuery = _context.PollFeedItems.FromSql(BuildBaseQuery(requestingUserId, query.SearchText));
         if (query.Author is not null)
             dbQuery = dbQuery.Where(x => x.Author == query.Author);
         if (query.CreatedBefore is not null)
@@ -28,9 +28,12 @@ public class PollFeedProjection : IPollFeedProjection
             dbQuery = dbQuery.Where(x => x.PollId == query.PollId);
         if (query.Tags.Any())
             dbQuery = dbQuery.Where(p => p.Tags.Any(t => query.Tags.ToArray().Contains(t)));
+        if (query.SearchText is not null)
+            dbQuery = dbQuery.Where(p => p.SearchRank > 0.001);
 
         dbQuery = query.OrderBy switch
         {
+            null when query.SearchText is not null => dbQuery.OrderByDescending(x => x.SearchRank),
             null => dbQuery,
             EGetPollFeedQueryOrderBy.CreatedAt => dbQuery.OrderBy(x => x.CreatedAt, query.Order!.Value),
             _ => throw new ArgumentOutOfRangeException(nameof(query.OrderBy))
@@ -39,9 +42,13 @@ public class PollFeedProjection : IPollFeedProjection
         return dbQuery.Paginate(query.PaginationOptions);
     }
 
-    private FormattableString BuildBaseQuery(UserId? requestingUserId) =>
+    private FormattableString BuildBaseQuery(UserId? requestingUserId, string? searchText) =>
         $"""
 select
+    case 
+        when length({searchText ?? ""}) > 0 then ts_rank(to_tsvector("Polls"."Title"), plainto_tsquery({searchText ?? ""}))
+        else 0
+    end as "SearchRank",
     "Polls"."Id" as "PollId",
     "Polls"."Title",
     string_to_array("Polls"."Tags", ',') as "Tags",
