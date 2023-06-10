@@ -2,6 +2,7 @@
 
 public class GetPollFeedQueryResultItem
 {
+    public double SearchRank { get; set; }
     public Guid PollId { get; set; }
     public string Title { get; set; }
     public bool HasMyVote { get; set; }

@@ -13,6 +13,8 @@ public class GetPollFeedHttpRequestQueryParams
     
     public EQueryOrder? Order { get; set; }
     
+    public string? Search { get; set; }
+    
     public string? Author { get; set; }
     
     public string[]? Tags { get; set; }
