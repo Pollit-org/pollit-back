@@ -36,5 +36,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(u => u.Birthdate).HasNullableBirthdateConversion();
         
         builder.Property(u => u.EmailVerificationToken).HasConversion(t => t.Value, t => new EmailVerificationToken(t));
+        
+        builder.HasMany(u => u.ResetPasswordLinks).WithOne();
     }
 }

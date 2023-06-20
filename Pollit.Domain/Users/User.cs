@@ -7,6 +7,7 @@ using Pollit.Domain.Users.Birthdates;
 using Pollit.Domain.Users.EncryptedPasswords;
 using Pollit.Domain.Users.Errors;
 using Pollit.Domain.Users.Events;
+using Pollit.Domain.Users.ResetPasswordLinks;
 using Pollit.Domain.Users.UserNames;
 using Pollit.SeedWork;
 
@@ -14,7 +15,13 @@ namespace Pollit.Domain.Users;
 
 public class User : EntityBase<UserId>
 {
-    public User(UserId id, Email email, UserName userName, bool hasTemporaryUserName, EncryptedPassword? encryptedPassword, HashSet<RefreshToken> refreshTokens, bool isEmailVerified, EGender? gender, Birthdate? birthdate, GoogleProfileDto? googleProfile, DateTime createdAt, DateTime? lastLoginAt, EmailVerificationToken emailVerificationToken)
+    [Obsolete("For EFCore 💩💩💩💩💩💩")]
+    private User()
+    {
+        
+    }
+    
+    public User(UserId id, Email email, UserName userName, bool hasTemporaryUserName, EncryptedPassword? encryptedPassword, HashSet<RefreshToken> refreshTokens, bool isEmailVerified, EGender? gender, Birthdate? birthdate, GoogleProfileDto? googleProfile, DateTime createdAt, DateTime? lastLoginAt, EmailVerificationToken emailVerificationToken, ICollection<ResetPasswordLink> resetPasswordLinks)
     {
         Id = id;
         Email = email;
@@ -23,17 +30,18 @@ public class User : EntityBase<UserId>
         EncryptedPassword = encryptedPassword;
         RefreshTokens = refreshTokens;
         IsEmailVerified = isEmailVerified;
-        Gender = gender ?? EGender.PreferNotToSay;
+        Gender = gender;
         Birthdate = birthdate;
         GoogleProfile = googleProfile;
         CreatedAt = createdAt;
         LastLoginAt = lastLoginAt;
         EmailVerificationToken = emailVerificationToken;
+        ResetPasswordLinks = resetPasswordLinks;
     }
 
     public static User NewUser(Email email, UserName userName, EncryptedPassword encryptedPassword)
     {
-        var user = new User(UserId.NewUserId(), email, userName, false, encryptedPassword, new HashSet<RefreshToken>(), false, null, null, null, DateTime.UtcNow, null, EmailVerificationToken.NewToken());
+        var user = new User(UserId.NewUserId(), email, userName, false, encryptedPassword, new HashSet<RefreshToken>(), false, null, null, null, DateTime.UtcNow, null, EmailVerificationToken.NewToken(), null);
         user.AddDomainEvent(new UserCreatedEvent(user));
 
         return user;
@@ -41,7 +49,7 @@ public class User : EntityBase<UserId>
 
     public static User NewUser(Email email)
     {
-        var user = new User(UserId.NewUserId(), email, UserName.RandomTemporary(), true, null, new HashSet<RefreshToken>(), true, null, null, null, DateTime.UtcNow, null, EmailVerificationToken.NewToken());
+        var user = new User(UserId.NewUserId(), email, UserName.RandomTemporary(), true, null, new HashSet<RefreshToken>(), true, null, null, null, DateTime.UtcNow, null, EmailVerificationToken.NewToken(), null);
         user.AddDomainEvent(new UserCreatedEvent(user));
 
         return user;
@@ -62,8 +70,8 @@ public class User : EntityBase<UserId>
     public HashSet<RefreshToken> RefreshTokens { get; protected set;  }
 
     public bool IsEmailVerified { get; protected set; }
-    
-    public EGender? Gender { get; protected set; }
+
+    public EGender? Gender { get; protected set; } = EGender.PreferNotToSay;
     
     public Birthdate? Birthdate { get; protected set; }
 
@@ -74,6 +82,8 @@ public class User : EntityBase<UserId>
     public DateTime? LastLoginAt { get; protected set; }
     
     public EmailVerificationToken EmailVerificationToken { get; protected set; }
+
+    public ICollection<ResetPasswordLink> ResetPasswordLinks { get; set; } = new List<ResetPasswordLink>();
 
     public UserPrivateProfileDto PrivateProfile => new(this);
     
@@ -108,16 +118,51 @@ public class User : EntityBase<UserId>
             };
     }
 
-    public OneOf<Success, VerificationTokenMismatchError> VerifyEmail(EmailVerificationToken emailVerificationToken)
+    public OneOf<Success, EmailVerificationTokenMismatchError> VerifyEmail(EmailVerificationToken emailVerificationToken)
     {
         if (EmailVerificationToken is null || EmailVerificationToken != emailVerificationToken)
-            return new VerificationTokenMismatchError();
+            return new EmailVerificationTokenMismatchError();
 
         IsEmailVerified = true;
         
         return new Success();
     }
-    
+
+    public void RequestResetPasswordLink(DateTime utcNow)
+    {
+        var resetPasswordLink = ResetPasswordLink.NewResetPasswordLink(utcNow);
+        ResetPasswordLinks.Add(resetPasswordLink);
+        
+        AddDomainEvent(new ResetPasswordLinkCreatedEvent(resetPasswordLink, this));
+    }
+
+    public bool HasAnyResetPasswordLinkConsumableByToken(PasswordResetToken token, DateTime utcNow)
+    {
+        return ResetPasswordLinks.Any(link => link.IsConsumableByToken(token, utcNow));
+    }
+
+    public OneOf<Success, ResetPasswordLinkNotFoundOrExpiredError> ResetPasswordFromLinkToken(PasswordResetToken token, EncryptedPassword encryptedPassword, DateTime utcNow)
+    {
+        var resetPasswordLink = ResetPasswordLinks.FirstOrDefault(link => link.IsConsumableByToken(token, utcNow));
+        
+        if (resetPasswordLink is null)
+            return new ResetPasswordLinkNotFoundOrExpiredError();
+
+        return resetPasswordLink
+            .ConsumeWith(token, utcNow)
+            .Match<OneOf<Success, ResetPasswordLinkNotFoundOrExpiredError>>(
+                success =>
+                {
+                    EncryptedPassword = encryptedPassword;
+                    AddDomainEvent(new PasswordResetEvent(this));
+                    
+                    return new Success();
+                },
+                passwordResetTokenMismatchError => new ResetPasswordLinkNotFoundOrExpiredError(),
+                passwordResetTokenExpiredError => new ResetPasswordLinkNotFoundOrExpiredError()
+            );
+    }
+
     public bool HasRefreshToken(RefreshToken refreshToken)
         => RefreshTokens.Contains(refreshToken);
 

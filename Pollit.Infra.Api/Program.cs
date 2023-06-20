@@ -1,6 +1,7 @@
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using Pollit.Application._Ports;
+using Pollit.Application.Auth.SendResetPasswordLinkEmailToUser;
 using Pollit.Application.Comments.GetCommentsOfAPoll;
 using Pollit.Application.Polls.GetPollFeed;
 using Pollit.Application.Users.SendEmailConfirmationEmailToUser;
@@ -92,6 +93,7 @@ app.UseAuthorization();
 app.MapControllers().RequireAuthorization();
 
 app.RegisterDomainEventHandler<UserCreatedEvent, SendEmailConfirmationToUserEventConsumer>();
+app.RegisterDomainEventHandler<ResetPasswordLinkCreatedEvent, SendResetPasswordLinkEmailToUserEventConsumer>();
 
 app.ApplyDbMigrations();
 

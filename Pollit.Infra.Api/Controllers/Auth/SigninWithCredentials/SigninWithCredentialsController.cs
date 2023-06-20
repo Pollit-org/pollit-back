@@ -10,7 +10,7 @@ namespace Pollit.Infra.Api.Controllers.Auth.SigninWithCredentials;
 public class SigninWithCredentialsController : OperationControllerBase<SigninWithCredentialsCommand, ISigninWithCredentialsPresenter, SigninWithCredentialsPresenter,SigninWithCredentialsCommandHandler>
 {
 
-    public SigninWithCredentialsController(SigninWithCredentialsCommandHandler commandHandler, IAuthenticatedUserProvider authenticatedUserprovider) : base(commandHandler, authenticatedUserprovider)
+    public SigninWithCredentialsController(SigninWithCredentialsCommandHandler commandHandler, IAuthenticatedUserProvider authenticatedUserProvider) : base(commandHandler, authenticatedUserProvider)
     {
     }
 

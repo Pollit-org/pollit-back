@@ -1,4 +1,5 @@
 ﻿using Pollit.Domain.Users.Services;
+using Pollit.SeedWork;
 using Pollit.Test.Common.Builders.Domain._Ports;
 using Pollit.Test.InMemoryDb;
 
@@ -17,6 +18,6 @@ public class UserAuthenticationServiceBuilder : IFluentBuilder<CredentialsAuthen
 
     public CredentialsAuthenticationService Build()
     {
-        return new CredentialsAuthenticationService(_inMemoryDatabase.GetUserRepository(), _passwordEncryptorBuilder.Build(), _accessTokenManagerBuilder.Build());
+        return new CredentialsAuthenticationService(_inMemoryDatabase.GetUserRepository(), _passwordEncryptorBuilder.Build(), _accessTokenManagerBuilder.Build(), new DateTimeProvider());
     }
 }

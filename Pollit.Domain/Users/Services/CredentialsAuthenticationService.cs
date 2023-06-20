@@ -6,6 +6,7 @@ using Pollit.Domain.Users._Ports;
 using Pollit.Domain.Users.ClearPasswords;
 using Pollit.Domain.Users.Errors;
 using Pollit.Domain.Users.UserNames;
+using Pollit.SeedWork;
 
 namespace Pollit.Domain.Users.Services;
 
@@ -15,17 +16,22 @@ public partial class SignupWithCredentialsResult : OneOfBase<Success, EmailAlrea
 [GenerateOneOf]
 public partial class SigninWithCredentialsResult : OneOfBase<SigninResult, UserDoesNotExistError, UserHasNoPasswordError, PasswordMismatchError> { }
 
+[GenerateOneOf]
+public partial class RequestResetPasswordLinkResult : OneOfBase<Success, UserDoesNotExistError> { }
+
 public class CredentialsAuthenticationService
 {
     private readonly IUserRepository _userRepository;
     private readonly IPasswordEncryptor _passwordEncryptor;
     private readonly IAccessTokenManager _accessTokenManager;
+    private readonly IDateTimeProvider _dateTimeProvider;
     
-    public CredentialsAuthenticationService(IUserRepository userRepository,IPasswordEncryptor passwordEncryptor, IAccessTokenManager accessTokenManager)
+    public CredentialsAuthenticationService(IUserRepository userRepository,IPasswordEncryptor passwordEncryptor, IAccessTokenManager accessTokenManager, IDateTimeProvider dateTimeProvider)
     {
         _userRepository = userRepository;
         _passwordEncryptor = passwordEncryptor;
         _accessTokenManager = accessTokenManager;
+        _dateTimeProvider = dateTimeProvider;
     }
 
     public async Task<SignupWithCredentialsResult> SignupWithCredentialsAsync(Email email, UserName userName, ClearPassword clearPassword)
@@ -70,5 +76,30 @@ public class CredentialsAuthenticationService
         user.AddRefreshToken(refreshToken);
         
         return new SigninResult(accessToken, refreshToken);
+    }
+    
+    public async Task<RequestResetPasswordLinkResult> RequestResetPasswordLink(Email email)
+    {
+        var user = await _userRepository.FindByEmailAsync(email);
+        if (user is null)
+            return new UserDoesNotExistError();  
+        
+        return RequestResetPasswordLink(user);
+    }
+
+    public async Task<RequestResetPasswordLinkResult> RequestResetPasswordLink(UserId userId)
+    {
+        var user = await _userRepository.GetAsync(userId);
+        if (user is null)
+            return new UserDoesNotExistError();
+
+        return RequestResetPasswordLink(user);
+    }
+    
+    private RequestResetPasswordLinkResult RequestResetPasswordLink(User user)
+    {
+        user.RequestResetPasswordLink(_dateTimeProvider.UtcNow);
+
+        return new Success();
     }
 }

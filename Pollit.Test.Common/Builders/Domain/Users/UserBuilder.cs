@@ -2,6 +2,7 @@
 using Pollit.Domain.Users;
 using Pollit.Domain.Users.Birthdates;
 using Pollit.Domain.Users.EncryptedPasswords;
+using Pollit.Domain.Users.ResetPasswordLinks;
 using Pollit.Domain.Users.UserNames;
 
 namespace Pollit.Test.Common.Builders.Domain.Users;
@@ -21,6 +22,7 @@ public class UserBuilder : IFluentBuilder<User>
     private DateTime _createdAt = DateTime.UtcNow;
     private DateTime? _lastLoginAt;
     private EmailVerificationToken _emailVerificationToken = EmailVerificationToken.NewToken();
+    private ICollection<ResetPasswordLink> _resetPasswordLinks = new List<ResetPasswordLink>();
 
     public UserBuilder WithId(UserId id)
     {
@@ -112,9 +114,15 @@ public class UserBuilder : IFluentBuilder<User>
         _encryptedPassword = null;
         return this;
     }
+    
+    public UserBuilder WithResetPasswordLink(ResetPasswordLink resetPasswordLink)
+    {
+        _resetPasswordLinks.Add(resetPasswordLink);
+        return this;
+    }
 
     public User Build()
     {
-        return new User(_id, _email, _userName, _hasTemporaryUserName, _encryptedPassword, _refreshTokens, _isEmailVerified, _gender, _birthdate, _googleProfile, _createdAt, _lastLoginAt, _emailVerificationToken);
+        return new User(_id, _email, _userName, _hasTemporaryUserName, _encryptedPassword, _refreshTokens, _isEmailVerified, _gender, _birthdate, _googleProfile, _createdAt, _lastLoginAt, _emailVerificationToken, _resetPasswordLinks);
     }
 }

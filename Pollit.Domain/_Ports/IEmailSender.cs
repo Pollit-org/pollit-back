@@ -6,4 +6,5 @@ namespace Pollit.Domain._Ports;
 public interface IEmailVerificationEmailSender
 {
     Task SendEmailVerificationEmail(Email email, UserName userName, Uri verifyEmailLinkUrl);
+    Task SendResetPasswordLinkEmail(Email email, UserName userName, Uri resetPasswordUrl);
 }

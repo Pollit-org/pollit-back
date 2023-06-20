@@ -24,6 +24,15 @@ public class EmailSender : IEmailVerificationEmailSender
         });
     }
 
+    public Task SendResetPasswordLinkEmail(Email email, UserName userName, Uri resetPasswordUrl)
+    {
+        return SendEmail(email, userName, 4899194, new Dictionary<string, object>()
+        {
+            {"reset_password_link", resetPasswordUrl},
+            {"user_name", userName.ToString()}
+        });
+    }
+
     public async Task SendEmail(Email email, UserName userName, int templateId, IDictionary<string, object> variables)
     {
         var transactionalEmail = new TransactionalEmailBuilder()
