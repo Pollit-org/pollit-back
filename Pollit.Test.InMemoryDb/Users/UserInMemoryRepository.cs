@@ -21,5 +21,5 @@ public class UserInMemoryRepository : BaseInMemoryRepository<User, UserId>, IUse
 
     Task<User?> IUserRepository.FindByUserNameAsync(UserName userName) => base.FirstOrDefaultAsync(u => u.UserName == userName);
 
-    Task<User?> IUserRepository.GetAsync(UserId userId) => base.GetByIdAsync(userId);
+    Task<User?> IUserRepository.FindByIdAsync(UserId userId) => base.GetByIdAsync(userId);
 }

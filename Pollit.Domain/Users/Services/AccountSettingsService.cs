@@ -30,7 +30,7 @@ public class AccountSettingsService
 
     public async Task<SetPermanentUserNameResult> SetPermanentUserNameAsync(UserId userId, UserName userName)
     {
-        var user = await _userRepository.GetAsync(userId);
+        var user = await _userRepository.FindByIdAsync(userId);
         if (user is null)
             return new UserDoesNotExistError();
     
@@ -47,7 +47,7 @@ public class AccountSettingsService
 
     public async Task<SetUserGenderResult> SetUserGender(Guid userId, EGender gender)
     {
-        var user = await _userRepository.GetAsync(userId);
+        var user = await _userRepository.FindByIdAsync(userId);
         if (user is null)
             return new UserDoesNotExistError();
 
@@ -58,7 +58,7 @@ public class AccountSettingsService
 
     public async Task<SetUserBirthdayResult> SetUserBirthdate(Guid userId, Birthdate? birthdate)
     {
-        var user = await _userRepository.GetAsync(userId);
+        var user = await _userRepository.FindByIdAsync(userId);
         if (user is null)
             return new UserDoesNotExistError();
 

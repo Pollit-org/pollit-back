@@ -14,6 +14,7 @@ public class ResetPasswordLinkConfiguration : IEntityTypeConfiguration<ResetPass
         builder.Property(v => v.Id).ValueGeneratedNever().IsRequired();
         builder.Property(u => u.Id).HasConversion(id => id.Value, id => new ResetPasswordLinkId(id));
 
-        builder.Property(x => x.Token).HasConversion(t => t.Value, t => new PasswordResetToken(t));
+        builder.Property(x => x.Token).HasConversion(t => t.Value, t => new ResetPasswordToken(t));
+        builder.Property(x => x.IssuedAt);
     }
 }

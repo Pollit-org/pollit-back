@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Pollit.Application;
 using Pollit.Application.Auth.RequestResetPasswordLink;
 using Pollit.Infra.Api.AuthenticatedUserProviders;
 

@@ -41,6 +41,11 @@ public class UserRepository : IUserRepository
     {
         return _context.Users.AnyAsync(u => u.UserName == userName);
     }
+    
+    public async Task<User?> FindByIdAsync(UserId userId)
+    {
+        return await Users.FirstOrDefaultAsync(u => u.Id == userId);
+    }
 
     public Task<User?> FindByEmailAsync(Email email)
     {
@@ -50,10 +55,5 @@ public class UserRepository : IUserRepository
     public Task<User?> FindByUserNameAsync(UserName userName)
     {
         return Users.FirstOrDefaultAsync(u => u.UserName == userName);
-    }
-
-    public async Task<User?> GetAsync(UserId userId)
-    {
-        return await Users.FirstOrDefaultAsync(u => u.Id == userId);
     }
 }

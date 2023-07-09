@@ -18,7 +18,7 @@ public class ResetPasswordLink : EntityBase<ResetPasswordLinkId>
         
     }
     
-    internal ResetPasswordLink(ResetPasswordLinkId id, PasswordResetToken token, DateTime issuedAt, DateTime? invalidatedAt)
+    internal ResetPasswordLink(ResetPasswordLinkId id, ResetPasswordToken token, DateTime issuedAt, DateTime? invalidatedAt)
     {
         Id = id;
         Token = token;
@@ -26,13 +26,13 @@ public class ResetPasswordLink : EntityBase<ResetPasswordLinkId>
         ForcedExpiryAt = invalidatedAt;
     }
 
-    public static ResetPasswordLink NewResetPasswordLink(DateTime utcNow)
+    public static ResetPasswordLink NewResetPasswordLink()
     {
-        return new ResetPasswordLink(ResetPasswordLinkId.NewResetPasswordLinkId(), PasswordResetToken.Generate(), utcNow, null);
+        return new ResetPasswordLink(ResetPasswordLinkId.NewResetPasswordLinkId(), ResetPasswordToken.Generate(), DateTime.UtcNow, null);
     }
 
     public override ResetPasswordLinkId Id { get; protected set; }
-    public readonly PasswordResetToken Token;
+    public readonly ResetPasswordToken Token;
     public readonly DateTime IssuedAt;
     public DateTime? ForcedExpiryAt { get; protected set; }
     public DateTime? ConsumedAt { get; protected set; }
@@ -41,21 +41,21 @@ public class ResetPasswordLink : EntityBase<ResetPasswordLinkId>
     
     public DateTime ExpiresAt => (DateTime) DateTimeExtensions.Min(NaturallyExpiresAt, ForcedExpiryAt, ConsumedAt)!;
 
-    public bool HasExpired(DateTime utcNow) => ExpiresAt <= utcNow;
+    public bool HasExpired() => ExpiresAt <= DateTime.UtcNow;
 
-    public bool IsConsumable(DateTime utcNow) => !HasExpired(utcNow);
+    public bool IsConsumable() => !HasExpired();
     
-    public bool IsConsumableByToken(PasswordResetToken token, DateTime utcNow) => IsConsumable(utcNow) && token == Token;
+    public bool IsConsumableByToken(ResetPasswordToken token) => IsConsumable() && token == Token;
 
-    public ConsumeResetPasswordLinkError ConsumeWith(PasswordResetToken token, DateTime utcNow)
+    public ConsumeResetPasswordLinkError ConsumeWith(ResetPasswordToken token)
     {
         if (token != Token)
             return new PasswordResetTokenMismatchError();
 
-        if (HasExpired(utcNow))
+        if (HasExpired())
             return new PasswordResetTokenExpiredError();
 
-        ConsumedAt = utcNow;
+        ConsumedAt = DateTime.UtcNow;
 
         return new Success();
     }

@@ -18,6 +18,6 @@ public class UserAuthenticationServiceBuilder : IFluentBuilder<CredentialsAuthen
 
     public CredentialsAuthenticationService Build()
     {
-        return new CredentialsAuthenticationService(_inMemoryDatabase.GetUserRepository(), _passwordEncryptorBuilder.Build(), _accessTokenManagerBuilder.Build(), new DateTimeProvider());
+        return new CredentialsAuthenticationService(_inMemoryDatabase.GetUserRepository(), _passwordEncryptorBuilder.Build(), _accessTokenManagerBuilder.Build());
     }
 }

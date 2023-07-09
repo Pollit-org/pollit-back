@@ -128,28 +128,28 @@ public class User : EntityBase<UserId>
         return new Success();
     }
 
-    public void RequestResetPasswordLink(DateTime utcNow)
+    public void RequestResetPasswordLink()
     {
-        var resetPasswordLink = ResetPasswordLink.NewResetPasswordLink(utcNow);
+        var resetPasswordLink = ResetPasswordLink.NewResetPasswordLink();
         ResetPasswordLinks.Add(resetPasswordLink);
         
         AddDomainEvent(new ResetPasswordLinkCreatedEvent(resetPasswordLink, this));
     }
 
-    public bool HasAnyResetPasswordLinkConsumableByToken(PasswordResetToken token, DateTime utcNow)
+    public bool HasAnyResetPasswordLinkConsumableByToken(ResetPasswordToken token)
     {
-        return ResetPasswordLinks.Any(link => link.IsConsumableByToken(token, utcNow));
+        return ResetPasswordLinks.Any(link => link.IsConsumableByToken(token));
     }
 
-    public OneOf<Success, ResetPasswordLinkNotFoundOrExpiredError> ResetPasswordFromLinkToken(PasswordResetToken token, EncryptedPassword encryptedPassword, DateTime utcNow)
+    public OneOf<Success, ResetPasswordLinkNotFoundOrExpiredError> ResetPasswordFromResetPasswordLinkToken(ResetPasswordToken token, EncryptedPassword encryptedPassword)
     {
-        var resetPasswordLink = ResetPasswordLinks.FirstOrDefault(link => link.IsConsumableByToken(token, utcNow));
+        var resetPasswordLink = ResetPasswordLinks.FirstOrDefault(link => link.IsConsumableByToken(token));
         
         if (resetPasswordLink is null)
             return new ResetPasswordLinkNotFoundOrExpiredError();
 
         return resetPasswordLink
-            .ConsumeWith(token, utcNow)
+            .ConsumeWith(token)
             .Match<OneOf<Success, ResetPasswordLinkNotFoundOrExpiredError>>(
                 success =>
                 {

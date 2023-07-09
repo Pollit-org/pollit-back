@@ -5,6 +5,7 @@ using Pollit.Domain.Shared.Email;
 using Pollit.Domain.Users._Ports;
 using Pollit.Domain.Users.ClearPasswords;
 using Pollit.Domain.Users.Errors;
+using Pollit.Domain.Users.ResetPasswordLinks;
 using Pollit.Domain.Users.UserNames;
 using Pollit.SeedWork;
 
@@ -19,19 +20,20 @@ public partial class SigninWithCredentialsResult : OneOfBase<SigninResult, UserD
 [GenerateOneOf]
 public partial class RequestResetPasswordLinkResult : OneOfBase<Success, UserDoesNotExistError> { }
 
+[GenerateOneOf]
+public partial class ResetPasswordFromResetPasswordLinkTokenResult : OneOfBase<Success, UserDoesNotExistError, ResetPasswordLinkNotFoundOrExpiredError> { }
+
 public class CredentialsAuthenticationService
 {
     private readonly IUserRepository _userRepository;
     private readonly IPasswordEncryptor _passwordEncryptor;
     private readonly IAccessTokenManager _accessTokenManager;
-    private readonly IDateTimeProvider _dateTimeProvider;
     
-    public CredentialsAuthenticationService(IUserRepository userRepository,IPasswordEncryptor passwordEncryptor, IAccessTokenManager accessTokenManager, IDateTimeProvider dateTimeProvider)
+    public CredentialsAuthenticationService(IUserRepository userRepository,IPasswordEncryptor passwordEncryptor, IAccessTokenManager accessTokenManager)
     {
         _userRepository = userRepository;
         _passwordEncryptor = passwordEncryptor;
         _accessTokenManager = accessTokenManager;
-        _dateTimeProvider = dateTimeProvider;
     }
 
     public async Task<SignupWithCredentialsResult> SignupWithCredentialsAsync(Email email, UserName userName, ClearPassword clearPassword)
@@ -89,7 +91,7 @@ public class CredentialsAuthenticationService
 
     public async Task<RequestResetPasswordLinkResult> RequestResetPasswordLink(UserId userId)
     {
-        var user = await _userRepository.GetAsync(userId);
+        var user = await _userRepository.FindByIdAsync(userId);
         if (user is null)
             return new UserDoesNotExistError();
 
@@ -98,8 +100,22 @@ public class CredentialsAuthenticationService
     
     private RequestResetPasswordLinkResult RequestResetPasswordLink(User user)
     {
-        user.RequestResetPasswordLink(_dateTimeProvider.UtcNow);
+        user.RequestResetPasswordLink();
 
         return new Success();
+    }
+
+    public async Task<ResetPasswordFromResetPasswordLinkTokenResult> ResetPasswordFromResetPasswordLinkToken(UserId userId, ResetPasswordToken resetPasswordToken, ClearPassword newPassword)
+    {
+        var user = await _userRepository.FindByIdAsync(userId);
+        if (user is null)
+            return new UserDoesNotExistError();
+
+        var encryptedPassword = _passwordEncryptor.Encrypt(newPassword);
+
+        return user.ResetPasswordFromResetPasswordLinkToken(resetPasswordToken, encryptedPassword).Match<ResetPasswordFromResetPasswordLinkTokenResult>(
+            success => success,
+            resetPasswordLinkNotFoundOrExpiredError => resetPasswordLinkNotFoundOrExpiredError
+        );
     }
 }

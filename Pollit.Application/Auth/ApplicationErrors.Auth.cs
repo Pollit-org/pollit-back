@@ -15,5 +15,4 @@ public partial class ApplicationError
     public const string ExpiredAccessTokenIsInvalid = $"{AuthErrorPrefix}:EXPIRED_ACCESS_TOKEN_IS_INVALID";
     public const string RefreshTokenIsInvalid = $"{AuthErrorPrefix}:REFRESH_TOKEN_IS_INVALID";
     public const string ResetPasswordLinkNotFoundOrExpired = $"{UsersErrorPrefix}:RESET_PASSWORD_LINK_NOT_FOUND_OR_EXPIRED";
-
 }

@@ -18,7 +18,7 @@ public class VerifyUserEmailCommandHandler : OperationHandlerBase<VerifyUserEmai
 
     protected override async Task HandleAsync(AuthorizedOperation<VerifyUserEmailCommand> command, IVerifyUserEmailPresenter presenter)
     {
-        var user = await _userRepository.GetAsync(new UserId(command.Value.UserId));
+        var user = await _userRepository.FindByIdAsync(new UserId(command.Value.UserId));
         if (user is null)
         {
             presenter.UserNotFound();

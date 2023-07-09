@@ -26,14 +26,14 @@ public class FrontAppUrlBuilder : IFrontAppUrlBuilder
             .ToUri();
     }
 
-    public Uri BuildResetPasswordUrl(UserId userId, PasswordResetToken passwordResetToken)
+    public Uri BuildResetPasswordUrl(UserId userId, ResetPasswordToken resetPasswordToken)
     {
         return _frontAppConfig
             .BaseUrl
             .TrimEnd('/')
             .AppendPathSegment(_frontAppConfig.Routes.ResetPassword.Path)
             .SetQueryParam(_frontAppConfig.Routes.ResetPassword.UserIdParamName, userId)
-            .SetQueryParam(_frontAppConfig.Routes.ResetPassword.ResetPasswordTokenParamName, passwordResetToken)
+            .SetQueryParam(_frontAppConfig.Routes.ResetPassword.ResetPasswordTokenParamName, resetPasswordToken)
             .ToUri();
     }
 }
