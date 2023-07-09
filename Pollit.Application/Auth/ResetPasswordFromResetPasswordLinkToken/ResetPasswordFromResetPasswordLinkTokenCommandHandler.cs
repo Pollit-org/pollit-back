@@ -25,7 +25,7 @@ public class ResetPasswordFromResetPasswordLinkTokenCommandHandler : OperationHa
                 await _unitOfWork.SaveChangesAsync();
                 presenter.Success();
             },
-            userDoesNotExistError => presenter.UserDoesNotExist(),
+            userDoesNotExistError => presenter.ResetPasswordLinkNotFoundOrExpired(),
             resetPasswordLinkNotFoundOrExpiredError => presenter.ResetPasswordLinkNotFoundOrExpired()
         );
     }
