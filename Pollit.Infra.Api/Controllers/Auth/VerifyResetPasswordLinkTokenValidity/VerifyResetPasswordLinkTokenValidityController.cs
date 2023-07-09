@@ -14,9 +14,9 @@ public class VerifyResetPasswordLinkTokenValidityController : OperationControlle
 
     [AllowAnonymous]
     [HttpGet("auth/resetPassword/fromResetPasswordToken/verifyValidity", Name = "VerifyResetPasswordLinkTokenValidity")]
-    public async Task<IActionResult?> VerifyResetPasswordLinkTokenValidityAsync([FromBody] VerifyResetPasswordLinkTokenValidityHttpRequestBody requestBody)
+    public async Task<IActionResult?> VerifyResetPasswordLinkTokenValidityAsync([FromQuery] VerifyResetPasswordLinkTokenValidityHttpQuery requestQueryParams)
     {
-        var query = new VerifyResetPasswordLinkTokenValidityQuery(requestBody.UserId, requestBody.ResetPasswordToken);
+        var query = new VerifyResetPasswordLinkTokenValidityQuery(requestQueryParams.UserId, requestQueryParams.ResetPasswordToken);
 
         var presenter = new VerifyResetPasswordLinkTokenValidityPresenter();
 
