@@ -4,6 +4,7 @@ using Pollit.Application._Ports;
 using Pollit.Application.Auth.SendResetPasswordLinkEmailToUser;
 using Pollit.Application.Comments.GetCommentsOfAPoll;
 using Pollit.Application.Polls.GetPollFeed;
+using Pollit.Application.Polls.GetPollResults;
 using Pollit.Application.Users.SendEmailConfirmationEmailToUser;
 using Pollit.Domain._Ports;
 using Pollit.Domain.Comments;
@@ -49,6 +50,7 @@ services
     .AddScoped<IUserRepository, UserRepository>()
     .AddScoped<IPollRepository, PollRepository>()
     .AddScoped<IPollFeedProjection, PollFeedProjection>()
+    .AddScoped<IPollResultsProjection, PollResultsProjection>()
     .AddScoped<ICommentRepository, CommentRepository>()
     .AddScoped<IGetCommentsOfAPollProjection, GetCommentsOfAPollProjection>()
     .AddTransient<IUnitOfWork, UnitOfWork>()

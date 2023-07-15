@@ -2,7 +2,7 @@
 
 public static class DictionaryExtensions
 {
-    public static TValue GetOrAdd<TKey, TValue>(this Dictionary<TKey, TValue> dict, TKey key, Func<TKey, TValue> valueGenerator)
+    public static TValue GetOrAdd<TKey, TValue>(this IDictionary<TKey, TValue> dict, TKey key, Func<TKey, TValue> valueGenerator)
     {
         if (dict.TryGetValue(key, out TValue value))
             return value;
@@ -14,13 +14,13 @@ public static class DictionaryExtensions
         return value;
     }
     
-    public static TValue GetOrAdd<TKey, TValue>(this Dictionary<TKey, TValue> dict, TKey key, TValue valueToAdd)
+    public static TValue GetOrAdd<TKey, TValue>(this IDictionary<TKey, TValue> dict, TKey key, Func<TValue> valueGenerator)
     {
-        if (dict.TryGetValue(key, out TValue value))
-            return value;
-
-        dict.Add(key, valueToAdd);
-
-        return valueToAdd;
+        return dict.GetOrAdd(key, (_) => valueGenerator());
+    }
+    
+    public static TValue GetOrAdd<TKey, TValue>(this IDictionary<TKey, TValue> dict, TKey key, TValue valueToAdd)
+    {
+        return dict.GetOrAdd(key, () => valueToAdd);
     }
 }
