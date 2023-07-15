@@ -5,4 +5,5 @@ public interface IPollRepository
     Task AddAsync(Poll poll);
 
     Task<Poll?> GetAsync(PollId pollId);
+    Task<bool> ExistsAsync(PollId pollId);
 }

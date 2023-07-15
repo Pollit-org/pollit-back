@@ -8,4 +8,6 @@ public class PollInMemoryRepository : BaseInMemoryRepository<Poll, PollId>, IPol
     Task IPollRepository.AddAsync(Poll poll) => base.AddAsync(poll);
 
     Task<Poll?> IPollRepository.GetAsync(PollId pollId) => base.GetByIdAsync(pollId);
+
+    Task<bool> IPollRepository.ExistsAsync(PollId pollId) => ExistsAsync(p => p.Id == pollId);
 }

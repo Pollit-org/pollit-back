@@ -25,4 +25,9 @@ public class PollRepository : IPollRepository
             .ThenInclude(o => o.Votes)
             .FirstOrDefaultAsync(p => p.Id == pollId);
     }
+
+    public Task<bool> ExistsAsync(PollId pollId)
+    {
+        return _context.Polls.AnyAsync(p => p.Id == pollId);
+    }
 }
