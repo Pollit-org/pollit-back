@@ -2,6 +2,7 @@
 using Pollit.Domain.Users;
 using Pollit.Infra.FrontApp.UrlBuilder.Config;
 using Flurl;
+using Pollit.Domain.Users.ResetPasswordLinks;
 
 namespace Pollit.Infra.FrontApp.UrlBuilder;
 
@@ -22,6 +23,17 @@ public class FrontAppUrlBuilder : IFrontAppUrlBuilder
             .AppendPathSegment(_frontAppConfig.Routes.VerifyEmail.Path)
             .SetQueryParam(_frontAppConfig.Routes.VerifyEmail.UserIdParamName, userId)
             .SetQueryParam(_frontAppConfig.Routes.VerifyEmail.VerificationTokenParamName, emailVerificationToken)
+            .ToUri();
+    }
+
+    public Uri BuildResetPasswordUrl(UserId userId, ResetPasswordToken resetPasswordToken)
+    {
+        return _frontAppConfig
+            .BaseUrl
+            .TrimEnd('/')
+            .AppendPathSegment(_frontAppConfig.Routes.ResetPassword.Path)
+            .SetQueryParam(_frontAppConfig.Routes.ResetPassword.UserIdParamName, userId)
+            .SetQueryParam(_frontAppConfig.Routes.ResetPassword.ResetPasswordTokenParamName, resetPasswordToken)
             .ToUri();
     }
 }

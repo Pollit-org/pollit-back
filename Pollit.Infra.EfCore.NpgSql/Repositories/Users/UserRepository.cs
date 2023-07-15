@@ -15,6 +15,8 @@ public class UserRepository : IUserRepository
         _context = context;
     }
     
+    private IQueryable<User> Users => _context.Users.Include(u => u.ResetPasswordLinks);
+    
     public async Task AddAsync(User user)
     {
         await _context.Users.AddAsync(user);
@@ -39,19 +41,19 @@ public class UserRepository : IUserRepository
     {
         return _context.Users.AnyAsync(u => u.UserName == userName);
     }
+    
+    public async Task<User?> FindByIdAsync(UserId userId)
+    {
+        return await Users.FirstOrDefaultAsync(u => u.Id == userId);
+    }
 
     public Task<User?> FindByEmailAsync(Email email)
     {
-        return _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+        return Users.FirstOrDefaultAsync(u => u.Email == email);
     }
 
     public Task<User?> FindByUserNameAsync(UserName userName)
     {
-        return _context.Users.FirstOrDefaultAsync(u => u.UserName == userName);
-    }
-
-    public async Task<User?> GetAsync(UserId userId)
-    {
-        return await _context.Users.FindAsync(userId);
+        return Users.FirstOrDefaultAsync(u => u.UserName == userName);
     }
 }

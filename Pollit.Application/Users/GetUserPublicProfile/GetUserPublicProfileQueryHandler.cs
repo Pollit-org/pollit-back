@@ -13,7 +13,7 @@ public class GetUserPublicProfileQueryHandler : OperationHandlerBase<GetUserPubl
     
     protected override async Task HandleAsync(AuthorizedOperation<GetUserPublicProfileQuery> query, IGetUserPublicProfilePresenter presenter)
     {
-        var user = await _userRepository.GetAsync(query.Value.UserId);
+        var user = await _userRepository.FindByIdAsync(query.Value.UserId);
         if (user is null)
         {
             presenter.UserNotFound();

@@ -12,11 +12,7 @@ public class RefreshToken : StringValueBase
 
     public static RefreshToken Generate()
     {
-        var randomNumber = new byte[64];
-        using var rng = RandomNumberGenerator.Create();
-        rng.GetBytes(randomNumber);
-        
-        return new RefreshToken(Convert.ToBase64String(randomNumber).Replace(' ', '.'));
+        return new RefreshToken(StringExtensions.UrlSafeRandomToken(64));
     }
     
     public static implicit operator RefreshToken(string refreshToken) => new (refreshToken);

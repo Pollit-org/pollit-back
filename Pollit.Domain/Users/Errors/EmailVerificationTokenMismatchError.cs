@@ -1,6 +1,6 @@
 ﻿namespace Pollit.Domain.Users.Errors;
 
-public class VerificationTokenMismatchError
+public class EmailVerificationTokenMismatchError
 {
     
 }

@@ -20,7 +20,7 @@ public class CastVoteToPollCommandHandler : OperationHandlerBase<CastVoteToPollC
 
     protected override async Task HandleAsync(AuthorizedOperation<CastVoteToPollCommand> command, ICastVoteToPollPresenter presenter)
     {
-        var user = await _userRepository.GetAsync(command.Value.VoterId);
+        var user = await _userRepository.FindByIdAsync(command.Value.VoterId);
         if (user is null) 
         {
             presenter.VoterNotFound();

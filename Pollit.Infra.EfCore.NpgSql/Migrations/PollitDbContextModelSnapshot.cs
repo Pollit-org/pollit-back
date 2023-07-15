@@ -46,6 +46,9 @@ namespace Pollit.Infra.SqlServer.Migrations
                     b.Property<Guid>("PollId")
                         .HasColumnType("uuid");
 
+                    b.Property<double>("SearchRank")
+                        .HasColumnType("double precision");
+
                     b.Property<string[]>("Tags")
                         .IsRequired()
                         .HasColumnType("text[]");
@@ -192,6 +195,34 @@ namespace Pollit.Infra.SqlServer.Migrations
                     b.ToTable("Polls.Options.Votes", (string)null);
                 });
 
+            modelBuilder.Entity("Pollit.Domain.Users.ResetPasswordLinks.ResetPasswordLink", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("ConsumedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("ForcedExpiryAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("IssuedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Users.ResetPasswordLinks", (string)null);
+                });
+
             modelBuilder.Entity("Pollit.Domain.Users.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -311,6 +342,13 @@ namespace Pollit.Infra.SqlServer.Migrations
                         .HasForeignKey("PollOptionId");
                 });
 
+            modelBuilder.Entity("Pollit.Domain.Users.ResetPasswordLinks.ResetPasswordLink", b =>
+                {
+                    b.HasOne("Pollit.Domain.Users.User", null)
+                        .WithMany("ResetPasswordLinks")
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("Pollit.Domain.Comments.Comment", b =>
                 {
                     b.Navigation("Votes");
@@ -324,6 +362,11 @@ namespace Pollit.Infra.SqlServer.Migrations
             modelBuilder.Entity("Pollit.Domain.Polls.PollOption", b =>
                 {
                     b.Navigation("Votes");
+                });
+
+            modelBuilder.Entity("Pollit.Domain.Users.User", b =>
+                {
+                    b.Navigation("ResetPasswordLinks");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,4 +1,5 @@
 ﻿using Pollit.Domain.Users.Services;
+using Pollit.SeedWork;
 using Pollit.Test.Common.Builders.Domain._Ports;
 using Pollit.Test.InMemoryDb;
 

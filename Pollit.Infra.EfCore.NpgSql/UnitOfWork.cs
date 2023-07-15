@@ -20,7 +20,6 @@ public class UnitOfWork : IUnitOfWork
     {
         var savedEntities = _context.ChangeTracker
             .Entries()
-            .Where(x => x.State is EntityState.Modified or EntityState.Deleted or EntityState.Added)
             .Select(x => x.Entity)
             .Where(x => x.GetType().IsAssignableTo(typeof(IEntity)))
             .ToArray();

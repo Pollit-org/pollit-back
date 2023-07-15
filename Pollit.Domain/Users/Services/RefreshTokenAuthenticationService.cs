@@ -27,7 +27,7 @@ public class RefreshTokenAuthenticationService
         if (!claims.TryGetValue(CClaimTypes.UserId, out var userId))
             return new ExpiredAccessTokenIsInvalidError();
 
-        var user = await _userRepository.GetAsync(Guid.Parse(userId));
+        var user = await _userRepository.FindByIdAsync(Guid.Parse(userId));
         if (user is null)
             return new UserDoesNotExistError();
 

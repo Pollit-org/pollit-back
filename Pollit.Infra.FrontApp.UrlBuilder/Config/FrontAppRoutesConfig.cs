@@ -3,4 +3,5 @@
 public class FrontAppRoutesConfig
 {
     public FrontAppVerifyEmailRouteConfig VerifyEmail { get; set; }
+    public FrontAppResetPasswordRouteConfig ResetPassword { get; set; }
 }

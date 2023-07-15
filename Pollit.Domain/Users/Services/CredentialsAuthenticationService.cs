@@ -5,7 +5,9 @@ using Pollit.Domain.Shared.Email;
 using Pollit.Domain.Users._Ports;
 using Pollit.Domain.Users.ClearPasswords;
 using Pollit.Domain.Users.Errors;
+using Pollit.Domain.Users.ResetPasswordLinks;
 using Pollit.Domain.Users.UserNames;
+using Pollit.SeedWork;
 
 namespace Pollit.Domain.Users.Services;
 
@@ -14,6 +16,12 @@ public partial class SignupWithCredentialsResult : OneOfBase<Success, EmailAlrea
 
 [GenerateOneOf]
 public partial class SigninWithCredentialsResult : OneOfBase<SigninResult, UserDoesNotExistError, UserHasNoPasswordError, PasswordMismatchError> { }
+
+[GenerateOneOf]
+public partial class RequestResetPasswordLinkResult : OneOfBase<Success, UserDoesNotExistError> { }
+
+[GenerateOneOf]
+public partial class ResetPasswordFromResetPasswordLinkTokenResult : OneOfBase<Success, UserDoesNotExistError, ResetPasswordLinkNotFoundOrExpiredError> { }
 
 public class CredentialsAuthenticationService
 {
@@ -70,5 +78,44 @@ public class CredentialsAuthenticationService
         user.AddRefreshToken(refreshToken);
         
         return new SigninResult(accessToken, refreshToken);
+    }
+    
+    public async Task<RequestResetPasswordLinkResult> RequestResetPasswordLink(Email email)
+    {
+        var user = await _userRepository.FindByEmailAsync(email);
+        if (user is null)
+            return new UserDoesNotExistError();  
+        
+        return RequestResetPasswordLink(user);
+    }
+
+    public async Task<RequestResetPasswordLinkResult> RequestResetPasswordLink(UserId userId)
+    {
+        var user = await _userRepository.FindByIdAsync(userId);
+        if (user is null)
+            return new UserDoesNotExistError();
+
+        return RequestResetPasswordLink(user);
+    }
+    
+    private RequestResetPasswordLinkResult RequestResetPasswordLink(User user)
+    {
+        user.RequestResetPasswordLink();
+
+        return new Success();
+    }
+
+    public async Task<ResetPasswordFromResetPasswordLinkTokenResult> ResetPasswordFromResetPasswordLinkToken(UserId userId, ResetPasswordToken resetPasswordToken, ClearPassword newPassword)
+    {
+        var user = await _userRepository.FindByIdAsync(userId);
+        if (user is null)
+            return new UserDoesNotExistError();
+
+        var encryptedPassword = _passwordEncryptor.Encrypt(newPassword);
+
+        return user.ResetPasswordFromResetPasswordLinkToken(resetPasswordToken, encryptedPassword).Match<ResetPasswordFromResetPasswordLinkTokenResult>(
+            success => success,
+            resetPasswordLinkNotFoundOrExpiredError => resetPasswordLinkNotFoundOrExpiredError
+        );
     }
 }
