@@ -46,15 +46,12 @@ public class PollResultsProjection : IPollResultsProjection
         $"""
     WITH "Intervals" AS (
     SELECT * FROM (
-    VALUES('age', 1, 15, null, null),
-        ('age', 15, 18, null, null),
-        ('age', 19, 25, null, null),
-        ('age', 26, 35, null, null),
-        ('age', 36, 45, null, null),
-        ('age', 46, 55, null, null),
-        ('age', 55, 70, null, null),
-        ('age', 70, 85, null, null),
-        ('age', 85, 120, null, null))
+    VALUES('age', 1, 17, null, null),
+        ('age', 18, 25, null, null),
+        ('age', 26, 34, null, null),
+        ('age', 35, 49, null, null),
+        ('age', 50, 64, null, null),
+        ('age', 65, 120, null, null))
     AS X("Feature", "AgeFrom", "AgeTo", "Gender", "Country")
     UNION ALL
     SELECT * FROM (

@@ -36,6 +36,8 @@ public class PollFeedProjection : IPollFeedProjection
             null when query.SearchText is not null => dbQuery.OrderByDescending(x => x.SearchRank),
             null => dbQuery,
             EGetPollFeedQueryOrderBy.CreatedAt => dbQuery.OrderBy(x => x.CreatedAt, query.Order!.Value),
+            EGetPollFeedQueryOrderBy.TotalVotesCount => dbQuery.OrderBy(x => x.TotalVotesCount, query.Order!.Value),
+            EGetPollFeedQueryOrderBy.Trending => dbQuery.OrderBy(x => x.TotalVotesCount / (DateTime.UtcNow - x.CreatedAt).TotalMinutes, EQueryOrder.Descending),
             _ => throw new ArgumentOutOfRangeException(nameof(query.OrderBy))
         };
 
